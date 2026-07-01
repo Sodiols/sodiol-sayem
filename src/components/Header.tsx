@@ -63,15 +63,15 @@ export default function Header({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 min-w-0">
             <button
               onClick={() => handleNavClick('home')}
-              className="flex items-center space-x-2 font-mono group"
+              className="flex items-center space-x-2 font-mono group min-w-0"
             >
               <div className="bg-black text-white p-2 rounded-none border border-black group-hover:bg-zinc-800 transition-all">
                 <CodeXml className="w-5 h-5" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-zinc-600 transition-colors">
+              <span className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-zinc-600 transition-colors truncate max-w-[120px] sm:max-w-[160px]">
                 {portfolioName || 'Sodiol Sayem'}
               </span>
             </button>
@@ -141,7 +141,7 @@ export default function Header({
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center space-x-2 min-w-0">
             {isDashboardActive && (
               <button
                 onClick={() => setIsDashboardActive(false)}
@@ -154,6 +154,7 @@ export default function Header({
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-none text-slate-600 hover:text-black hover:bg-slate-100 focus:outline-none transition-colors"
+              aria-label="Toggle navigation menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
