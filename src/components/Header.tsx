@@ -60,18 +60,18 @@ export default function Header({
           : 'py-4.5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-3 h-14 min-w-0">
           {/* Logo */}
-          <div className="flex-shrink-0 min-w-0">
+          <div className="flex-1 md:flex-none min-w-0 overflow-hidden">
             <button
               onClick={() => handleNavClick('home')}
-              className="flex items-center space-x-2 font-mono group min-w-0"
+              className="flex items-center space-x-2 font-mono group min-w-0 max-w-full"
             >
-              <div className="bg-black text-white p-2 rounded-none border border-black group-hover:bg-zinc-800 transition-all">
+              <div className="bg-black text-white p-2 rounded-none border border-black group-hover:bg-zinc-800 transition-all shrink-0">
                 <CodeXml className="w-5 h-5" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-zinc-600 transition-colors truncate max-w-[120px] sm:max-w-[160px]">
+              <span className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-zinc-600 transition-colors truncate min-w-0 max-w-[calc(100vw-7.5rem)] sm:max-w-none md:max-w-[160px]">
                 {portfolioName || 'Sodiol Sayem'}
               </span>
             </button>
@@ -141,11 +141,11 @@ export default function Header({
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-2 min-w-0">
+          <div className="md:hidden flex shrink-0 items-center gap-2">
             {isDashboardActive && (
               <button
                 onClick={() => setIsDashboardActive(false)}
-                className="p-2 rounded-none border bg-black text-white border-black"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none border bg-black text-white border-black"
                 title="View Portfolio"
               >
                 <Shield className="w-5 h-5" />
@@ -153,7 +153,7 @@ export default function Header({
             )}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-none text-slate-600 hover:text-black hover:bg-slate-100 focus:outline-none transition-colors"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none text-slate-600 hover:text-black hover:bg-slate-100 focus:outline-none transition-colors"
               aria-label="Toggle navigation menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
