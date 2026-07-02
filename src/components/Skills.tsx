@@ -35,10 +35,10 @@ export default function Skills({ skills }: SkillsProps) {
   };
 
   return (
-    <section className="relative w-full py-12 md:py-16">
-      <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-zinc-200/5 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative w-full max-w-full overflow-x-clip py-12 md:py-16">
+      <div className="absolute top-1/2 left-1/2 w-[min(300px,80vw)] h-[min(300px,80vw)] bg-zinc-200/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="site-container relative z-10">
         
         {/* Section Header */}
         <div className="mb-12">
@@ -55,7 +55,7 @@ export default function Skills({ skills }: SkillsProps) {
         </div>
 
         {/* Bento Grid layout for Skills Categories */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-w-0">
           {(['Frontend', 'Backend', 'Tools'] as const).map((categoryName) => {
             const catMeta = categories[categoryName];
             const catSkills = getSkillsByCategory(categoryName);
@@ -67,16 +67,16 @@ export default function Skills({ skills }: SkillsProps) {
               >
                 <div>
                   {/* Category Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center space-x-3">
+                  <div className="flex items-center justify-between gap-3 mb-6">
+                    <div className="flex min-w-0 items-center space-x-3">
                       <div className="bg-zinc-50 p-2.5 rounded-none border border-slate-200 text-slate-800">
                         {catMeta.icon}
                       </div>
-                      <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+                      <h3 className="text-lg font-bold text-slate-900 tracking-tight break-safe">
                         {categoryName}
                       </h3>
                     </div>
-                    <span className="text-xs text-slate-500 font-mono">
+                    <span className="shrink-0 text-xs text-slate-500 font-mono">
                       {catSkills.length} SKILLS
                     </span>
                   </div>
@@ -85,8 +85,8 @@ export default function Skills({ skills }: SkillsProps) {
                   <div className="space-y-4">
                     {catSkills.map((skill) => (
                       <div key={skill.id} className="space-y-1.5">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-slate-700 font-medium">{skill.name}</span>
+                        <div className="flex justify-between items-center gap-3 text-xs">
+                          <span className="text-slate-700 font-medium break-safe">{skill.name}</span>
                           <span className={`font-mono text-[10px] ${catMeta.textColor}`}>
                             {skill.level}%
                           </span>
@@ -107,7 +107,7 @@ export default function Skills({ skills }: SkillsProps) {
                 </div>
 
                 {/* Footer text of bento box */}
-                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                <div className="pt-6 mt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-slate-500 uppercase tracking-widest">
                   <span>Sodiol Sayem</span>
                   <span>Stack Configured</span>
                 </div>

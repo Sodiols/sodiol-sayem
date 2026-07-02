@@ -67,7 +67,7 @@ export default function PortfolioClient({ initialPortfolio }: PortfolioClientPro
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfcfc] text-slate-900 flex flex-col font-sans selection:bg-black selection:text-white">
+    <div className="site-shell min-h-screen bg-[#fcfcfc] text-slate-900 flex flex-col font-sans selection:bg-black selection:text-white">
       <InteractiveGrid />
 
       <Header
@@ -79,8 +79,8 @@ export default function PortfolioClient({ initialPortfolio }: PortfolioClientPro
         instagram={portfolio.instagram}
       />
 
-      <main className="flex-grow relative z-10">
-        <div className="relative z-10 space-y-16 md:space-y-24 pb-20">
+      <main className="flex-grow relative z-10 min-w-0">
+        <div className="relative z-10 space-y-16 md:space-y-24 pb-20 min-w-0">
           <div id="home" className="w-full min-h-[90vh] flex flex-col justify-center">
             <Hero portfolio={portfolio} />
           </div>
@@ -107,17 +107,17 @@ export default function PortfolioClient({ initialPortfolio }: PortfolioClientPro
         </div>
       </main>
 
-      <footer className="bg-[#fcfcfc] border-t border-slate-200/80 py-12 relative z-[60] text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-[#fcfcfc] border-t border-slate-200/80 py-12 relative z-[60] text-xs text-slate-500 overflow-x-clip">
+        <div className="site-container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-zinc-900 animate-pulse" />
-              <span className="font-mono uppercase tracking-wider text-[10px]">
+            <div className="flex items-center gap-2 min-w-0 text-center md:text-left">
+              <span className="w-2 h-2 shrink-0 rounded-full bg-zinc-900 animate-pulse" />
+              <span className="font-mono uppercase tracking-wider text-[10px] break-safe">
                 Located in Sylhet, Bangladesh • Global Remote Delivery
               </span>
             </div>
 
-            <div className="flex items-center space-x-6 font-mono text-[10px] uppercase tracking-widest">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-widest">
               <a href={portfolio.github} target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
                 GitHub
               </a>
@@ -129,7 +129,7 @@ export default function PortfolioClient({ initialPortfolio }: PortfolioClientPro
               </a>
             </div>
 
-            <div className="font-mono text-[10px]">
+            <div className="font-mono text-[10px] text-center break-safe">
               &copy; {new Date().getFullYear()} {portfolio.name} Portfolio • Fully Optimized
             </div>
           </div>

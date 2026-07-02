@@ -20,7 +20,7 @@ export default function DashboardClient({ initialPortfolio }: DashboardClientPro
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfcfc] text-slate-900 flex flex-col font-sans selection:bg-black selection:text-white">
+    <div className="site-shell min-h-screen bg-[#fcfcfc] text-slate-900 flex flex-col font-sans selection:bg-black selection:text-white">
       <InteractiveGrid />
 
       <Header
@@ -32,7 +32,7 @@ export default function DashboardClient({ initialPortfolio }: DashboardClientPro
         instagram={portfolio.instagram}
       />
 
-      <main className="flex-grow relative z-10">
+      <main className="flex-grow relative z-10 min-w-0">
         <AdminDashboard portfolio={portfolio} onPortfolioUpdate={setPortfolio} />
       </main>
     </div>

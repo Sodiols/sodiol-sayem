@@ -199,13 +199,13 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 pt-28 pb-16">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-zinc-200/5 rounded-none blur-[100px] pointer-events-none" />
+      <div className="min-h-screen flex items-center justify-center px-3 sm:px-4 pt-28 pb-16 overflow-x-clip">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[min(350px,85vw)] h-[min(350px,85vw)] bg-zinc-200/5 rounded-none blur-[100px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md bg-white border border-slate-200 rounded-none p-8 relative overflow-hidden shadow-none"
+          className="w-full max-w-md bg-white border border-slate-200 rounded-none p-5 sm:p-8 relative overflow-hidden shadow-none"
         >
           {/* Padlock Icon */}
           <div className="flex flex-col items-center text-center space-y-4 mb-8">
@@ -270,22 +270,22 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
   }
 
   return (
-    <div className="min-h-screen pt-28 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-28 pb-16 overflow-x-clip">
+      <div className="site-container">
         
         {/* Admin Dashboard Page Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between pb-8 mb-8 border-b border-slate-200 gap-4">
-          <div>
-            <div className="flex items-center space-x-2 text-black font-mono text-xs mb-1">
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-8 mb-8 border-b border-slate-200 gap-4 min-w-0">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 text-black font-mono text-xs mb-1">
               <Shield className="w-4.5 h-4.5" />
-              <span className="font-semibold">AUTHENTICATED SECURE CONTENT MANAGEMENT</span>
+              <span className="font-semibold break-safe">AUTHENTICATED SECURE CONTENT MANAGEMENT</span>
             </div>
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight break-safe">
               Sodiol Sayem Control Dashboard
             </h1>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex shrink-0 items-center gap-3">
             <button
               onClick={fetchInquiries}
               className="p-2.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-zinc-50 text-slate-700 rounded-none transition-all cursor-pointer shadow-none"
@@ -305,7 +305,7 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
         </div>
 
         {/* Dynamic Overview Bento Boxes */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Bento box: New inquiries */}
           <div className="bg-white border border-slate-200 rounded-none p-6 flex flex-col justify-between shadow-none">
             <div>
@@ -360,10 +360,10 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
         </div>
 
         {/* Tab Selection */}
-        <div className="flex border-b border-slate-200 mb-8 space-x-2">
+        <div className="flex border-b border-slate-200 mb-8 gap-2 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab('inquiries')}
-            className={`px-5 py-3 text-sm font-medium border-b-2 transition-all cursor-pointer ${
+            className={`shrink-0 px-4 sm:px-5 py-3 text-sm font-medium border-b-2 transition-all cursor-pointer ${
               activeTab === 'inquiries'
                 ? 'border-black text-black bg-zinc-50/50 font-bold'
                 : 'border-transparent text-slate-500 hover:text-black'
@@ -382,7 +382,7 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
 
           <button
             onClick={() => setActiveTab('portfolio')}
-            className={`px-5 py-3 text-sm font-medium border-b-2 transition-all cursor-pointer ${
+            className={`shrink-0 px-4 sm:px-5 py-3 text-sm font-medium border-b-2 transition-all cursor-pointer ${
               activeTab === 'portfolio'
                 ? 'border-black text-black bg-zinc-50/50 font-bold'
                 : 'border-transparent text-slate-500 hover:text-black'
@@ -417,7 +417,7 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
                   {inquiries.map((inq) => (
                     <div
                       key={inq.id}
-                      className={`p-6 border rounded-none transition-all ${
+                      className={`p-4 sm:p-6 border rounded-none transition-all min-w-0 ${
                         inq.status === 'new'
                           ? 'bg-zinc-50 border-slate-400 shadow-none'
                           : inq.status === 'archived'
@@ -426,22 +426,22 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
                       }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                        <div className="space-y-1">
+                        <div className="space-y-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-sm font-bold text-slate-900">{inq.name}</span>
-                            <span className="text-xs text-slate-500 font-mono">{inq.email}</span>
+                            <span className="text-sm font-bold text-slate-900 break-safe">{inq.name}</span>
+                            <span className="text-xs text-slate-500 font-mono break-safe">{inq.email}</span>
                             {inq.status === 'new' && (
                               <span className="bg-black text-white px-2 py-0.5 rounded-none text-[10px] font-semibold tracking-wider uppercase">
                                 New Inquiry
                               </span>
                             )}
                           </div>
-                          <h4 className="text-base font-semibold text-slate-800">
+                          <h4 className="text-base font-semibold text-slate-800 break-safe">
                             Subject: {inq.subject}
                           </h4>
                         </div>
 
-                        <div className="flex flex-col sm:items-end gap-1.5 font-mono text-xs text-slate-500">
+                        <div className="flex flex-col sm:items-end gap-1.5 font-mono text-xs text-slate-500 break-safe">
                           <span>{new Date(inq.createdAt).toLocaleString()}</span>
                           {inq.budget && (
                             <span className="bg-zinc-100 text-zinc-800 px-2 py-0.5 rounded-none text-[10px] font-semibold border border-zinc-200 w-fit">
@@ -451,13 +451,13 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
                         </div>
                       </div>
 
-                      <p className="text-slate-700 text-sm leading-relaxed mb-6 whitespace-pre-wrap bg-zinc-50/50 p-4 rounded-none border border-slate-100 font-sans">
+                      <p className="text-slate-700 text-sm leading-relaxed mb-6 whitespace-pre-wrap break-safe bg-zinc-50/50 p-4 rounded-none border border-slate-100 font-sans">
                         {inq.message}
                       </p>
 
                       {/* Controls bar */}
                       <div className="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-slate-100">
-                        <div className="flex items-center space-x-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           {inq.status === 'new' && (
                             <button
                               onClick={() => updateInquiryStatus(inq.id, 'read')}
@@ -497,7 +497,7 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
 
           {/* Tab 2: Portfolio CMS Modifier Form */}
           {activeTab === 'portfolio' && (
-            <div className="bg-white border border-slate-200 rounded-none p-6 sm:p-8 shadow-none">
+            <div className="bg-white border border-slate-200 rounded-none p-4 sm:p-8 shadow-none min-w-0">
               <form onSubmit={savePortfolioDetails} className="space-y-8">
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 tracking-tight mb-4">Core Metadata</h3>
@@ -643,7 +643,7 @@ export default function AdminDashboard({ portfolio, onPortfolioUpdate }: AdminDa
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex items-center space-x-2 px-6 py-3 bg-black hover:bg-zinc-800 text-white text-sm font-bold rounded-none shadow-none transition-all disabled:opacity-50 cursor-pointer"
+                    className="flex w-full sm:w-auto items-center justify-center space-x-2 px-6 py-3 bg-black hover:bg-zinc-800 text-white text-sm font-bold rounded-none shadow-none transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {loading ? (
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

@@ -10,10 +10,10 @@ interface ExperienceProps {
 
 export default function ExperienceSection({ experiences }: ExperienceProps) {
   return (
-    <section className="relative w-full py-12 md:py-16">
-      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-zinc-200/5 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative w-full max-w-full overflow-x-clip py-12 md:py-16">
+      <div className="absolute bottom-1/4 right-0 md:right-1/4 w-[min(350px,80vw)] h-[min(350px,80vw)] bg-zinc-200/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="site-container relative z-10">
         
         {/* Section Header */}
         <div className="mb-16">
@@ -30,7 +30,7 @@ export default function ExperienceSection({ experiences }: ExperienceProps) {
         </div>
 
         {/* Timeline Layout */}
-        <div className="relative max-w-3xl mx-auto pl-6 sm:pl-8 border-l border-slate-200 space-y-12">
+        <div className="relative w-full max-w-3xl mx-auto pl-6 sm:pl-8 border-l border-slate-200 space-y-12">
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.id}
@@ -46,27 +46,27 @@ export default function ExperienceSection({ experiences }: ExperienceProps) {
               </div>
 
               {/* Box Details */}
-              <div className="bg-white p-6 rounded-none border border-slate-200 hover:border-black/30 transition-all duration-300 shadow-none">
+              <div className="bg-white p-4 sm:p-6 rounded-none border border-slate-200 hover:border-black/30 transition-all duration-300 shadow-none min-w-0">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-slate-950 tracking-tight">
+                    <h3 className="text-xl font-bold text-slate-950 tracking-tight break-safe">
                       {exp.role}
                     </h3>
-                    <p className="text-black font-semibold text-sm font-sans mt-0.5">
+                    <p className="text-black font-semibold text-sm font-sans mt-0.5 break-safe">
                       {exp.company}
                     </p>
                   </div>
 
-                  <div className="flex items-center space-x-1.5 text-xs font-mono text-slate-600 bg-zinc-50 px-3 py-1 rounded-none border border-slate-200 w-fit">
+                  <div className="flex items-center space-x-1.5 text-xs font-mono text-slate-600 bg-zinc-50 px-3 py-1 rounded-none border border-slate-200 w-fit max-w-full">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{exp.duration}</span>
+                    <span className="break-safe">{exp.duration}</span>
                   </div>
                 </div>
 
                 {/* Bullets List */}
                 <ul className="space-y-2 text-slate-600 text-sm leading-relaxed list-disc list-inside">
                   {exp.description.map((bullet, idx) => (
-                    <li key={idx} className="marker:text-black">
+                    <li key={idx} className="marker:text-black break-safe">
                       {bullet}
                     </li>
                   ))}

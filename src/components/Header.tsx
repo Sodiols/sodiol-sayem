@@ -54,14 +54,14 @@ export default function Header({
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 bg-white border-b border-slate-200 shadow-none ${
+      className={`fixed inset-x-0 top-0 w-full max-w-full z-[100] overflow-x-clip transition-all duration-300 bg-white border-b border-slate-200 shadow-none ${
         scrolled || isDashboardActive
           ? 'py-3'
           : 'py-4.5'
       }`}
     >
-      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-3 h-14 min-w-0">
+      <div className="site-container">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] md:flex md:items-center md:justify-between gap-3 h-14 min-w-0">
           {/* Logo */}
           <div className="flex-1 md:flex-none min-w-0 overflow-hidden">
             <button
@@ -71,7 +71,7 @@ export default function Header({
               <div className="bg-black text-white p-2 rounded-none border border-black group-hover:bg-zinc-800 transition-all shrink-0">
                 <CodeXml className="w-5 h-5" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-zinc-600 transition-colors truncate min-w-0 max-w-[calc(100vw-7.5rem)] sm:max-w-none md:max-w-[160px]">
+              <span className="mobile-brand-name text-base sm:text-lg font-bold tracking-tight text-slate-900 group-hover:text-zinc-600 transition-colors truncate min-w-0 max-w-[calc(100vw-7rem)] sm:max-w-none md:max-w-[160px]">
                 {portfolioName || 'Sodiol Sayem'}
               </span>
             </button>
@@ -172,7 +172,7 @@ export default function Header({
             transition={{ duration: 0.2 }}
             className="md:hidden bg-white border-b border-slate-200/80 shadow-none"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2">
+            <div className="site-container pt-2 pb-6 space-y-2">
               {!isDashboardActive ? (
                 navItems.map((item) => {
                   const isActive = currentSection === item.id;
@@ -199,12 +199,12 @@ export default function Header({
               )}
 
               {!isDashboardActive && (
-                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-center space-x-6">
+                <div className="pt-4 mt-4 border-t border-slate-100 grid grid-cols-1 min-[360px]:grid-cols-2 gap-3">
                   <a
                     href={facebook || "https://facebook.com"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-2 text-slate-600 hover:text-black transition-colors text-sm font-mono"
+                    className="flex items-center justify-center space-x-2 text-slate-600 hover:text-black transition-colors text-sm font-mono"
                   >
                     <Facebook className="w-4 h-4" />
                     <span>Facebook</span>
@@ -213,7 +213,7 @@ export default function Header({
                     href={instagram || "https://instagram.com"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-2 text-slate-600 hover:text-black transition-colors text-sm font-mono"
+                    className="flex items-center justify-center space-x-2 text-slate-600 hover:text-black transition-colors text-sm font-mono"
                   >
                     <Instagram className="w-4 h-4" />
                     <span>Instagram</span>

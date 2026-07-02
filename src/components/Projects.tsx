@@ -26,26 +26,26 @@ export default function Projects({ projects }: ProjectsProps) {
   });
 
   return (
-    <section className="relative w-full py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="relative w-full max-w-full overflow-x-clip py-12 md:py-16">
+      <div className="site-container relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 min-w-0">
+          <div className="min-w-0">
             <div className="flex items-center space-x-2 text-black font-mono text-sm mb-2">
               <Code className="w-4 h-4" />
               <span className="font-semibold">CRAFTED WITH PRECISION</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight break-safe">
               Web Development Projects
             </h2>
-            <p className="text-slate-600 mt-2 max-w-xl">
+            <p className="text-slate-600 mt-2 max-w-xl break-safe">
               A curated showcase of highly-responsive web products, engineered with robust cloud backends and lightning fast performance.
             </p>
           </div>
 
           {/* Search bar */}
-          <div className="relative w-full md:w-80">
+          <div className="relative w-full md:w-80 shrink-0">
             <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
             <input
               type="text"
@@ -58,7 +58,7 @@ export default function Projects({ projects }: ProjectsProps) {
         </div>
 
         {/* Tech Badges / Filters */}
-        <div className="flex flex-wrap gap-2 mb-10 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex gap-2 mb-10 overflow-x-auto pb-2 scrollbar-none">
           {allTechs.map((tech) => (
             <button
               key={tech}
@@ -77,7 +77,7 @@ export default function Projects({ projects }: ProjectsProps) {
         {/* Bento/Grid Layout for Projects */}
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-0"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
@@ -111,8 +111,8 @@ export default function Projects({ projects }: ProjectsProps) {
                 {/* Info Block */}
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-black transition-colors">
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-black transition-colors break-safe">
                         {project.title}
                       </h3>
                       {project.featured && (
@@ -121,7 +121,7 @@ export default function Projects({ projects }: ProjectsProps) {
                         </span>
                       )}
                     </div>
-                    <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3 break-safe">
                       {project.description}
                     </p>
                   </div>
@@ -140,7 +140,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     </div>
 
                     {/* Footer Row */}
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-mono">
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100 text-xs font-mono">
                       <button
                         onClick={() => setSelectedProject(project)}
                         className="text-black hover:text-zinc-600 transition-colors flex items-center space-x-1 font-semibold cursor-pointer"
@@ -191,7 +191,7 @@ export default function Projects({ projects }: ProjectsProps) {
         {/* Case Study Details Modal */}
         <AnimatePresence>
           {selectedProject && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
               {/* Overlay */}
               <motion.div
                 initial={{ opacity: 0 }}
@@ -206,7 +206,7 @@ export default function Projects({ projects }: ProjectsProps) {
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="bg-white border border-slate-200 rounded-none w-full max-w-2xl overflow-hidden shadow-none relative z-10"
+                className="bg-white border border-slate-200 rounded-none w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto shadow-none relative z-10"
               >
                 {/* Header Cover */}
                 <div className="relative h-48 sm:h-64 bg-slate-100">
@@ -228,13 +228,13 @@ export default function Projects({ projects }: ProjectsProps) {
                 <div className="p-6 sm:p-8 space-y-6">
                   <div>
                     <span className="text-xs uppercase tracking-widest text-slate-800 font-mono font-semibold">Technical Case Study</span>
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 mt-1">
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 mt-1 break-safe">
                       {selectedProject.title}
                     </h3>
                   </div>
 
                   <div className="space-y-4">
-                    <p className="text-slate-600 text-sm leading-relaxed">
+                    <p className="text-slate-600 text-sm leading-relaxed break-safe">
                       {selectedProject.detail || selectedProject.description}
                     </p>
                   </div>

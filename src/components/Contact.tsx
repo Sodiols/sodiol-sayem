@@ -82,11 +82,11 @@ export default function Contact() {
   };
 
   return (
-    <section className="relative w-full py-12 md:py-16 overflow-hidden">
+    <section className="relative w-full max-w-full py-12 md:py-16 overflow-x-clip">
       {/* Background blobs */}
-      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-zinc-200/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 md:right-1/4 w-[min(300px,80vw)] h-[min(300px,80vw)] bg-zinc-200/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="site-container relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-16">
@@ -97,16 +97,16 @@ export default function Contact() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Start a Project Inquiry
           </h2>
-          <p className="text-slate-600 mt-2">
+          <p className="text-slate-600 mt-2 break-safe">
             Have an application, UI feature, or business need? Share your scope details and let's transform it together.
           </p>
         </div>
 
         {/* Form and Contact Cards layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start min-w-0">
           
           {/* Left Block info cards */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="lg:col-span-4 space-y-4 min-w-0">
             
             {/* Quick Contact Info */}
             <div className="bg-white border border-slate-200 rounded-none p-6 space-y-6 shadow-none">
@@ -117,24 +117,24 @@ export default function Contact() {
               <div className="space-y-4">
                 <a
                   href="mailto:itssayem2023@gmail.com"
-                  className="flex items-start space-x-3.5 group hover:text-black text-slate-600 transition-colors"
+                  className="flex min-w-0 items-start space-x-3.5 group hover:text-black text-slate-600 transition-colors"
                 >
                   <div className="bg-zinc-50 p-2.5 rounded-none border border-slate-200 text-black group-hover:bg-zinc-100 transition-colors">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-xs text-slate-400 font-mono">EMAIL</span>
-                    <span className="text-sm font-medium text-slate-800">itssayem2023@gmail.com</span>
+                    <span className="text-sm font-medium text-slate-800 break-safe">itssayem2023@gmail.com</span>
                   </div>
                 </a>
 
-                <div className="flex items-start space-x-3.5 text-slate-600">
+                <div className="flex min-w-0 items-start space-x-3.5 text-slate-600">
                   <div className="bg-zinc-50 p-2.5 rounded-none border border-slate-200 text-black">
                     <MapPin className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-xs text-slate-400 font-mono">LOCATION</span>
-                    <span className="text-sm font-medium text-slate-800">Sylhet, Bangladesh</span>
+                    <span className="text-sm font-medium text-slate-800 break-safe">Sylhet, Bangladesh</span>
                   </div>
                 </div>
 
@@ -142,14 +142,14 @@ export default function Contact() {
                   href="https://wa.me/8801626974965"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start space-x-3.5 group hover:text-black text-slate-600 transition-colors"
+                  className="flex min-w-0 items-start space-x-3.5 group hover:text-black text-slate-600 transition-colors"
                 >
                   <div className="bg-zinc-50 p-2.5 rounded-none border border-slate-200 text-black group-hover:bg-zinc-100 transition-colors">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-xs text-slate-400 font-mono">WHATSAPP / PHONE</span>
-                    <span className="text-sm font-medium text-slate-800 group-hover:underline">01626974965</span>
+                    <span className="text-sm font-medium text-slate-800 group-hover:underline break-safe">01626974965</span>
                   </div>
                 </a>
               </div>
@@ -165,7 +165,7 @@ export default function Contact() {
           </div>
 
           {/* Right Form Card */}
-          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-none p-6 sm:p-8 shadow-none">
+          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-none p-4 sm:p-8 shadow-none min-w-0">
             <form onSubmit={handleSubmit} className="space-y-6">
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -220,11 +220,11 @@ export default function Contact() {
                       id="form-budget"
                       type="button"
                       onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-                      className="w-full bg-white border-b border-t-0 border-l-0 border-r-0 border-slate-200 rounded-none pl-6 pr-10 py-3 text-sm text-slate-900 text-left focus:outline-none focus:border-black transition-colors cursor-pointer flex items-center justify-between"
+                      className="w-full bg-white border-b border-t-0 border-l-0 border-r-0 border-slate-200 rounded-none pl-6 pr-10 py-3 text-sm text-slate-900 text-left focus:outline-none focus:border-black transition-colors cursor-pointer flex items-center justify-between gap-2"
                     >
                       <span className="flex items-center">
                         <DollarSign className="absolute left-0 w-4 h-4 text-slate-500" />
-                        <span className={formData.budget ? 'text-slate-900 font-medium' : 'text-slate-400'}>
+                        <span className={`truncate ${formData.budget ? 'text-slate-900 font-medium' : 'text-slate-400'}`}>
                           {formData.budget || 'Select scope budget'}
                         </span>
                       </span>

@@ -40,7 +40,7 @@ export default function Faq() {
   };
 
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="site-container-narrow overflow-x-clip">
       {/* Header section with minimal badge */}
       <div className="text-center mb-12">
         <div className="inline-flex items-center space-x-2 px-3 py-1 bg-zinc-100 border border-zinc-200 text-[10px] font-mono uppercase tracking-widest text-slate-800 mb-4">
@@ -67,15 +67,15 @@ export default function Faq() {
               <button
                 type="button"
                 onClick={() => toggleFaq(index)}
-                className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 cursor-pointer select-none"
+                className="w-full text-left px-4 sm:px-6 py-5 flex items-center justify-between gap-4 cursor-pointer select-none"
               >
-                <span className="flex items-start space-x-3.5">
+                <span className="flex min-w-0 items-start space-x-3.5">
                   <HelpCircle className={`w-5 h-5 shrink-0 mt-0.5 transition-colors duration-300 ${isOpen ? 'text-black' : 'text-slate-400'}`} />
-                  <span className={`text-base font-medium transition-colors duration-200 ${isOpen ? 'text-black' : 'text-slate-800'}`}>
+                  <span className={`text-base font-medium transition-colors duration-200 break-safe ${isOpen ? 'text-black' : 'text-slate-800'}`}>
                     {faq.question}
                   </span>
                 </span>
-                <span className={`p-1 bg-zinc-50 border border-slate-100 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-zinc-100 border-slate-200' : ''}`}>
+                <span className={`shrink-0 p-1 bg-zinc-50 border border-slate-100 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-zinc-100 border-slate-200' : ''}`}>
                   <ChevronDown className="w-4 h-4 text-slate-500" />
                 </span>
               </button>
@@ -89,7 +89,7 @@ export default function Faq() {
                     transition={{ duration: 0.25, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-6 pt-1 text-sm text-slate-500 leading-relaxed pl-14 pr-10 border-t border-slate-100">
+                    <div className="px-4 sm:px-6 pb-6 pt-4 text-sm text-slate-500 leading-relaxed sm:pl-14 sm:pr-10 border-t border-slate-100 break-safe">
                       {faq.answer}
                     </div>
                   </motion.div>
