@@ -36,7 +36,7 @@ export const defaultPortfolio: PortfolioData = {
       description: "An incredibly fast and responsive modern e-commerce platform optimized for dynamic item display and seamless checkout experiences.",
       tech: ["React", "TypeScript", "Tailwind CSS", "Express", "Stripe", "Supabase"],
       imageUrl: "/projects/husnalogy.png",
-      demoUrl: "https://husnalogy25-6-26.vercel.app",
+      demoUrl: "https://husnalogy.vercel.app",
       githubUrl: "null",
       featured: true,
       detail: "This platform is built with a focus on core web vitals and ultra-fast paint times. It incorporates server-side generation strategies alongside lazy loaded client-side checkout interactions. It features optimized cart reconciliation algorithms, custom invoice layouts, and is fully responsive across tablet, mobile, and wide desktop frames."
