@@ -120,6 +120,7 @@ export const projects: Project[] = [
     category: "Fashion Ecommerce",
     summary: "An online store for a women's fashion label in Bangladesh.",
     statement: "A calm storefront for everyday women's fashion in Bangladesh.",
+    year: "2026",
     url: "https://tarabd.co",
     role: "Full Stack Developer",
     services: ["Development", "Architecture", "Ecommerce"],
