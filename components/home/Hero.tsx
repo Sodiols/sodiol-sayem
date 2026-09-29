@@ -26,12 +26,12 @@ export function Hero() {
           Next.js, TypeScript, Node.js and Supabase.
         </p>
         <div className="hero-actions">
-          <a href="#work" className="hero-primary group">
-            Explore Work <span aria-hidden="true" className="arrow">→</span>
-          </a>
-          <Link href="/contact" className="hero-secondary group">
+          <Link href="/contact" className="hero-primary group">
             Let’s Talk <span aria-hidden="true" className="arrow">→</span>
           </Link>
+          <a href="#work" className="hero-secondary group">
+            Explore Work <span aria-hidden="true" className="arrow">→</span>
+          </a>
         </div>
       </div>
       <a href="#work" className="hero-scroll label hit text-muted" aria-label="Scroll to selected work">
