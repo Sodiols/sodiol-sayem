@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { CapabilityId } from "@/data/technologies";
+import { validateContact } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 // Small local demonstrations. Nothing here talks to a network or loops forever:
@@ -226,28 +227,36 @@ function EcommerceDemo() {
 function ApiDemo() {
   const [response, setResponse] = useState<{ status: string; body: string } | "pending" | null>(null);
   const timers = useTimers();
-  const request = (valid: boolean) =>
-    JSON.stringify({ name: "Ada", email: valid ? "ada@example.com" : "not-an-email", message: "Hello there, about a project." }, null, 2);
-  const [body, setBody] = useState(request(true));
+  const request = (valid: boolean) => ({
+    name: "Ada",
+    email: valid ? "ada@example.com" : "not-an-email",
+    message: "Hello there, about a project.",
+  });
+  const format = (value: object) => JSON.stringify(value, null, 2);
+  const [body, setBody] = useState(format(request(true)));
 
   function send(valid: boolean) {
     timers.clear();
-    setBody(request(valid));
+    const input = request(valid);
+    setBody(format(input));
+
+    // Same validation as the contact form: invalid input never leaves the browser.
+    const result = validateContact(input);
+    if (!result.valid) {
+      setResponse({ status: "Not sent · blocked by validation", body: format({ errors: result.errors }) });
+      return;
+    }
+
     setResponse("pending");
     timers.later(
-      () =>
-        setResponse(
-          valid
-            ? { status: "200 OK", body: '{ "ok": true }' }
-            : { status: "422 Unprocessable", body: '{\n  "ok": false,\n  "reason": "invalid",\n  "errors": {\n    "email": "Please enter a valid email address."\n  }\n}' },
-        ),
+      () => setResponse({ status: "200 OK", body: '{\n  "success": true,\n  "message": "Email sent successfully!"\n}' }),
       450,
     );
   }
 
   return (
     <Stage
-      caption="Simulated in the browser; mirrors this site’s contact endpoint"
+      caption="Simulated in the browser; mirrors this site’s Web3Forms contact form"
       controls={
         <>
           <DemoButton onClick={() => send(true)}>Send valid</DemoButton>
@@ -257,7 +266,7 @@ function ApiDemo() {
     >
       <div className="grid h-full grid-cols-2 gap-4 font-mono text-[0.6875rem] leading-relaxed">
         <div className="min-w-0">
-          <p className="text-muted">POST /api/contact</p>
+          <p className="text-muted">POST api.web3forms.com/submit</p>
           <pre className="mt-2 overflow-hidden whitespace-pre-wrap break-all">{body}</pre>
         </div>
         <div className="min-w-0 border-l border-line pl-4" aria-live="polite">

@@ -55,10 +55,20 @@ Copy `.env.example` to `.env.local`.
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and Open Graph. Falls back to the Vercel production URL, then `localhost`. |
-| `RESEND_API_KEY` | [Resend](https://resend.com) API key for the contact form. |
-| `CONTACT_TO_EMAIL` | Inbox that receives contact messages. |
-| `CONTACT_FROM_EMAIL` | Sender address on a domain verified in Resend. |
+| `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | [Web3Forms](https://web3forms.com) access key used by the contact form. Web3Forms access keys are designed to be used in client side forms, so this is safe to expose to the browser. |
 
-Without `RESEND_API_KEY` and `CONTACT_TO_EMAIL`, the form still validates input but tells the visitor that nothing was sent and shows the email address instead. It never reports a delivery that did not happen.
+## Contact form
 
-The contact endpoint (`app/api/contact/route.ts`) validates on the server, uses a honeypot field and a minimum fill time, and applies a per-instance rate limit (5 messages per IP per 10 minutes). For stronger protection on a busy site, back the rate limit with a shared store.
+The form in `components/contact/ContactForm.tsx` submits directly from the browser to `https://api.web3forms.com/submit`. There is no Next.js route in between. Input is checked first with `validateContact()` from `lib/contact.ts`, and nothing is sent unless it passes. The success screen only appears after Web3Forms confirms delivery; on a failure, a rate limit (HTTP 429) or a network error the form keeps its contents and shows a message instead. Spam is filtered with the Web3Forms `botcheck` honeypot.
+
+Without `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`, the form still validates input but tells the visitor that nothing was sent and shows the email address instead. It never reports a delivery that did not happen.
+
+To set it up:
+
+1. Create a Web3Forms account or form at [web3forms.com](https://web3forms.com) and verify the email address that should receive messages.
+2. Generate the access key for that form.
+3. Add it to `.env.local` as `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` and restart `npm run dev`.
+4. Add the same variable in your hosting platform (for Vercel: Project Settings → Environment Variables).
+5. Redeploy. `NEXT_PUBLIC_` variables are embedded in the browser bundle at build time, so a change only takes effect after a new build.
+
+Replies go straight to the visitor: Web3Forms uses the submitted `email` field as the Reply-To address.

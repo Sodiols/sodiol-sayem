@@ -6,11 +6,6 @@ export type ContactFields = {
 
 export type ContactErrors = Partial<Record<keyof ContactFields, string>>;
 
-export type ContactResponse =
-  | { ok: true }
-  | { ok: false; reason: "invalid"; errors: ContactErrors }
-  | { ok: false; reason: "not_configured" | "rate_limited" | "failed" };
-
 export const limits = {
   name: 100,
   email: 254,

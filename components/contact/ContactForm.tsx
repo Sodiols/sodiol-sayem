@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { type ContactErrors, type ContactResponse, limits } from "@/lib/contact";
+import { type ContactErrors, limits, validateContact } from "@/lib/contact";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
+
+// Web3Forms is called straight from the browser; its access key is meant to be public.
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
 type Status =
   | { state: "idle" | "sending" | "sent" }
@@ -41,42 +44,62 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
-  // Used server side to discard submissions made faster than a person could fill the form.
-  const [mountedAt] = useState(() => Date.now());
   const errors = status.state === "error" ? status.errors : undefined;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
+    const data = new FormData(form);
+
+    const { fields, errors: fieldErrors, valid } = validateContact(Object.fromEntries(data));
+    if (!valid) {
+      setStatus({ state: "error", message: "Please check the highlighted fields.", errors: fieldErrors });
+      return;
+    }
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setStatus({ state: "error", message: failureMessages.not_configured });
+      return;
+    }
+
+    // Send the trimmed values that passed validation. Web3Forms uses `email` as the reply-to address.
+    data.set("name", fields.name);
+    data.set("email", fields.email);
+    data.set("message", fields.message);
+    data.set("access_key", accessKey);
+    data.set("subject", `New portfolio message from ${fields.name}`);
+    data.set("from_name", `${site.name} Portfolio`);
+
     setStatus({ state: "sending" });
 
-    const payload = {
-      ...Object.fromEntries(new FormData(form)),
-      elapsed: Date.now() - mountedAt,
-    };
-
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const result: ContactResponse = await response.json();
+      // No Content-Type header: the browser sets the multipart boundary itself.
+      const response = await fetch(WEB3FORMS_ENDPOINT, { method: "POST", body: data });
 
-      if (result.ok) {
+      if (response.status === 429) {
+        setStatus({ state: "error", message: failureMessages.rate_limited });
+        return;
+      }
+
+      const result: unknown = await response.json().catch(() => null);
+      const delivered =
+        response.ok && typeof result === "object" && result !== null && "success" in result && result.success === true;
+
+      if (delivered) {
         form.reset();
         setStatus({ state: "sent" });
-      } else if (result.reason === "invalid") {
-        setStatus({ state: "error", message: "Please check the highlighted fields.", errors: result.errors });
       } else {
-        setStatus({ state: "error", message: failureMessages[result.reason] });
+        console.error("Web3Forms submission failed", response.status, result);
+        setStatus({ state: "error", message: failureMessages.failed });
       }
-    } catch {
+    } catch (error) {
+      console.error("Web3Forms request failed", error);
       setStatus({ state: "error", message: failureMessages.failed });
     }
   }
 
-  // Only reached after the server confirms delivery (result.ok), never on a timer.
+  // Only reached after Web3Forms confirms delivery (success: true), never on a timer.
   if (status.state === "sent") {
     return (
       <div role="status" className="swap-in border-t border-ink pt-6">
@@ -146,11 +169,8 @@ export function ContactForm() {
         <FieldError id="message-error" message={errors?.message} />
       </div>
 
-      {/* Hidden from people; bots tend to fill it in. */}
-      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="company">Company</label>
-        <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
-      </div>
+      {/* Web3Forms honeypot: never shown or focusable; submissions with it checked are discarded. */}
+      <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden />
 
       <div className="flex flex-wrap items-center justify-between gap-6 border-t border-ink pt-5">
         <p
