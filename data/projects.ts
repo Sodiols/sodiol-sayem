@@ -254,8 +254,8 @@ export const projects: Project[] = [
     url: "https://prichat-ebf5.vercel.app/login",
     role: "Full Stack Developer",
     services: ["Development", "Realtime systems"],
-    technologies: ["Next.js", "Firebase", "WebRTC"],
-    architecture: [["Browser"], ["Next.js"], ["Auth", "Messages", "Voice & Calls"], ["Firebase", "WebRTC"]],
+    technologies: ["Next.js", "Supabase", "WebRTC"],
+    architecture: [["Browser"], ["Next.js"], ["Auth", "Messages", "Voice & Calls"], ["Supabase", "WebRTC"]],
     caseStudy: {
       overview:
         "PriChat is a web chat application with persistent sign in, realtime messaging, recorded voice messages and browser calls.",
@@ -264,7 +264,7 @@ export const projects: Project[] = [
       approach:
         "Authentication and session state sit at the base, so every conversation, recording and call starts from a known user. Messaging and calls are separate flows that share the same identity.",
       development:
-        "Built with Next.js. Firebase handles authentication and realtime data, while calls connect directly between browsers over WebRTC with signalling passed through the app.",
+        "Built with Next.js. Supabase handles authentication and the database, while calls connect directly between browsers over WebRTC with signalling passed through the app.",
       features: [
         "Persistent authentication across sessions",
         "Realtime one to one messaging",
