@@ -275,12 +275,19 @@ export const projects: Project[] = [
     },
     menuImage: "/projects/prichat/menu.webp",
     heroImage: {
-      src: "/projects/prichat/hero.webp",
-      alt: "PriChat sign in screen with email, password and Google sign in",
-      width: 1600,
-      height: 1000,
+      src: "/projects/prichat/cover.webp",
+      alt: "PriChat shown across its chat rooms on desktop and tablet, the new room dialog and the sign in screen",
+      width: 1448,
+      height: 1086,
     },
-    gallery: [],
+    gallery: [
+      {
+        src: "/projects/prichat/hero.webp",
+        alt: "PriChat sign in screen with email, password and Google sign in",
+        width: 1600,
+        height: 1000,
+      },
+    ],
   },
 ];
 

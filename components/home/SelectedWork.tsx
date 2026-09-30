@@ -60,7 +60,7 @@ const layouts: CardLayout[] = [
 // Art direction per project: which of its images to use, how it is cropped, and whether it is a
 // dark image that needs a dark ground and light type. Anything not listed uses its hero image,
 // centred, on a light ground.
-type ArtDirection = { src?: string; tone?: "dark"; focus?: string; crop?: Crop; contrast?: number; seamless?: boolean };
+type ArtDirection = { src?: string; tone?: "dark"; focus?: string; crop?: Crop; contrast?: number };
 
 const direction: Record<string, ArtDirection> = {
   // The invitation photograph from the mobile homepage, cropped inside the surrounding interface.
@@ -69,8 +69,8 @@ const direction: Record<string, ArtDirection> = {
   // The photograph on the right of the homepage hero, clear of its headline. It sits under a
   // flat colour wash on the site, so it needs extra contrast once grey.
   meka: { src: "/projects/meka/hero.webp", tone: "dark", crop: { x: 0.52, y: 0.18, width: 0.48, height: 0.72 }, contrast: 1.45 },
-  // Its dark interface greys to exactly the ink ground, so the photograph needs no fade.
-  prichat: { tone: "dark", seamless: true },
+  // The desktop chat room and new room dialog; the sign in panel on the right would sit under the card's controls.
+  prichat: { tone: "dark", crop: { x: 0.02, y: 0.03, width: 0.7, height: 0.6 } },
 };
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
@@ -155,7 +155,6 @@ export function SelectedWork() {
                 focus={art.focus}
                 crop={art.crop}
                 contrast={art.contrast}
-                seamless={art.seamless}
               />
             );
           })}

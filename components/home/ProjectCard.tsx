@@ -48,8 +48,6 @@ type ProjectCardProps = {
   crop?: Crop;
   /** Contrast after the grayscale conversion; flat sources need more. */
   contrast?: number;
-  /** The photograph's own background already matches the ground, so its edge needs no fade. */
-  seamless?: boolean;
 };
 
 const card: Variants = {
@@ -95,7 +93,7 @@ function DiagonalArrow() {
  * sources untouched) and fades into a ground of the same tone where the text sits, instead of
  * being darkened by an overlay. The whole card is one link; a stretched overlay carries it.
  */
-export function ProjectCard({ project, image, layout, tone, focus = "50% 50%", crop, contrast = 1.05, seamless }: ProjectCardProps) {
+export function ProjectCard({ project, image, layout, tone, focus = "50% 50%", crop, contrast = 1.05 }: ProjectCardProps) {
   const ref = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -126,7 +124,7 @@ export function ProjectCard({ project, image, layout, tone, focus = "50% 50%", c
               dark ? "bg-ink text-paper" : "bg-well text-ink",
             )}
           >
-            <div className={cn("absolute", layout.frame)} style={seamless ? { maskImage: "none" } : undefined}>
+            <div className={cn("absolute", layout.frame)}>
               <m.div
                 variants={photo}
                 transition={reveal(0, 1.4)}
