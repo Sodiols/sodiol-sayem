@@ -1,0 +1,59 @@
+/* Typography
+   Type refinements layered on top of everything else: balanced headings, measure, tracking, numerals. */
+
+body {
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+}
+
+h1, h2, h3, .footer-big, .hero-statement > p, .next-inner strong {
+  font-kerning: normal;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+  hanging-punctuation: first;
+}
+
+/* Mono labels: Geist Mono runs wider than system monospace, so ease the tracking a touch. */
+.eyebrow, .page-overline, .case-back, .case-facts span, .form-top, .field label, .tools-bottom,
+.filter-button, .stack-n, .approach-list > div > span, .nav-n, .project-number, .footer-bottom {
+  letter-spacing: .06em;
+}
+
+/* Body copy: comfortable measure (about 60-65 characters) and steady rhythm. */
+.about-copy p, .case-about p {
+  max-width: 62ch;
+}
+
+.statement-grid p, .about-copy p, .case-about p {
+  line-height: 1.68;
+}
+
+.hero-sub > span, .heading-note, .footer-side p, .form-intro, .contact-side p {
+  line-height: 1.65;
+}
+
+.project-meta p {
+  max-width: 44ch;
+  line-height: 1.55;
+}
+
+.page-hero-bottom p, .case-lede p {
+  line-height: 1.32;
+  letter-spacing: -.02em;
+}
+
+/* Buttons and small caps text: semibold Geist reads cleaner than the faux 850 weight. */
+.nav-cta, .primary-button, .button-outline-light, .secondary-button, .text-link, .small-underlined,
+.desktop-nav a, .plain-button {
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+/* Numbers that update or align should not jitter. */
+.minute-display strong, .filter-button sup, .project-number, .stack-n, .nav-n {
+  font-variant-numeric: tabular-nums;
+}

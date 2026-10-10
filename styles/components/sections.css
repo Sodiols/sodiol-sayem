@@ -1,0 +1,138 @@
+/* Sections
+   Shared section scaffolding: section blocks, section headings and the inner-page hero. */
+
+.section-block {
+  border-bottom: var(--stroke);
+  padding-block: 107px 116px;
+}
+
+.section-heading {
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 43px;
+  display: flex;
+}
+
+.section-heading h2 {
+  font: 900 clamp(66px,9vw,136px)/.85 var(--display);
+  letter-spacing: -.05em;
+  margin: 24px 0 0;
+}
+
+.section-heading h2 i, .page-hero h1 em, .about-copy h2 i, .contact-side h2 i {
+  -webkit-text-stroke: 2px var(--ink);
+  color: #0000;
+  font-style: normal;
+}
+
+.title-period {
+  color: #b2bf00;
+}
+
+.heading-note {
+  color: #53554c;
+  margin: 0 4px 4px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.page-hero {
+  padding: 45px 0 94px;
+}
+
+.page-overline {
+  border-bottom: var(--stroke);
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 18px;
+  font: 800 11px var(--mono);
+  display: flex;
+}
+
+.page-hero h1 {
+  font: 900 clamp(80px,12vw,197px)/.88 var(--display);
+  letter-spacing: -.055em;
+  margin: 48px 0 51px;
+}
+
+.page-hero-bottom {
+  border-top: var(--stroke);
+  justify-content: space-between;
+  align-items: start;
+  padding-top: 19px;
+  display: flex;
+}
+
+.page-hero-bottom p {
+  letter-spacing: -.025em;
+  max-width: 675px;
+  margin: 0;
+  font-size: clamp(18px, 2.1vw, 30px);
+  line-height: 1.4;
+}
+
+.page-hero-symbol {
+  letter-spacing: -.08em;
+  font: 900 clamp(60px, 8vw, 110px) / .8 Arial;
+}
+
+@media (width <= 760px) {
+  .section-block {
+    padding-block: 64px 75px;
+  }
+
+  .section-heading {
+    align-items: start;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .section-heading h2 {
+    margin-top: 17px;
+    font-size: clamp(53px, 12vw, 91px);
+  }
+
+  .section-heading .text-link {
+    align-self: end;
+    gap: 10px;
+    min-width: 115px;
+    font-size: 9px;
+  }
+
+  .heading-note {
+    margin-top: 8px;
+  }
+
+  .page-hero {
+    padding: 30px 0 67px;
+  }
+
+  .page-hero h1 {
+    margin: 40px 0;
+    font-size: clamp(62px, 12vw, 100px);
+  }
+
+  .page-hero-bottom p {
+    max-width: 80%;
+    font-size: 18px;
+  }
+
+  .page-hero-symbol {
+    font-size: 65px;
+  }
+
+  .page-overline {
+    font-size: 9px;
+  }
+
+  .section-heading {
+    flex-wrap: wrap;
+  }
+}
+
+@media (width <= 380px) {
+  .page-hero h1 {
+    font-size: 55px;
+  }
+}

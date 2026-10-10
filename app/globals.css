@@ -1,0 +1,21 @@
+/* Global stylesheet.
+   Tailwind first (reset + utilities), then the site's own styles split by area.
+   Order matters: later files override earlier ones, and typography.css is applied last. */
+@import "tailwindcss";
+@source not "../legacy-static-site";
+
+@import "../styles/base.css";
+@import "../styles/layout/header.css";
+@import "../styles/layout/footer.css";
+@import "../styles/components/buttons.css";
+@import "../styles/components/sections.css";
+@import "../styles/pages/home.css";
+@import "../styles/components/project-card.css";
+@import "../styles/components/project-art.css";
+@import "../styles/pages/about.css";
+@import "../styles/pages/work.css";
+@import "../styles/pages/case-study.css";
+@import "../styles/pages/contact.css";
+@import "../styles/components/contact-form.css";
+@import "../styles/components/select.css";
+@import "../styles/typography.css";

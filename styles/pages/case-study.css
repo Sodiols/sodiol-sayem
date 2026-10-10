@@ -1,0 +1,291 @@
+/* Case study page
+   Project header, artwork frame, facts, overview and next-project link. */
+
+.case-top {
+  padding: 46px 0 0;
+}
+
+.case-back {
+  border-bottom: var(--stroke);
+  justify-content: space-between;
+  padding-bottom: 19px;
+  font: 800 11px var(--mono);
+  display: flex;
+}
+
+.case-back a:hover {
+  text-decoration: underline;
+}
+
+.case-header {
+  justify-content: space-between;
+  align-items: end;
+  padding: 50px 0 23px;
+  display: flex;
+}
+
+.case-header h1 {
+  font: 900 clamp(65px,11vw,180px)/.95 var(--display);
+  letter-spacing: -.055em;
+  overflow-wrap: anywhere;
+  margin: 12px 0 0;
+}
+
+.case-asterisk {
+  font: 900 clamp(80px, 11vw, 190px) / .8 Arial;
+  transform: rotate(-14deg);
+}
+
+.case-lede {
+  border-top: var(--stroke);
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  padding: 21px 0 31px;
+  display: flex;
+}
+
+.case-lede p {
+  letter-spacing: -.035em;
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(18px, 2.6vw, 35px);
+  font-weight: 700;
+}
+
+.case-lede span {
+  font: 800 11px var(--mono);
+}
+
+.case-art {
+  border: var(--stroke);
+  background: #e8e5dd;
+  height: clamp(380px, 56vw, 750px);
+  padding: 35px;
+}
+
+.case-art .preview-inner {
+  transition: none;
+}
+
+.case-art .mini-top b {
+  font-size: 22px;
+}
+
+.case-art .hus-shape > span {
+  font-size: clamp(100px, 12vw, 230px);
+}
+
+.case-art .tara-type {
+  font-size: clamp(95px, 13vw, 190px);
+}
+
+.case-art .minute-display strong {
+  font-size: clamp(105px, 12vw, 185px);
+}
+
+.case-art .bubble {
+  padding: 17px 26px;
+  font-size: clamp(22px, 2.2vw, 36px);
+}
+
+.case-content {
+  padding-bottom: 125px;
+}
+
+.case-facts {
+  border-bottom: var(--stroke);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 30px 0 48px;
+  display: grid;
+}
+
+.case-facts > div {
+  flex-direction: column;
+  gap: 12px;
+  display: flex;
+}
+
+.case-facts span {
+  color: #666;
+  font: 700 10px var(--mono);
+}
+
+.case-facts strong {
+  font-size: 13px;
+}
+
+.case-about {
+  border-bottom: var(--stroke);
+  grid-template-columns: 33% 67%;
+  padding: 85px 0;
+  display: grid;
+}
+
+.case-about h2 {
+  font: 900 clamp(36px,5.4vw,80px)/1 var(--display);
+  letter-spacing: -.039em;
+  max-width: 750px;
+  margin: 0 0 27px;
+}
+
+.case-about p {
+  color: #51524b;
+  max-width: 580px;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.case-actions {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 35px;
+  display: flex;
+}
+
+.link-note, .no-live {
+  color: #666;
+  font: 700 11px / 1.5 var(--mono);
+}
+
+.case-focus {
+  grid-template-columns: 33% 67%;
+  padding: 35px 0;
+  display: grid;
+}
+
+.focus-tags {
+  flex-wrap: wrap;
+  gap: 10px;
+  display: flex;
+}
+
+.focus-tags span {
+  border: 2px solid var(--ink);
+  padding: 13px 16px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.next-project {
+  background: var(--accent);
+  border-top: var(--stroke);
+}
+
+.next-inner {
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  min-height: 230px;
+  display: flex;
+}
+
+.next-inner strong {
+  font: 900 clamp(60px,8vw,130px)/.95 var(--display);
+  letter-spacing: -.046em;
+  justify-content: space-between;
+  display: flex;
+}
+
+.next-inner:hover strong span {
+  transform: translate(12px, -12px);
+}
+
+@media (width <= 760px) {
+  .case-top {
+    padding-top: 29px;
+  }
+
+  .case-header {
+    padding: 30px 0;
+  }
+
+  .case-asterisk {
+    font-size: 70px;
+  }
+
+  .case-lede {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .case-art {
+    height: clamp(360px, 86vw, 550px);
+    padding: 13px;
+  }
+
+  .case-art .hus-shape > span {
+    font-size: clamp(60px, 12vw, 100px);
+  }
+
+  .case-art .tara-type {
+    font-size: clamp(75px, 16vw, 115px);
+  }
+
+  .case-art .minute-display strong {
+    font-size: clamp(63px, 12vw, 105px);
+  }
+
+  .case-art .bubble {
+    font-size: clamp(16px, 3.5vw, 23px);
+  }
+
+  .case-facts {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 30px;
+  }
+
+  .case-about, .case-focus {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .case-about {
+    padding: 60px 0;
+  }
+
+  .case-about h2 {
+    font-size: clamp(36px, 8vw, 68px);
+  }
+
+  .case-about p {
+    font-size: 15px;
+  }
+
+  .case-content {
+    padding-bottom: 70px;
+  }
+
+  .next-inner {
+    min-height: 180px;
+  }
+
+  .next-inner strong {
+    font-size: clamp(50px, 10vw, 85px);
+  }
+
+  .case-header > div {
+    min-width: 0;
+  }
+
+  .next-inner strong {
+    gap: 16px;
+    font-size: clamp(34px, 10vw, 85px);
+  }
+
+  .case-header h1 {
+    font-size: clamp(40px, 11vw, 100px);
+  }
+
+  .next-inner strong span {
+    flex-shrink: 0;
+  }
+}
+
+@media (width <= 380px) {
+  .case-art .minute-display strong {
+    font-size: 57px;
+  }
+}

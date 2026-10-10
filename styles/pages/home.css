@@ -1,0 +1,381 @@
+/* Home page
+   Hero, marquee, statement band and toolbox. */
+
+.hero {
+  overflow: hidden;
+}
+
+.hero-kicker {
+  justify-content: space-between;
+  align-items: center;
+  padding: 43px 0 17px;
+  display: flex;
+}
+
+.little-square {
+  background: var(--ink);
+  vertical-align: -1px;
+  width: 11px;
+  height: 11px;
+  margin-right: 7px;
+  display: inline-block;
+}
+
+.hero-head {
+  border-block: var(--stroke);
+  justify-content: space-between;
+  align-items: center;
+  min-height: 240px;
+  display: flex;
+  position: relative;
+}
+
+.hero h1 {
+  font: 900 clamp(110px,19.6vw,325px)/.86 var(--display);
+  letter-spacing: -.061em;
+  white-space: nowrap;
+  margin: 0 0 15px -.015em;
+}
+
+.hero-dot {
+  color: #b4c30b;
+}
+
+.hero-index {
+  text-align: right;
+  white-space: nowrap;
+  flex-direction: column;
+  align-self: stretch;
+  align-items: flex-end;
+  gap: 45px;
+  padding: 24px 0 24px 12px;
+  font: 700 10px / 1.45 var(--mono);
+  display: flex;
+}
+
+.hero-bottom {
+  grid-template-columns: 28% 72%;
+  gap: 0;
+  min-height: 350px;
+  padding-top: 26px;
+  display: grid;
+}
+
+.hero-badge {
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  text-align: center;
+  width: 160px;
+  height: 160px;
+  box-shadow: 5px 5px 0 var(--ink);
+  border-radius: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  font: 700 12px / 1.3 var(--mono);
+  display: flex;
+  transform: rotate(-13deg);
+}
+
+.badge-spark {
+  font: 900 42px / 1 Arial;
+}
+
+.hero-statement > p {
+  font: 900 clamp(30px,4.15vw,75px)/1.03 var(--display);
+  letter-spacing: -.038em;
+  margin: 3px 0 27px;
+}
+
+.hero-statement > p span {
+  color: #0000;
+  -webkit-text-stroke: 2px var(--ink);
+}
+
+.hero-statement > p em {
+  z-index: 1;
+  font-style: normal;
+  position: relative;
+}
+
+.hero-statement > p em:after {
+  content: "";
+  background: var(--accent);
+  z-index: -1;
+  height: 16px;
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  transform: rotate(-1deg);
+}
+
+.hero-sub {
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding-bottom: 39px;
+  display: flex;
+}
+
+.hero-sub > span {
+  color: #474841;
+  max-width: 310px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.marquee {
+  border-block: var(--stroke);
+  background: var(--accent);
+  align-items: center;
+  height: 66px;
+  margin-bottom: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.marquee-track {
+  white-space: nowrap;
+  font: 900 28px var(--display);
+  letter-spacing: -.032em;
+  align-items: center;
+  gap: 34px;
+  min-width: max-content;
+  animation: 32s linear infinite marquee;
+  display: flex;
+}
+
+.marquee-track span {
+  font: 900 20px Arial;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-48%);
+  }
+}
+
+.statement-band {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 104px 0 126px;
+}
+
+.statement-grid {
+  grid-template-columns: 33% 67%;
+  display: grid;
+}
+
+.huge-asterisk {
+  color: var(--accent);
+  margin-top: 20px;
+  font: 900 clamp(200px, 32vw, 470px) / 1 Arial;
+  display: block;
+  transform: rotate(-17deg);
+}
+
+.statement-grid h2 {
+  font: 900 clamp(62px,8.2vw,132px)/.92 var(--display);
+  letter-spacing: -.046em;
+  margin: 0 0 28px;
+}
+
+.statement-grid h2 span {
+  color: var(--accent);
+}
+
+.statement-grid p {
+  color: #d4d4ca;
+  max-width: 530px;
+  margin-bottom: 33px;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.tools-section .section-heading {
+  align-items: end;
+}
+
+.tools-cloud {
+  border-top: var(--stroke);
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 28px 0 47px;
+  display: flex;
+}
+
+.tools-cloud span {
+  border: 2px solid var(--ink);
+  font: 800 clamp(19px,2.55vw,38px)/1 var(--display);
+  letter-spacing: -.029em;
+  background: var(--paper);
+  padding: 15px 22px;
+  transition: background .18s, transform .18s;
+}
+
+.tools-cloud span:nth-child(3n+2) {
+  background: var(--accent);
+}
+
+.tools-cloud span:hover {
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: translate(-3px, -3px);
+}
+
+.tools-bottom {
+  border-top: var(--stroke);
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  font: 800 11px var(--mono);
+  display: flex;
+}
+
+@media (width <= 1100px) {
+  .hero h1 {
+    font-size: 19vw;
+  }
+
+  .hero-index {
+    font-size: 9px;
+  }
+
+  .hero-badge {
+    width: 135px;
+    height: 135px;
+  }
+}
+
+@media (width <= 760px) {
+  .hero-kicker {
+    padding: 27px 0 16px;
+  }
+
+  .hero-edition {
+    display: none;
+  }
+
+  .hero-head {
+    min-height: unset;
+    padding: 20px 0 22px;
+  }
+
+  .hero h1 {
+    margin-bottom: 0;
+    font-size: 20vw;
+  }
+
+  .hero-index {
+    display: none;
+  }
+
+  .hero-bottom {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-top: 20px;
+  }
+
+  .hero-badge {
+    width: 90px;
+    height: 90px;
+    box-shadow: 3px 3px 0 var(--ink);
+    gap: 2px;
+    margin: 0 0 22px auto;
+    font-size: 8px;
+    transform: rotate(-13deg);
+  }
+
+  .badge-spark {
+    font-size: 22px;
+  }
+
+  .hero-statement > p {
+    margin-bottom: 28px;
+    font-size: clamp(37px, 8.2vw, 67px);
+  }
+
+  .hero-statement > p span {
+    -webkit-text-stroke: 1.4px var(--ink);
+  }
+
+  .hero-statement > p em:after {
+    height: 8px;
+  }
+
+  .hero-sub {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: 28px;
+  }
+
+  .hero-sub > span {
+    max-width: 100%;
+  }
+
+  .marquee {
+    height: 52px;
+  }
+
+  .marquee-track {
+    font-size: 20px;
+  }
+
+  .statement-band {
+    padding: 70px 0;
+  }
+
+  .statement-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .huge-asterisk {
+    margin: 0;
+    font-size: 110px;
+    line-height: .9;
+  }
+
+  .statement-grid h2 {
+    margin-top: 20px;
+    font-size: clamp(50px, 10vw, 80px);
+  }
+
+  .statement-grid p {
+    font-size: 15px;
+  }
+
+  .tools-section .section-heading {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .tools-cloud {
+    gap: 8px;
+  }
+
+  .tools-cloud span {
+    padding: 12px 13px;
+    font-size: clamp(16px, 5vw, 25px);
+  }
+
+  .tools-bottom {
+    align-items: start;
+    gap: 10px;
+  }
+
+  .tools-bottom .text-link {
+    gap: 15px;
+    min-width: 120px;
+  }
+}
+
+@media (width <= 380px) {
+  .hero-statement > p {
+    font-size: 33px;
+  }
+
+  .hero h1 {
+    font-size: 19vw;
+  }
+}

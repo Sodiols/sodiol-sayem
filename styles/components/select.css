@@ -1,0 +1,142 @@
+/* Select
+   Brutal dropdown (components/ui/brutal-select.tsx). */
+
+/* Dropdown: trigger reads like the other underlined inputs, panel is a hard-shadow card. */
+.select {
+  position: relative;
+}
+
+.select-trigger {
+  appearance: none;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 8px 0 10px 2px;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font: 600 15px/1.3 var(--font);
+  text-align: left;
+}
+
+.select-trigger:hover, .select[data-open] .select-trigger {
+  background: var(--highlight);
+}
+
+.select-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-index {
+  color: #55564f;
+  font: 700 11px/1 var(--mono);
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.select-arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  font: 800 18px/1 var(--font);
+  transition: transform .28s cubic-bezier(.16, 1, .3, 1), background .18s, color .18s, box-shadow .18s;
+}
+
+.select-trigger:hover .select-arrow {
+  background: var(--accent);
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: translate(-2px, -2px);
+}
+
+.select[data-open] .select-arrow {
+  background: var(--ink);
+  color: var(--accent);
+  box-shadow: none;
+  transform: rotate(180deg);
+}
+
+.select-panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  max-height: 340px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  border: var(--stroke);
+  background: var(--paper);
+  box-shadow: 6px 6px 0 var(--ink);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .16s, transform .24s cubic-bezier(.16, 1, .3, 1), visibility 0s .24s;
+}
+
+.select[data-open] .select-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity .16s, transform .24s cubic-bezier(.16, 1, .3, 1);
+}
+
+.select-option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 16px;
+  cursor: pointer;
+  font: 600 15px/1.3 var(--font);
+  user-select: none;
+}
+
+.select-option + .select-option {
+  border-top: 1px solid var(--ink);
+}
+
+.select-hint {
+  color: #55564f;
+  font: 700 10px/1.3 var(--mono);
+  letter-spacing: .06em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.select-option[data-active] {
+  background: var(--accent);
+}
+
+.select-option[aria-selected="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.select-option[aria-selected="true"] .select-index {
+  color: var(--accent);
+}
+
+.select-option[aria-selected="true"] .select-hint {
+  color: #c9c9bf;
+}
+
+.select-option[aria-selected="true"][data-active] {
+  box-shadow: inset 6px 0 0 var(--accent);
+}
+
+@media (width <= 520px) {
+  .select-hint {
+    display: none;
+  }
+}

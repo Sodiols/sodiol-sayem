@@ -1,0 +1,111 @@
+/* Contact page
+   Contact layout, side column and form header. */
+
+.contact-arrow {
+  color: var(--ink);
+  font-size: .65em;
+}
+
+.contact-main {
+  border-top: var(--stroke);
+  grid-template-columns: 38% 62%;
+  padding-bottom: 115px;
+  display: grid;
+}
+
+.contact-side {
+  border-right: var(--stroke);
+  padding: 53px 35px 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Keeps the decorative arrow clear of the copy when the form collapses into the sent message. */
+@media (width > 760px) {
+  .contact-side {
+    min-height: 620px;
+  }
+}
+
+.contact-side h2 {
+  font: 900 clamp(55px,6.5vw,94px)/.95 var(--display);
+  letter-spacing: -.046em;
+  margin: 35px 0;
+}
+
+.contact-side p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.contact-decoration {
+  font: 900 220px/1 var(--display);
+  position: absolute;
+  bottom: -10px;
+  left: -18px;
+  transform: rotate(-14deg);
+}
+
+.contact-form-wrap {
+  padding: 53px 0 60px 55px;
+}
+
+.form-top {
+  border-bottom: var(--stroke);
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  font: 800 10px var(--mono);
+  display: flex;
+}
+
+.contact-form-wrap h2 {
+  font: 900 clamp(45px,5vw,75px)/1 var(--display);
+  letter-spacing: -.046em;
+  margin: 36px 0 12px;
+}
+
+.form-intro {
+  color: #61625a;
+  max-width: 600px;
+  margin: 0 0 38px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+@media (width <= 760px) {
+  .contact-main {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-side {
+    border-right: 0;
+    border-bottom: var(--stroke);
+    padding: 38px 0 28px;
+  }
+
+  .contact-side h2 {
+    margin: 20px 0;
+    font-size: 65px;
+  }
+
+  .contact-decoration {
+    font-size: 120px;
+    bottom: 0;
+    left: auto;
+    right: 0;
+  }
+
+  .contact-form-wrap {
+    padding: 38px 0 70px;
+  }
+
+  .contact-form-wrap h2 {
+    font-size: 53px;
+  }
+
+  .form-top {
+    font-size: 9px;
+  }
+}

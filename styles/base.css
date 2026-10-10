@@ -1,0 +1,115 @@
+/* Base
+   Design tokens, reset, page shell, focus styles, shared labels (.eyebrow) and the skip link. */
+
+:root {
+  --paper: #f4f2e9;
+  --ink: #171815;
+  --accent: #e7fd46;
+  --muted: #6f7069;
+  --stroke: 2px solid var(--ink);
+  --error: #7a1c1c;
+  /* Marker-style underline used on focused fields and the open dropdown. */
+  --highlight: linear-gradient(transparent calc(100% - 9px), var(--accent) 0);
+  /* Type system: Geist for text, Archivo (black, slightly expanded) for display, Geist Mono for labels.
+     Loaded through next/font in layout.tsx, which exposes the variables below. */
+  --font: var(--font-geist), "Helvetica Neue", Arial, sans-serif;
+  --display: var(--font-archivo), "Arial Black", Arial, sans-serif;
+  --mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
+  /* Archivo is variable on width; Geist and Geist Mono ignore this axis. */
+  font-variation-settings: "wdth" 112;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+img {
+  max-width: 100%;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline-offset: 4px;
+  outline: 3px dashed #5453d5;
+}
+
+.shell {
+  width: min(100% - 72px, 1440px);
+  margin-inline: auto;
+}
+
+.eyebrow {
+  letter-spacing: .075em;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.eyebrow.light {
+  color: var(--accent);
+}
+
+.skip-link {
+  z-index: 100;
+  background: var(--accent);
+  padding: 12px 20px;
+  font-weight: 800;
+  position: absolute;
+  top: -100px;
+  left: 16px;
+}
+
+.skip-link:focus {
+  top: 10px;
+}
+
+@media (width <= 760px) {
+  .shell {
+    width: min(100% - 36px, 1440px);
+  }
+}
+
+@media (width <= 380px) {
+  .shell {
+    width: calc(100% - 28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, :before, :after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

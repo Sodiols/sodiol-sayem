@@ -1,0 +1,57 @@
+/* Work page
+   Project index bar and category filters. */
+
+.work-listing {
+  padding-top: 51px;
+}
+
+.work-bar {
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 32px;
+  display: flex;
+}
+
+.filter-list {
+  flex-wrap: wrap;
+  gap: 7px;
+  display: flex;
+}
+
+.filter-button {
+  border: 2px solid var(--ink);
+  background: none;
+  padding: 11px 14px;
+  font: 800 11px var(--mono);
+}
+
+.filter-button sup {
+  vertical-align: super;
+  margin-left: 5px;
+  font-size: 8px;
+}
+
+.filter-button:hover, .filter-button.is-active {
+  background: var(--accent);
+}
+
+@media (width <= 760px) {
+  .work-listing {
+    padding-top: 64px;
+  }
+
+  .work-bar {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .filter-list {
+    gap: 6px;
+  }
+
+  .filter-button {
+    padding: 10px;
+    font-size: 10px;
+  }
+}
