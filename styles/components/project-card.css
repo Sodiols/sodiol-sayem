@@ -27,17 +27,6 @@
   transform: rotate(45deg);
 }
 
-.project-number {
-  z-index: 5;
-  background: var(--paper);
-  border: 1px solid var(--ink);
-  padding: 6px 10px;
-  font: 800 10px var(--mono);
-  position: absolute;
-  top: 12px;
-  left: 15px;
-}
-
 .preview-open {
   z-index: 5;
   border: 2px solid var(--ink);

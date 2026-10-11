@@ -18,7 +18,7 @@ export type OgOptions = {
   /** Text in the accent box, bottom right. */
   tag: string;
   /** Optional project panel shown on the right, in the project's own colors. */
-  panel?: { background: string; foreground: string; label: string; number: string };
+  panel?: { background: string; foreground: string; label: string };
 };
 
 async function loadFonts() {
@@ -108,7 +108,7 @@ export async function renderOgImage({ section, title, subtitle, tag, panel }: Og
                   height: 300,
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-end",
                   padding: 26,
                   background: panel.background,
                   color: panel.foreground,
@@ -116,18 +116,6 @@ export async function renderOgImage({ section, title, subtitle, tag, panel }: Og
                   boxShadow: `10px 10px 0 ${ink}`,
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontFamily: "Geist Mono",
-                    fontSize: 18,
-                    letterSpacing: 1.5,
-                  }}
-                >
-                  <span>CASE</span>
-                  <span>{panel.number}</span>
-                </div>
                 <div
                   style={{
                     display: "flex",

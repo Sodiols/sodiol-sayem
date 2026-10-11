@@ -22,17 +22,13 @@ export default function ContactPage() {
         ]}
       />
       <section className="page-hero shell contact-heading">
-        <div className="page-overline">
-          <span>/ 03 - CONTACT</span>
-          <span>THE START OF SOMETHING GOOD</span>
-        </div>
         <h1>
           GOT AN
           <br />
-          <em>IDEA?</em> <span className="contact-arrow">↗</span>
+          <em>IDEA?</em> <span className="contact-arrow" aria-hidden="true">↗</span>
         </h1>
         <div className="page-hero-bottom">
-          <p>Have a site, app, or unusual idea in mind? Tell me what you&apos;re thinking.</p>
+          <p>Tell me about your website, app or desktop project.</p>
           <span className="page-hero-symbol" aria-hidden="true">
             ✳
           </span>
@@ -41,7 +37,6 @@ export default function ContactPage() {
 
       <section className="contact-main shell">
         <div className="contact-side">
-          <span className="eyebrow">/ THE NEXT STEP</span>
           <h2>
             START
             <br />
@@ -52,21 +47,15 @@ export default function ContactPage() {
           <p>
             Based in Sylhet, Bangladesh.
             <br />
-            Working on the web, from anywhere.
+            Working with clients remotely.
           </p>
           <div className="contact-decoration" aria-hidden="true">
             ↗
           </div>
         </div>
         <div className="contact-form-wrap">
-          <div className="form-top">
-            <span>01 / PROJECT NOTE</span>
-            <span>TAKES ABOUT A MINUTE</span>
-          </div>
-          <h2>LET&apos;S HEAR IT.</h2>
-          <p className="form-intro">
-            Your message goes straight to my inbox through Web3Forms. Nothing is stored on this website.
-          </p>
+          <h2>SEND A MESSAGE.</h2>
+          <p className="form-intro">Sent to my inbox through Web3Forms. Nothing is stored on this website.</p>
           <ContactForm />
         </div>
       </section>

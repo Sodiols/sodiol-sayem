@@ -10,19 +10,15 @@ export default function NotFound() {
   return (
     <main id="main">
       <section className="page-hero shell">
-        <div className="page-overline">
-          <span>/ 404</span>
-          <span>THIS PAGE DOES NOT EXIST</span>
-        </div>
         <h1>
-          LOST IN
+          PAGE NOT
           <br />
-          THE <em>PIXELS.</em>
+          <em>FOUND.</em>
         </h1>
         <div className="page-hero-bottom">
-          <p>The page you were looking for moved or never existed. The work is still here.</p>
+          <p>This page doesn&apos;t exist or has moved.</p>
           <Link className="primary-button" href="/work/">
-            EXPLORE MY WORK <span>↗</span>
+            VIEW MY WORK <span aria-hidden="true">↗</span>
           </Link>
         </div>
       </section>

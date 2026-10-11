@@ -18,7 +18,7 @@
   box-shadow: 5px 5px 0 var(--ink);
   border-radius: 50%;
   place-items: center;
-  margin-top: 45px;
+  margin-top: 0;
   font: 800 16px / 1.55 var(--mono);
   display: grid;
   transform: rotate(-10deg);
@@ -48,7 +48,7 @@
 }
 
 .stack-columns > div {
-  min-height: 300px;
+  min-height: 240px;
   padding: 28px 24px 32px;
 }
 
@@ -56,14 +56,10 @@
   border-left: var(--stroke);
 }
 
-.stack-n {
-  font: 800 11px var(--mono);
-}
-
 .stack-columns h3 {
   font: 900 clamp(31px,3.3vw,54px)/.98 var(--display);
   letter-spacing: -.041em;
-  margin: 36px 0 26px;
+  margin: 0 0 26px;
 }
 
 .stack-tags {
@@ -85,16 +81,12 @@
 
 .approach-list > div {
   border-bottom: var(--stroke);
-  grid-template-columns: 10% 58% 32%;
+  grid-template-columns: 62% 38%;
   align-items: center;
   gap: 0;
   min-height: 143px;
   padding: 10px;
   display: grid;
-}
-
-.approach-list > div > span {
-  font: 800 12px var(--mono);
 }
 
 .approach-list h3 {
@@ -116,7 +108,7 @@
   .about-circle {
     width: 110px;
     height: 110px;
-    margin: 18px 0 40px;
+    margin: 0 0 32px;
     font-size: 10px;
   }
 
@@ -142,12 +134,12 @@
   }
 
   .stack-columns h3 {
-    margin: 25px 0;
+    margin: 0 0 25px;
     font-size: 44px;
   }
 
   .approach-list > div {
-    grid-template-columns: 38px 1fr;
+    grid-template-columns: 1fr;
     row-gap: 6px;
     min-height: 105px;
   }
@@ -157,7 +149,6 @@
   }
 
   .approach-list p {
-    grid-column: 2;
     margin: 0;
   }
 

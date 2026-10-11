@@ -142,9 +142,6 @@ export function BrutalSelect({ id, name, labelId, options, value, onChange, desc
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={onKeyDown}
       >
-        <span className="select-index" aria-hidden="true">
-          {String(selectedIndex + 1).padStart(2, "0")}
-        </span>
         <span className="select-value">{selected.label}</span>
         <span className="select-arrow" aria-hidden="true">
           ↓
@@ -163,9 +160,6 @@ export function BrutalSelect({ id, name, labelId, options, value, onChange, desc
             onPointerDown={(event) => event.preventDefault()}
             onClick={() => commit(index)}
           >
-            <span className="select-index" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </span>
             <span className="select-option-label">{option.label}</span>
             {option.hint && <span className="select-hint">{option.hint}</span>}
           </li>

@@ -7,7 +7,7 @@ import { projectFilters, projects, type ProjectKind } from "@/data/projects";
 type Category = "all" | ProjectKind;
 
 const count = (category: Category) =>
-  String(category === "all" ? projects.length : projects.filter((p) => p.kind === category).length).padStart(2, "0");
+  category === "all" ? projects.length : projects.filter((p) => p.kind === category).length;
 
 export function WorkGrid() {
   const [category, setCategory] = useState<Category>("all");
@@ -16,7 +16,6 @@ export function WorkGrid() {
   return (
     <>
       <div className="work-bar">
-        <span className="eyebrow">PROJECT INDEX / 001-{String(projects.length).padStart(3, "0")}</span>
         <div className="filter-list" role="group" aria-label="Filter projects">
           {projectFilters.map((filter) => {
             const selected = filter.category === category;

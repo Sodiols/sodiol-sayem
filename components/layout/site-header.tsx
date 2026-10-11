@@ -48,7 +48,7 @@ export function SiteHeader() {
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
-              {item.label} <span className="nav-n">{item.n}</span>
+              {item.label}
             </Link>
           ))}
         </nav>
@@ -76,7 +76,6 @@ export function SiteHeader() {
             aria-current={isCurrent(item.href) ? "page" : undefined}
             onClick={close}
           >
-            <span>{item.n}</span>
             {item.label}
             <b aria-hidden="true">↗</b>
           </Link>

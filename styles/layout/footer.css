@@ -23,7 +23,7 @@
   display: block;
 }
 
-.footer-big > span:first-child {
+.footer-big > span:first-of-type {
   color: var(--accent);
 }
 
@@ -36,30 +36,6 @@
 
 .footer-big:hover .big-arrow {
   transform: translate(15px, -15px);
-}
-
-.footer-side {
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.footer-side p {
-  color: #b9b9b0;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-.small-underlined {
-  border-bottom: 1px solid var(--paper);
-  margin-top: 13px;
-  padding-bottom: 8px;
-  font-size: 11px;
-  font-weight: 800;
-  display: inline-block;
-}
-
-.small-underlined:hover {
-  color: var(--accent);
 }
 
 .footer-bottom {
@@ -104,11 +80,6 @@
   .footer-big {
     white-space: normal;
     font-size: clamp(53px, 11.1vw, 90px);
-  }
-
-  .footer-side {
-    text-align: left;
-    margin-top: 39px;
   }
 
   .footer-bottom {

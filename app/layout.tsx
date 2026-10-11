@@ -63,14 +63,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <div className="utility-strip">
-          <div className="shell flex items-center justify-between">
-            <span>INDEPENDENT CREATIVE DEVELOPER</span>
-            <span className="utility-right">
-              SYLHET, BANGLADESH <span aria-hidden="true">↗</span>
-            </span>
-          </div>
-        </div>
         <SiteHeader />
         {children}
         <SiteFooter />

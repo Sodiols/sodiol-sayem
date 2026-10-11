@@ -38,7 +38,7 @@ export function absoluteUrl(path = "/"): string {
 }
 
 export const navItems = [
-  { href: "/work/", label: "Work", n: "01" },
-  { href: "/about/", label: "About", n: "02" },
-  { href: "/contact/", label: "Contact", n: "03" },
+  { href: "/work/", label: "Work" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" },
 ] as const;

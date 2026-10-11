@@ -31,7 +31,6 @@ export default async function ProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const next = getNextProject(project.slug);
-  const total = String(projects.length).padStart(2, "0");
   const path = `/projects/${project.slug}/`;
   const title = `${project.name} Project | Sodiol Portfolio`;
 
@@ -51,9 +50,6 @@ export default async function ProjectPage({ params }: Props) {
       <section className="case-top shell">
         <div className="case-back">
           <Link href="/work/">← ALL PROJECTS</Link>
-          <span>
-            CASE {project.number} / {total}
-          </span>
         </div>
         <div className="case-header">
           <div>
@@ -69,7 +65,6 @@ export default async function ProjectPage({ params }: Props) {
         </div>
         <div className="case-lede">
           <p>{project.detail}</p>
-          <span>{project.format}</span>
         </div>
         <div className="case-art">
           <ProjectArt slug={project.slug} />
@@ -97,31 +92,30 @@ export default async function ProjectPage({ params }: Props) {
         </div>
         <div className="case-about">
           <div>
-            <span className="eyebrow">/ ABOUT THIS PROJECT</span>
+            <h2 className="eyebrow">About the project</h2>
           </div>
           <div>
-            <h2>{project.detail}</h2>
             <p>{project.overview}</p>
             <div className="case-actions">
               {project.url && !project.linkNote && (
                 <a className="primary-button" href={project.url} target="_blank" rel="noopener noreferrer">
-                  VISIT PROJECT <span aria-hidden="true">↗</span>
+                  VISIT SITE <span aria-hidden="true">↗</span>
                 </a>
               )}
               {project.url && project.linkNote && (
                 <>
                   <a className="secondary-button" href={project.url} target="_blank" rel="noopener noreferrer">
-                    OPEN PROJECT URL ↗
+                    VISIT SITE <span aria-hidden="true">↗</span>
                   </a>
                   <span className="link-note">{project.linkNote}</span>
                 </>
               )}
-              {!project.url && <span className="no-live">DESKTOP APPLICATION / NO PUBLIC LINK PROVIDED</span>}
+              {!project.url && <span className="no-live">NO PUBLIC LINK FOR THIS DESKTOP APP</span>}
             </div>
           </div>
         </div>
         <div className="case-focus">
-          <div className="eyebrow">/ FOCUS AREAS</div>
+          <h2 className="eyebrow">Focus areas</h2>
           <div className="focus-tags">
             {project.focus.map((item) => (
               <span key={item}>{item}</span>
@@ -132,9 +126,9 @@ export default async function ProjectPage({ params }: Props) {
 
       <section className="next-project">
         <Link href={`/projects/${next.slug}/`} className="shell next-inner">
-          <span className="eyebrow">NEXT PROJECT / {next.number}</span>
+          <span className="eyebrow">Next project</span>
           <strong>
-            {next.title} <span>↗</span>
+            {next.title} <span aria-hidden="true">↗</span>
           </strong>
         </Link>
       </section>

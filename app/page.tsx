@@ -22,25 +22,12 @@ export default function HomePage() {
       />
       <section className="hero shell">
         <div className="hero-kicker">
-          <span className="eyebrow">
-            <span className="little-square"></span> HELLO, I&apos;M A CREATIVE DEVELOPER
-          </span>
-          <span className="eyebrow hero-edition">PORTFOLIO / 2026</span>
+          <span className="eyebrow">HELLO, I&apos;M A CREATIVE DEVELOPER</span>
         </div>
         <div className="hero-head">
           <h1>
             SODIOL<span className="hero-dot">.</span>
           </h1>
-          <div className="hero-index" aria-label="Developer based in Sylhet">
-            <span>01 / 04</span>
-            <span>
-              DESIGN
-              <br />
-              MEETS
-              <br />
-              DEVELOPMENT
-            </span>
-          </div>
         </div>
         <div className="hero-bottom">
           <div className="hero-badge" aria-label="Based in Sylhet, Bangladesh">
@@ -58,17 +45,11 @@ export default function HomePage() {
               THINGS FEEL <em>DIFFERENT.</em>
             </p>
             <div className="hero-sub">
-              <span>Creative development with a taste for bold ideas, considered details, and things that actually work.</span>
+              <span>I build websites, online stores, web apps and desktop software.</span>
               <Link className="primary-button" href="/work/">
-                EXPLORE MY WORK <span>↗</span>
+                VIEW MY WORK <span aria-hidden="true">↗</span>
               </Link>
             </div>
-          </div>
-        </div>
-        <div className="marquee" aria-label="Ideas, code, and creative thinking">
-          <div className="marquee-track" aria-hidden="true">
-            IDEAS <span>✳</span> CODE <span>✳</span> CURIOSITY <span>✳</span> IDEAS <span>✳</span> CODE <span>✳</span>{" "}
-            CURIOSITY <span>✳</span>
           </div>
         </div>
       </section>
@@ -77,7 +58,6 @@ export default function HomePage() {
         <div className="shell">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">/ 01 - SOME THINGS I&apos;VE BUILT</span>
               <h2>
                 SELECTED
                 <br />
@@ -86,7 +66,7 @@ export default function HomePage() {
               </h2>
             </div>
             <Link className="text-link" href="/work/">
-              ALL PROJECTS <span>↗</span>
+              ALL PROJECTS <span aria-hidden="true">↗</span>
             </Link>
           </div>
           <div className="projects-grid">
@@ -100,7 +80,6 @@ export default function HomePage() {
       <section className="statement-band">
         <div className="shell statement-grid">
           <div>
-            <span className="eyebrow light">/ 02 - WHAT I BRING</span>
             <span className="huge-asterisk" aria-hidden="true">
               ✳
             </span>
@@ -112,11 +91,11 @@ export default function HomePage() {
               <span>MORE</span> INTENT.
             </h2>
             <p>
-              I&apos;m a creative developer from Sylhet, Bangladesh. I use modern web technology to build clear, useful
-              experiences with a personality of their own.
+              I take projects from first idea to launch: planning the structure, designing the interface and writing the
+              code. Everything I ship is responsive and accessible.
             </p>
             <Link href="/about/" className="button-outline-light">
-              A BIT MORE ABOUT ME ↗
+              ABOUT ME <span aria-hidden="true">↗</span>
             </Link>
           </div>
         </div>
@@ -125,29 +104,15 @@ export default function HomePage() {
       <section className="section-block tools-section">
         <div className="shell">
           <div className="section-heading">
-            <div>
-              <span className="eyebrow">/ 03 - THE TOOLBOX</span>
-              <h2>
-                WHAT I<br />
-                WORK <i>WITH.</i>
-              </h2>
-            </div>
-            <p className="heading-note">
-              Built with the right tools.
-              <br />
-              Not just the trendy ones.
-            </p>
+            <h2>
+              WHAT I<br />
+              WORK <i>WITH.</i>
+            </h2>
           </div>
           <div className="tools-cloud">
             {site.tech.map((tool) => (
               <span key={tool}>{tool}</span>
             ))}
-          </div>
-          <div className="tools-bottom">
-            <span>AND ALWAYS LEARNING ↗</span>
-            <Link href="/about/" className="text-link">
-              SEE THE FULL STORY <span>↗</span>
-            </Link>
           </div>
         </div>
       </section>

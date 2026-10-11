@@ -34,17 +34,13 @@ export default function WorkPage() {
         ]}
       />
       <section className="page-hero shell">
-        <div className="page-overline">
-          <span>/ 02 - WORK</span>
-          <span>THE THINGS I PUT OUT INTO THE WORLD</span>
-        </div>
         <h1>
-          PROOF IN
+          SELECTED
           <br />
-          THE <em>PIXELS.</em>
+          <em>PROJECTS.</em>
         </h1>
         <div className="page-hero-bottom">
-          <p>Different projects. Different problems. One common thread: building things with intention.</p>
+          <p>Online stores, a messaging app and a desktop time tracker.</p>
           <span className="page-hero-symbol" aria-hidden="true">
             ↘
           </span>

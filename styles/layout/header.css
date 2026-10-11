@@ -1,22 +1,5 @@
 /* Header
-   Utility strip, sticky header, desktop navigation and the mobile menu. */
-
-.utility-strip {
-  height: 31px;
-  color: var(--paper);
-  background: var(--ink);
-  letter-spacing: .12em;
-  font: 700 10px / 31px var(--mono);
-}
-
-.utility-strip .shell {
-  height: 100%;
-}
-
-.utility-right span {
-  color: var(--accent);
-  margin-left: 15px;
-}
+   Sticky header, desktop navigation and the mobile menu. */
 
 .site-header {
   z-index: 50;
@@ -66,13 +49,6 @@
   background: var(--accent);
 }
 
-.nav-n {
-  color: #777970;
-  align-self: center;
-  margin-top: -12px;
-  font: 700 9px var(--mono);
-}
-
 .nav-cta {
   border: 2px solid var(--ink);
   justify-content: space-between;
@@ -110,14 +86,6 @@
 }
 
 @media (width <= 760px) {
-  .utility-strip {
-    font-size: 8px;
-  }
-
-  .utility-right {
-    display: none;
-  }
-
   .site-header .nav-inner {
     min-height: 68px;
   }
@@ -177,10 +145,6 @@
     gap: 20px;
     padding: 17px 0;
     display: flex;
-  }
-
-  .mobile-menu a span {
-    font: 800 11px var(--mono);
   }
 
   .mobile-menu a b {

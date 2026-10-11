@@ -16,7 +16,7 @@ export function ProjectArt({ slug }: { slug: Project["slug"] }) {
               <br />
               <i>personal.</i>
             </span>
-            <div className="hus-stamp">H / 01</div>
+            <div className="hus-stamp">H</div>
           </div>
           <span className="preview-caption">OBJECTS FOR YOUR MOMENTS</span>
         </div>
@@ -30,7 +30,7 @@ export function ProjectArt({ slug }: { slug: Project["slug"] }) {
             <span className="pri-menu">•••</span>
           </div>
           <div className="chat-bubbles">
-            <span className="bubble b1">Hey! 👋</span>
+            <span className="bubble b1">Hey!</span>
             <span className="bubble b2">Let’s talk ideas.</span>
             <span className="bubble b3">Sounds good ↗</span>
           </div>
@@ -43,7 +43,7 @@ export function ProjectArt({ slug }: { slug: Project["slug"] }) {
       return (
         <div className="preview-inner preview-tara">
           <div className="tara-nav">
-            TARA <span>COLLECTION / 026</span>
+            TARA <span>COLLECTION</span>
           </div>
           <div className="tara-art">
             <div className="tara-oval"></div>
@@ -67,7 +67,7 @@ export function ProjectArt({ slug }: { slug: Project["slug"] }) {
             <span>FOCUS MODE</span>
           </div>
           <div className="minute-display">
-            <span className="minute-small">CURRENT SESSION / 001</span>
+            <span className="minute-small">CURRENT SESSION</span>
             <strong>
               01:28<span>:42</span>
             </strong>

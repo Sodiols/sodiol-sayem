@@ -1,5 +1,5 @@
 /* Home page
-   Hero, marquee, statement band and toolbox. */
+   Hero, statement band and toolbox. */
 
 .hero {
   overflow: hidden;
@@ -10,15 +10,6 @@
   align-items: center;
   padding: 43px 0 17px;
   display: flex;
-}
-
-.little-square {
-  background: var(--ink);
-  vertical-align: -1px;
-  width: 11px;
-  height: 11px;
-  margin-right: 7px;
-  display: inline-block;
 }
 
 .hero-head {
@@ -39,18 +30,6 @@
 
 .hero-dot {
   color: #b4c30b;
-}
-
-.hero-index {
-  text-align: right;
-  white-space: nowrap;
-  flex-direction: column;
-  align-self: stretch;
-  align-items: flex-end;
-  gap: 45px;
-  padding: 24px 0 24px 12px;
-  font: 700 10px / 1.45 var(--mono);
-  display: flex;
 }
 
 .hero-bottom {
@@ -126,37 +105,6 @@
   line-height: 1.7;
 }
 
-.marquee {
-  border-block: var(--stroke);
-  background: var(--accent);
-  align-items: center;
-  height: 66px;
-  margin-bottom: 0;
-  display: flex;
-  overflow: hidden;
-}
-
-.marquee-track {
-  white-space: nowrap;
-  font: 900 28px var(--display);
-  letter-spacing: -.032em;
-  align-items: center;
-  gap: 34px;
-  min-width: max-content;
-  animation: 32s linear infinite marquee;
-  display: flex;
-}
-
-.marquee-track span {
-  font: 900 20px Arial;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-48%);
-  }
-}
-
 .statement-band {
   background: var(--ink);
   color: var(--paper);
@@ -194,15 +142,9 @@
   line-height: 1.65;
 }
 
-.tools-section .section-heading {
-  align-items: end;
-}
-
 .tools-cloud {
-  border-top: var(--stroke);
   flex-wrap: wrap;
   gap: 12px;
-  padding: 28px 0 47px;
   display: flex;
 }
 
@@ -224,22 +166,9 @@
   transform: translate(-3px, -3px);
 }
 
-.tools-bottom {
-  border-top: var(--stroke);
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 16px;
-  font: 800 11px var(--mono);
-  display: flex;
-}
-
 @media (width <= 1100px) {
   .hero h1 {
     font-size: 19vw;
-  }
-
-  .hero-index {
-    font-size: 9px;
   }
 
   .hero-badge {
@@ -253,10 +182,6 @@
     padding: 27px 0 16px;
   }
 
-  .hero-edition {
-    display: none;
-  }
-
   .hero-head {
     min-height: unset;
     padding: 20px 0 22px;
@@ -265,10 +190,6 @@
   .hero h1 {
     margin-bottom: 0;
     font-size: 20vw;
-  }
-
-  .hero-index {
-    display: none;
   }
 
   .hero-bottom {
@@ -314,14 +235,6 @@
     max-width: 100%;
   }
 
-  .marquee {
-    height: 52px;
-  }
-
-  .marquee-track {
-    font-size: 20px;
-  }
-
   .statement-band {
     padding: 70px 0;
   }
@@ -345,11 +258,6 @@
     font-size: 15px;
   }
 
-  .tools-section .section-heading {
-    flex-direction: column;
-    align-items: start;
-  }
-
   .tools-cloud {
     gap: 8px;
   }
@@ -357,16 +265,6 @@
   .tools-cloud span {
     padding: 12px 13px;
     font-size: clamp(16px, 5vw, 25px);
-  }
-
-  .tools-bottom {
-    align-items: start;
-    gap: 10px;
-  }
-
-  .tools-bottom .text-link {
-    gap: 15px;
-    min-width: 120px;
   }
 }
 

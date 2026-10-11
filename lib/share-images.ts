@@ -5,28 +5,26 @@ export const ogSize = { width: 1200, height: 630 };
 
 type ShareImage = OgOptions & { alt: string };
 
-const total = String(projects.length).padStart(2, "0");
-
 /** One social sharing image per page, served as /og/<id>.png by app/og/[image]/route.tsx. */
 export const shareImages: Record<string, ShareImage> = {
   home: {
     alt: "Sodiol, creative developer based in Sylhet, Bangladesh",
     section: "PORTFOLIO",
     title: ["SODIOL"],
-    subtitle: "Digital things, built with intention.",
+    subtitle: "Websites, online stores, web apps and desktop software.",
     tag: "SYLHET, BD",
   },
   about: {
-    alt: "About Sodiol: not your average dev",
+    alt: "About Sodiol, creative developer",
     section: "ABOUT",
-    title: ["NOT YOUR", "AVERAGE DEV"],
+    title: ["HI, I'M", "SODIOL"],
     subtitle: "A creative developer from Sylhet, Bangladesh.",
-    tag: "THE PERSON",
+    tag: "ABOUT",
   },
   work: {
-    alt: "Selected work by Sodiol: proof in the pixels",
+    alt: "Selected projects by Sodiol",
     section: "WORK",
-    title: ["PROOF IN", "THE PIXELS"],
+    title: ["SELECTED", "PROJECTS"],
     subtitle: "Websites, web apps, commerce and desktop software.",
     tag: `${projects.length} PROJECTS`,
   },
@@ -34,7 +32,7 @@ export const shareImages: Record<string, ShareImage> = {
     alt: "Contact Sodiol: got an idea?",
     section: "CONTACT",
     title: ["GOT AN", "IDEA?"],
-    subtitle: "Have a site, app, or unusual idea in mind?",
+    subtitle: "Tell me about your website, app or desktop project.",
     tag: "SAY HELLO",
   },
   ...Object.fromEntries(
@@ -50,7 +48,6 @@ export const shareImages: Record<string, ShareImage> = {
           background: project.og.background,
           foreground: project.og.foreground,
           label: project.type,
-          number: `${project.number} / ${total}`,
         },
       },
     ]),

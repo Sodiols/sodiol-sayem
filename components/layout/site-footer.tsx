@@ -8,24 +8,13 @@ export function SiteFooter() {
       <div className="shell">
         <div className="footer-top">
           <div>
-            <p className="eyebrow light">HAVE SOMETHING IN MIND?</p>
             <Link className="footer-big" href="/contact/">
-              LET&apos;S MAKE
+              LET&apos;S
               <br />
-              IT <span>HAPPEN.</span>
+              <span>CONNECT.</span>
               <span className="big-arrow" aria-hidden="true">
                 ↗
               </span>
-            </Link>
-          </div>
-          <div className="footer-side">
-            <p>
-              Thoughtful development.
-              <br />
-              Distinct digital experiences.
-            </p>
-            <Link href="/contact/" className="small-underlined">
-              START A CONVERSATION ↗
             </Link>
           </div>
         </div>
@@ -33,7 +22,6 @@ export function SiteFooter() {
           <Link className="wordmark footer-mark" href="/">
             sodiol<span className="brand-stop">.</span>
           </Link>
-          <span>BASED IN SYLHET, BANGLADESH</span>
           <span>© {year} SODIOL</span>
           <a href="#top">BACK TO TOP ↑</a>
         </div>

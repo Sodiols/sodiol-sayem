@@ -6,11 +6,7 @@
 }
 
 .case-back {
-  border-bottom: var(--stroke);
-  justify-content: space-between;
-  padding-bottom: 19px;
   font: 800 11px var(--mono);
-  display: flex;
 }
 
 .case-back a:hover {
@@ -20,7 +16,7 @@
 .case-header {
   justify-content: space-between;
   align-items: end;
-  padding: 50px 0 23px;
+  padding: 32px 0 23px;
   display: flex;
 }
 
@@ -51,10 +47,6 @@
   margin: 0;
   font-size: clamp(18px, 2.6vw, 35px);
   font-weight: 700;
-}
-
-.case-lede span {
-  font: 800 11px var(--mono);
 }
 
 .case-art {
@@ -123,16 +115,14 @@
   display: grid;
 }
 
-.case-about h2 {
-  font: 900 clamp(36px,5.4vw,80px)/1 var(--display);
-  letter-spacing: -.039em;
-  max-width: 750px;
-  margin: 0 0 27px;
+.case-about h2, .case-focus h2 {
+  margin: 0;
 }
 
 .case-about p {
   color: #51524b;
   max-width: 580px;
+  margin: 0;
   font-size: 17px;
   line-height: 1.75;
 }
@@ -206,11 +196,6 @@
     font-size: 70px;
   }
 
-  .case-lede {
-    flex-direction: column;
-    align-items: start;
-  }
-
   .case-art {
     height: clamp(360px, 86vw, 550px);
     padding: 13px;
@@ -244,10 +229,6 @@
 
   .case-about {
     padding: 60px 0;
-  }
-
-  .case-about h2 {
-    font-size: clamp(36px, 8vw, 68px);
   }
 
   .case-about p {

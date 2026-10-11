@@ -154,7 +154,7 @@ export function ContactForm() {
             id="contact-name"
             name="name"
             autoComplete="name"
-            placeholder="What should I call you?"
+            placeholder="Your name…"
             required
             maxLength={100}
             aria-invalid={errors.name ? true : undefined}
@@ -194,7 +194,7 @@ export function ContactForm() {
 
       <div className="field">
         <label id="contact-type-label" htmlFor="contact-type">
-          WHAT ARE YOU THINKING?
+          PROJECT TYPE
         </label>
         <BrutalSelect
           id="contact-type"
@@ -208,12 +208,12 @@ export function ContactForm() {
 
       <div className="field" data-invalid={errors.message ? true : undefined}>
         <label htmlFor="contact-message">
-          A LITTLE ABOUT YOUR IDEA <span aria-hidden="true">*</span>
+          MESSAGE <span aria-hidden="true">*</span>
         </label>
         <textarea
           id="contact-message"
           name="message"
-          placeholder="The idea, a rough scope, or just a starting point..."
+          placeholder="The idea, a rough scope, or a starting point…"
           rows={6}
           required
           maxLength={MESSAGE_MAX}
@@ -225,7 +225,7 @@ export function ContactForm() {
           }}
         />
         <div className="field-meta">
-          <p id="contact-message-help">Scope, timeline, links. Whatever helps.</p>
+          <p id="contact-message-help">Scope, timeline and any useful links.</p>
           <span className="field-count" aria-hidden="true">
             {messageLength} / {MESSAGE_MAX}
           </span>

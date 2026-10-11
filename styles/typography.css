@@ -18,8 +18,7 @@ p {
 }
 
 /* Mono labels: Geist Mono runs wider than system monospace, so ease the tracking a touch. */
-.eyebrow, .page-overline, .case-back, .case-facts span, .form-top, .field label, .tools-bottom,
-.filter-button, .stack-n, .approach-list > div > span, .nav-n, .project-number, .footer-bottom {
+.eyebrow, .case-back, .case-facts span, .field label, .filter-button, .footer-bottom {
   letter-spacing: .06em;
 }
 
@@ -32,7 +31,7 @@ p {
   line-height: 1.68;
 }
 
-.hero-sub > span, .heading-note, .footer-side p, .form-intro, .contact-side p {
+.hero-sub > span, .form-intro, .contact-side p {
   line-height: 1.65;
 }
 
@@ -47,13 +46,13 @@ p {
 }
 
 /* Buttons and small caps text: semibold Geist reads cleaner than the faux 850 weight. */
-.nav-cta, .primary-button, .button-outline-light, .secondary-button, .text-link, .small-underlined,
+.nav-cta, .primary-button, .button-outline-light, .secondary-button, .text-link,
 .desktop-nav a, .plain-button {
   font-weight: 700;
   letter-spacing: .02em;
 }
 
 /* Numbers that update or align should not jitter. */
-.minute-display strong, .filter-button sup, .project-number, .stack-n, .nav-n {
+.minute-display strong, .filter-button sup {
   font-variant-numeric: tabular-nums;
 }
