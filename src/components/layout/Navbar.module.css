@@ -1,0 +1,150 @@
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant-garamond-600-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+.root {
+  --menu-ground: #1e1c18;
+  --menu-ivory: #d0cabf;
+  --menu-gutter: clamp(18px, 4.5vw, 80px);
+  --menu-top: clamp(8px, calc(7svh - 22px), 42px);
+  --menu-serif: "Cormorant Garamond", "Instrument Serif", serif;
+}
+
+.bar {
+  position: fixed;
+  top: max(var(--menu-top), env(safe-area-inset-top));
+  left: max(var(--menu-gutter), env(safe-area-inset-left));
+  right: max(var(--menu-gutter), env(safe-area-inset-right));
+  z-index: 80;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  mix-blend-mode: difference;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+}
+
+:global([data-intro="complete"]) .bar { visibility: visible; opacity: 1; pointer-events: none; }
+:global([data-intro="complete"]) .bar > :is(a, button) { pointer-events: auto; }
+.root[data-overlay-visible="true"] .bar { visibility: hidden; opacity: 0; pointer-events: none; }
+.wordmark { font-family: var(--menu-serif); font-size: clamp(18px, min(3.8svh, 3.5vw), 32px); font-weight: 600; line-height: 1; letter-spacing: -0.065em; }
+.bar .wordmark { display: inline-flex; min-width: 44px; min-height: 44px; align-items: center; }
+.bar .wordmark:hover { opacity: 0.8; }
+.menuButton, .closeButton {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.menuButton span, .closeButton span { position: absolute; display: block; height: 1px; background: currentColor; transform-origin: center; }
+.menuButton span { width: 21px; left: 11.5px; transition: transform 0.22s ease; }
+.menuButton span:first-child { top: 20px; }
+.menuButton span:last-child { top: 24px; }
+.menuButton:active span:first-child { transform: translateY(1px); }
+.menuButton:active span:last-child { transform: translateY(-1px); }
+.closeButton { position: fixed; top: max(var(--menu-top), env(safe-area-inset-top)); right: max(var(--menu-gutter), env(safe-area-inset-right)); z-index: 2; }
+.closeButton span { width: 14px; left: 15px; top: 21.5px; }
+.closeButton span:first-child { transform: rotate(45deg); }
+.closeButton span:last-child { transform: rotate(-45deg); }
+.closeButton:hover { opacity: 0.72; }
+.closeButton:active { opacity: 0.55; }
+.bar a:focus-visible, .bar button:focus-visible, .overlay a:focus-visible, .overlay button:focus-visible { outline: 1px solid currentColor; outline-offset: 5px; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: transparent;
+  color: var(--menu-ivory);
+  overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
+  color-scheme: dark;
+}
+.overlay:not([open]) { display: none; }
+.overlay::backdrop { background: transparent; }
+.panel { position: absolute; inset: -1px; background: var(--menu-ground); transform: translate3d(0, 101%, 0); will-change: transform; }
+.menuBrand {
+  position: absolute;
+  top: max(calc(var(--menu-top) + 22px), calc(env(safe-area-inset-top) + 22px));
+  left: 0;
+  right: 0;
+  margin-top: -0.5em;
+  text-align: center;
+  opacity: 0;
+}
+.menuLinks {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  font-family: var(--menu-serif);
+  font-size: clamp(48px, min(11.6svh, 27vw), 128px);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+  text-align: center;
+}
+.lineMask { overflow: hidden; padding: 0.06em 0.12em; margin: -0.06em 0; }
+.lineMask:has(:focus-visible) { outline: 1px solid currentColor; outline-offset: 3px; }
+.revealLine { display: block; transform: translate3d(0, 112%, 0); will-change: transform; }
+.menuLink { display: block; color: inherit; text-decoration: none; touch-action: manipulation; }
+.labelWindow { display: block; position: relative; overflow: hidden; }
+.labelMain, .labelEcho { display: block; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+.labelEcho { position: absolute; inset: 0; transform: translateY(106%); }
+.menuLink:active { opacity: 0.7; }
+.socials {
+  position: absolute;
+  left: 50%;
+  bottom: max(var(--menu-top), env(safe-area-inset-bottom));
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.5vw, 18px);
+}
+.socialIcon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: inherit; opacity: 0; }
+.socialIcon svg { display: block; width: 18px; height: 18px; fill: currentColor; transition: transform 0.22s ease, opacity 0.22s ease; }
+.socialIcon:first-child svg { width: 15px; height: 18px; }
+.socialIcon:nth-child(3) svg { width: 20px; height: 20px; }
+.socialIcon:active svg { opacity: 0.65; }
+@media (hover: hover) {
+  .menuButton:hover span:first-child { transform: translateY(-1px); }
+  .menuButton:hover span:last-child { transform: translateY(1px); }
+  .menuLink:hover .labelMain, .menuLink:focus-visible .labelMain { transform: translateY(-106%); }
+  .menuLink:hover .labelEcho, .menuLink:focus-visible .labelEcho { transform: translateY(0); }
+  a.socialIcon:hover svg { transform: translateY(-2px); opacity: 0.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar, .menuButton span, .labelMain, .labelEcho, .socialIcon svg { transition: none; }
+  .menuLink:hover .labelMain, .menuLink:focus-visible .labelMain { transform: none; }
+  .labelEcho { display: none; }
+}
+
