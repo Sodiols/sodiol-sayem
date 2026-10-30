@@ -8,6 +8,7 @@ import priChat from "../../public/projects/prichat.png";
 
 export type Project = {
   name: string; slug: string; href: string; image: StaticImageData;
+  category: "E-commerce" | "Esports" | "Web app";
   position: string; fit: "cover" | "contain";
   description: string; summary: string; disciplines: string[]; alt: string;
   overview: string; approach: string; implementation: string[]; outcome: string;
@@ -19,6 +20,7 @@ export type Project = {
 export const projects: readonly Project[] = [
   {
     name: "Husnalogy", slug: "husnalogy", href: "https://husnalogy.com", image: husnalogy,
+    category: "E-commerce",
     position: "50% 50%", fit: "contain",
     description: "An editorial shopping experience for invitations, wedding stationery and personalized gifts, where the details are as considered as the occasion.",
     summary: "An editorial shopping experience for invitations, wedding stationery and personalized gifts.",
@@ -31,6 +33,7 @@ export const projects: readonly Project[] = [
   },
   {
     name: "TARA", slug: "tara", href: "https://tarabd.co", image: tara,
+    category: "E-commerce",
     position: "50% 50%", fit: "contain",
     description: "A fashion-led shopping destination with an understated, editorial presentation and a focus on easy everyday discovery.",
     summary: "A fashion-led shopping destination with an understated editorial presentation.",
@@ -43,6 +46,7 @@ export const projects: readonly Project[] = [
   },
   {
     name: "Epic Elites", slug: "epic-elites", href: "https://epicelites.vercel.app", image: epicElites,
+    category: "Esports",
     position: "50% 50%", fit: "contain",
     description: "An energetic esports platform that translates the identity of a team into a complete online experience.",
     summary: "An esports platform built around a team’s identity and online presence.",
@@ -55,6 +59,7 @@ export const projects: readonly Project[] = [
   },
   {
     name: "PriChat", slug: "prichat", href: "https://prichat-ebf5.vercel.app", image: priChat,
+    category: "Web app",
     position: "50% 50%", fit: "contain",
     description: "A lightweight communication product that puts connection and immediacy before unnecessary interface complexity.",
     summary: "A lightweight communication product focused on connection and immediacy.",

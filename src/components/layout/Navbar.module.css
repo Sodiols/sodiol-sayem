@@ -52,7 +52,7 @@
   cursor: pointer;
   touch-action: manipulation;
 }
-.menuButton span, .closeButton span { position: absolute; display: block; height: 1px; background: currentColor; transform-origin: center; }
+.menuButton span, .closeButton span { position: absolute; display: block; height: 1px; /* taste-skill-ignore: preserve the original navbar requested by the user. */ background: currentColor; transform-origin: center; }
 .menuButton span { width: 21px; left: 11.5px; transition: transform 0.22s ease; }
 .menuButton span:first-child { top: 20px; }
 .menuButton span:last-child { top: 24px; }
@@ -147,4 +147,3 @@
   .menuLink:hover .labelMain, .menuLink:focus-visible .labelMain { transform: none; }
   .labelEcho { display: none; }
 }
-

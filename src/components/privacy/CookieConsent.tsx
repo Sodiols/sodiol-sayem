@@ -46,9 +46,12 @@ export function CookieConsent() {
   return <div className={styles.root}>
     {choice === "unknown" && !settings && <aside className={styles.banner} aria-labelledby="cookie-heading" data-consent-banner>
       <h2 id="cookie-heading">A little about cookies.</h2>
-      <p>I use optional analytics cookies to understand how visitors use this site. You can accept, reject, or manage your preferences.</p>
-      <div className={styles.actions}><button type="button" onClick={()=>choose(true)}>Accept analytics</button><button type="button" onClick={()=>choose(false)}>Reject optional</button><button type="button" data-cookie-preferences onClick={event=>{opener.current=event.currentTarget;setSettings(true);}}>Preferences</button></div>
-      <Link href="/privacy-policy">Privacy Policy</Link>
+      <p>Optional analytics measure site visits.</p>
+      <div className={styles.actions}><button type="button" onClick={()=>choose(true)}>Accept analytics</button><button type="button" onClick={()=>choose(false)}>Reject optional</button></div>
+      <div className={styles.links}>
+        <button type="button" data-cookie-preferences onClick={event=>{opener.current=event.currentTarget;setSettings(true);}}>Preferences</button>
+        <Link href="/privacy-policy">Privacy Policy</Link>
+      </div>
     </aside>}
     <dialog ref={dialog} className={styles.dialog} aria-labelledby="preferences-heading" onCancel={event=>{event.preventDefault();setSettings(false);}} onClose={()=>setSettings(false)}>
       <div className={styles.dialogTop}><h2 id="preferences-heading">Your cookie preferences.</h2><button type="button" onClick={()=>setSettings(false)} aria-label="Close cookie preferences">×</button></div>

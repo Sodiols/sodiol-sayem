@@ -77,9 +77,12 @@ The carousel uses no GSAP plugin or ScrollTrigger. The menu continues using GSAP
 the compact About reveal uses native Web Animations. Reduced motion settles image changes immediately, and a
 no-JavaScript project index preserves the four external destinations. The unused
 General Sans 700 preload was removed; the existing fonts themselves are retained.
-The gallery sits below the fixed navbar and uses 94svh rather than filling the
-entire viewport. Arrow targets are 56px on desktop and 48px on mobile. The bottom
-strip contains only the active project description, per the requested refinement.
+The gallery opens directly below the fixed navbar without a separate personal
+introduction or View selected work action. It uses an inset 92svh desktop stage
+and a content-sized mobile composition. Arrow targets are 56px on desktop and
+48px on mobile. The compact caption includes the project category and description,
+without a visible project counter; the project title is not duplicated on mobile. The name
+Sodiol Sayem appears in the homepage About copy.
 
 ## Navigation and About
 
@@ -110,19 +113,14 @@ is rendered.
 
 ## Home toolkit canvas
 
-`Toolboard` sits once between the homepage About teaser and Contact. The compact
-About section remains directly above it. Its 25 entries and deterministic desktop coordinates /
-compact layout spans live in `src/data/toolkit.ts`. The canvas uses existing
-Cormorant Garamond / General Sans with scoped monochrome tile styling.
-
-Desktop movement uses a bounded CSS float that settles in less than five seconds,
-then restrained pointer response. A single on-demand animation frame loop
-interpolates nearby objects by at most 4px; no pointer updates enter React state.
-Geometry is measured on entry/resize, not on each frame. Offscreen, hidden-tab,
-reduced-motion, and coarse-pointer cases stop unnecessary motion. The label and
-pause UI were removed per the requested refinement. Hover/focus pauses the
-initial drift, and selecting a tile keeps its name visible. Keyboard uses native
-button behavior. Touch layouts show labels and use a separate staggered layout.
+`Toolboard` sits once between About and Contact. Its 25 entries and seven ordered
+groups live in `src/data/toolkit.ts`: languages, frontend, backend, databases/data,
+AI tools, development/deployment and analytics. Each group has its own labeled
+row. Wide layouts align up to five tools horizontally; tablet/mobile wrap tools
+within their group rather than mixing categories. Existing site tokens and fonts
+are retained. Text-only identities display once instead of colliding with a
+second label. This uses server-rendered markup and CSS, without a motion loop,
+pointer listeners or additional JavaScript dependencies.
 
 The SVG assets total approximately 28 KB and load locally/lazily. Simple Icons and
 Devicon sources/licenses are documented in `public/toolkit/SOURCES.md`; tool

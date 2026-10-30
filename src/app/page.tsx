@@ -10,7 +10,7 @@ import { socialProfiles } from "@/data/navigation";
 
 export const metadata = pageMetadata("/");
 
-export const viewport: Viewport = { themeColor: "#111111" };
+export const viewport: Viewport = { themeColor: "#262823" };
 
 export default function Home() {
   return <>

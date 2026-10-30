@@ -2,10 +2,13 @@
 .lineMask { display: block; overflow: clip; padding-block: .12em; margin-block: -.12em; }
 .lineMask > span { display: block; }
 .copy:focus-within { opacity: 1 !important; transform: none !important; }
+.copy .name { color:var(--ink); font-family:var(--font-display); font-size:clamp(29px,2.5vw,40px); line-height:1.15; letter-spacing:-.025em; margin-bottom:22px; }
+.copy > p + p { margin-top:16px; }
+.copy .name { margin-top:8px; }
 .contactLink { position: relative; display: inline-flex; align-items: center; gap: 32px; min-height: 44px; margin-top: 24px; border-bottom: 1px solid currentColor; touch-action: manipulation; }
-.contactLink::after { content: ""; position: absolute; inset: auto 0 -1px; height: 1px; background: #ffffff; transform: scaleX(0); transform-origin: left center; transition: transform .3s ease; }
+.contactLink::after { content: ""; position: absolute; inset: auto 0 -1px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left center; transition: transform .3s ease; }
 .contactLink > span { transition: transform .3s ease; }
-.contactLink:hover, .contactLink:focus-visible { color: #ffffff; }
+.contactLink:hover, .contactLink:focus-visible { color: var(--accent); }
 .contactLink:is(:hover,:focus-visible)::after { transform: scaleX(1); }
 .contactLink:is(:hover,:focus-visible) > span { transform: translate(2px,-2px); }
 .contactLink:active { opacity: .7; }

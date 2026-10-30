@@ -10,3 +10,17 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}.intro-curtain{display:none}.portfolio [data-reveal]{opacity:1!important;transform:none!important}}
 .portfolio #about,.portfolio #contact{scroll-margin-top:clamp(70px,10svh,108px)}
 .skip-link:focus{z-index:90}
+
+@font-face{font-family:"General Sans";src:url('/fonts/general-sans-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"General Sans";src:url('/fonts/general-sans-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"General Sans";src:url('/fonts/general-sans-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+:root{--ground:#262823;--ink:#e6e8df;--muted:#b8bdb0;--intro:#34372f;--interlude:#171914;--surface:#30342d;--surface-raised:#3a3e36;--surface-soft:#292c26;--paper:#dfe3d8;--paper-ink:#292d26;--paper-muted:#50564b;--accent:#cbd2b1;--accent-hover:#d9dfc5;--field:#292d27;--font-body:"General Sans",Arial,sans-serif;--font-display:"Instrument Serif","Times New Roman",serif;--page-gutter:clamp(20px,4.5vw,72px)}
+body{font-family:var(--font-body)}
+.portfolio{font-family:var(--font-body)}
+.portfolio .work{padding-inline:var(--page-gutter);background:var(--paper);color:var(--paper-ink)}
+.portfolio .work .section-heading p{color:var(--paper-muted)}
+.portfolio .work .project+.project{border-top:0}
+.portfolio .work .project:hover{background:#d4d9cd}
+.portfolio #about{padding-inline:var(--page-gutter)}
+.portfolio .contact{background:var(--surface);color:var(--ink)}
+.portfolio footer{background:var(--ground);color:var(--ink);border-top:0}

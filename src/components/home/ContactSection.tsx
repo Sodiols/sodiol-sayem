@@ -172,7 +172,7 @@ export function ContactSection() {
     <div className={styles.layout}>
       <div className={styles.introduction}>
         <h2 id="contact-title"><span className={styles.mask}><span data-contact-line>Have something</span></span>{" "}<span className={styles.mask}><span data-contact-line>in mind?</span></span></h2>
-        <p className={styles.description}>An idea, a project, or just a question. I’d love to hear about it.</p>
+        <p className={styles.description}>For project enquiries, collaboration, or a quick question, send me a message.</p>
         <p className={styles.location}>Based in Sylhet, Bangladesh.</p>
       </div>
       <form ref={form} onSubmit={submit} noValidate action="https://api.web3forms.com/submit" method="POST"

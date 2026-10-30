@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { projects } from "@/data/projects";
 import { ProjectImage } from "./ProjectImage";
@@ -33,7 +34,9 @@ function ProjectSelector({ active, onSelect }: { active: number; onSelect: (inde
     <div className={styles.selector}>
       {projects.map((project, index) => <button key={project.slug} type="button"
         aria-label={`Show ${project.name}`} aria-current={active === index ? "true" : undefined}
-        onClick={() => onSelect(index)}><span /></button>)}
+        onClick={() => onSelect(index)}>
+        <Image src={project.image} alt="" fill sizes="(max-width: 767px) 48px, 78px" />
+      </button>)}
     </div>
   </nav>;
 }
@@ -167,8 +170,8 @@ export function ProjectShowcase() {
 
   return <section ref={root} id="work" className={styles.showcase} aria-labelledby="work-title" data-showcase data-active={active}>
     <div id="home" className={styles.homeAnchor} />
-    <h1 id="work-title" className="sr-only">Selected work</h1>
-    <div ref={canvas} className={styles.stage} role="region" aria-roledescription="carousel" aria-label="Selected projects"
+    <h1 id="work-title" className="sr-only">Selected projects</h1>
+    <div id="project-carousel" ref={canvas} className={styles.stage} role="region" aria-roledescription="carousel" aria-label="Selected projects"
       tabIndex={0} onKeyDown={keyboard} data-carousel aria-busy={incoming !== null}>
       <div className={styles.artwork} onPointerDown={pointerDown} onPointerUp={pointerUp} onPointerCancel={() => { pointer.current = null; }}>
         <div className={styles.imageViewport}>
@@ -191,7 +194,8 @@ export function ProjectShowcase() {
       <CarouselArrows onPrevious={() => step(-1)} onNext={() => step(1)} />
       <ProjectSelector active={active} onSelect={select} />
       <div className={styles.descriptionStrip}>
-        <div><span className={styles.marker} aria-hidden="true"><i /><i /><i /></span><p>{project.summary}</p></div>
+        <div className={styles.projectDetails}><p className={styles.projectName}>{project.name}</p><span className={styles.category} data-project-category>{project.category}</span></div>
+        <p className={styles.projectSummary}>{project.summary}</p>
       </div>
       <p className="sr-only" aria-live="polite" aria-atomic="true">{project.name}. Project {active + 1} of {projects.length}.</p>
     </div>
