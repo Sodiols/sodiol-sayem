@@ -11,7 +11,6 @@ const questions = [
   ["Can you build a website from an idea?", "An inquiry can start with an idea. We can discuss requirements, define a scope, then plan the design and development work."],
   ["How can I contact you about a project?", null],
   ["How long does a website project take?", "It depends on the scope, complexity, content and integrations. A useful timeline comes after discussing those requirements, rather than a fixed promise upfront."],
-  ["Where are you based?", "Sylhet, Bangladesh."],
 ] as const;
 export default function FAQ() {
   return <EditorialPage label="FAQ / THE DETAILS" title="A few good questions." description="Some things worth knowing before we get started."><div className={styles.faq}>{questions.map(([question,answer])=><details key={question}><summary>{question}</summary><p>{answer || <>Use the <Link href="/#contact">homepage contact form</Link> to share a little about what you have in mind.</>}</p></details>)}</div></EditorialPage>;

@@ -53,7 +53,7 @@ export function AboutSection() {
       <p>I’m</p>
       <p className={styles.name}>Sodiol Sayem</p>
       <p>I care how a website looks, and how it works.</p>
-      <p>A full-stack developer based in Sylhet, Bangladesh. I enjoy turning ideas into functional, thoughtfully designed digital experiences. My work focuses on building modern web applications and scalable solutions. I’m passionate about learning, experimenting with new technologies, and creating products that solve real-world problems.</p>
+      <p>A full-stack developer. I enjoy turning ideas into functional, thoughtfully designed digital experiences. My work focuses on building modern web applications and scalable solutions. I’m passionate about learning, experimenting with new technologies, and creating products that solve real-world problems.</p>
       <a className={styles.contactLink} href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
     </div>
   </section>;
