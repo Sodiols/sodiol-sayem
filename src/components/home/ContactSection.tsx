@@ -172,7 +172,7 @@ export function ContactSection() {
     <div className={styles.layout}>
       <div className={styles.introduction}>
         <h2 id="contact-title"><span className={styles.mask}><span data-contact-line>Have something</span></span>{" "}<span className={styles.mask}><span data-contact-line>in mind?</span></span></h2>
-        <p className={styles.description}>For project enquiries, collaboration, or a quick question, send me a message.</p>
+        <p className={styles.description}>Have a website to build or an application to improve? Tell me what it needs to do, where you are with it, and any timeline you have in mind.</p>
       </div>
       <form ref={form} onSubmit={submit} noValidate action="https://api.web3forms.com/submit" method="POST"
         onFocusCapture={() => setCaptchaActive(true)}
@@ -208,9 +208,10 @@ export function ContactSection() {
           <div className={styles.field} data-contact-field>
             <label htmlFor="contact-message">Your message</label>
             <div className={styles.control}><textarea id="contact-message" name="message" rows={4} placeholder="Tell me a little about what you have in mind…" required maxLength={5000}
-              aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-error" : undefined}
+              aria-invalid={Boolean(errors.message)} aria-describedby={`contact-message-help${errors.message ? " contact-message-error" : ""}`}
               onInput={() => clearError("message")} onBlur={() => checkField("message")} /></div>
             <p id="contact-message-error" className={styles.fieldError}>{errors.message}</p>
+            <p id="contact-message-help" className={styles.messageHelp}>A short brief is enough to start. Please leave out passwords and other sensitive information.</p>
           </div>
           <div className={styles.sendRow}>
           <div className={styles.verification}>

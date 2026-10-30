@@ -109,7 +109,10 @@ export function ProjectShowcase() {
         select(index);
         setCaseOpen(true);
         setCaseVisit(visit => visit + 1);
-      } else if (["#work", "#home"].includes(hash)) select(0);
+      } else {
+        setCaseOpen(false);
+        if (["#work", "#home"].includes(hash)) select(0);
+      }
     };
     const onIntroComplete = () => {
       window.history.scrollRestoration = restoration;
@@ -159,6 +162,7 @@ export function ProjectShowcase() {
   }
   function backToWork() {
     window.history.replaceState(null, "", "#work");
+    setCaseOpen(false);
     canvas.current?.focus({ preventScroll: true });
     // Supersede the case-entry element scroll with another element scroll;
     // Firefox can otherwise finish that pending scroll after window.scrollTo.
@@ -170,7 +174,10 @@ export function ProjectShowcase() {
 
   return <section ref={root} id="work" className={styles.showcase} aria-labelledby="work-title" data-showcase data-active={active}>
     <div id="home" className={styles.homeAnchor} />
-    <h1 id="work-title" className="sr-only">Selected projects</h1>
+    <header className={styles.identity}>
+      <div><p className={styles.introName}>Sodiol Sayem · Sylhet, Bangladesh</p><h1 id="work-title">Full-Stack Developer.</h1></div>
+      <div className={styles.identityCopy}><p>I build complete web applications, from the interface to the database. Senior Developer at Meka Agency.</p><a href="#contact">Discuss a project <span aria-hidden="true">↗</span></a></div>
+    </header>
     <div id="project-carousel" ref={canvas} className={styles.stage} role="region" aria-roledescription="carousel" aria-label="Selected projects"
       tabIndex={0} onKeyDown={keyboard} data-carousel aria-busy={incoming !== null}>
       <div className={styles.artwork} onPointerDown={pointerDown} onPointerUp={pointerUp} onPointerCancel={() => { pointer.current = null; }}>
@@ -204,7 +211,7 @@ export function ProjectShowcase() {
     </div>
     <noscript><div className={styles.noScript}>
       <p>Explore the projects</p>
-      {projects.map(item => <details key={item.slug}><summary>{item.name}</summary><p>{item.description}</p><a href={item.href} target="_blank" rel="noopener noreferrer">Live site ↗</a></details>)}
+      {projects.map(item => <details key={item.slug}><summary>{item.name}</summary><p>{item.description}</p><a href={item.href} target="_blank" rel="noopener noreferrer">Live site ↗</a>{" · "}<a href={`/work/${item.slug}`}>Read the case study</a></details>)}
     </div></noscript>
   </section>;
 }

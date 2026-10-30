@@ -52,13 +52,12 @@ export function IntroLoader({ children }: { children: ReactNode }) {
       // Never wait indefinitely on a failed font request. The serif fallback is usable.
       await Promise.race([
         document.fonts.load('100px "Instrument Serif"', "sodiol."),
-        new Promise<void>(resolve => { fontTimeout = setTimeout(resolve, 1800); }),
+        new Promise<void>(resolve => { fontTimeout = setTimeout(resolve, 100); }),
       ]).catch(() => undefined);
       clearTimeout(fontTimeout);
       if (cancelled) return;
       shell.dataset.intro = "playing";
       if (motion.matches) {
-        await animate(surface, [{ opacity: 1 }, { opacity: 0 }], { duration: 180 }).finished;
         finish();
         return;
       }
@@ -69,30 +68,30 @@ export function IntroLoader({ children }: { children: ReactNode }) {
           { transform: `translate3d(0,${y}em,0) rotate(${rotate}deg)`, opacity: 0 },
           { opacity: 0.65, offset: 0.35 },
           { transform: "translate3d(0,0,0) rotate(0deg)", opacity: 1 },
-        ], { delay: 830 + delay, duration: 560 - delay * 0.45, easing: "cubic-bezier(.25,.1,.25,1)" });
+        ], { delay: delay * .25, duration: 300, easing: "cubic-bezier(.25,.1,.25,1)" });
         entrance.startTime = epoch;
         const exit = animate(glyph, [
           { transform: "translate3d(0,0,0) rotate(0deg)", opacity: 1 },
           { opacity: 0.8, offset: 0.35 },
           { transform: `translate3d(0,${-y * 1.48}em,0) rotate(${-rotate}deg)`, opacity: 0 },
-        ], { delay: 2480 + delay * 0.25, duration: 540, easing: "cubic-bezier(.45,0,.55,1)", fill: "forwards" });
+        ], { delay: 440 + delay * .1, duration: 240, easing: "cubic-bezier(.45,0,.55,1)", fill: "forwards" });
         exit.startTime = epoch;
       });
       const lift = animate(surface, [
         { transform: "translate3d(0,0,0)" },
         { transform: "translate3d(0,-101%,0)" },
-      ], { delay: 3780, duration: 460, easing: "cubic-bezier(.76,0,.24,1)" });
+      ], { delay: 670, duration: 200, easing: "cubic-bezier(.76,0,.24,1)" });
       lift.startTime = epoch;
       // The dark intermediate screen stays still, then uncovers the prepared page from the left.
       const reveal = animate(curtain, [
         { transform: "scaleX(1)" }, { transform: "scaleX(0)" },
-      ], { delay: 4920, duration: 820, easing: "cubic-bezier(.65,0,.25,1)" });
+      ], { delay: 800, duration: 280, easing: "cubic-bezier(.65,0,.25,1)" });
       reveal.startTime = epoch;
       shell.querySelectorAll<HTMLElement>("[data-reveal]").forEach((element, index) => {
         const animation = animate(element, [
           { opacity: 0, transform: "translate3d(0,18px,0)" },
           { opacity: 1, transform: "translate3d(0,0,0)" },
-        ], { delay: index === 0 ? 4840 : 4960 + index * 70, duration: index === 0 ? 400 : 650, easing: "cubic-bezier(.16,1,.3,1)" });
+        ], { delay: 800 + index * 30, duration: 250, easing: "cubic-bezier(.16,1,.3,1)" });
         animation.startTime = epoch;
       });
       await reveal.finished;

@@ -9,5 +9,6 @@ export const socialProfiles = {
 export const navigationLinks = [
   { label: "Works", href: "/#work" },
   { label: "About", href: "/#about" },
+  { label: "Toolkit", href: "/#skills" },
   { label: "Contact", href: "/#contact" },
 ] as const;

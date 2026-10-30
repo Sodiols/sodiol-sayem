@@ -53,8 +53,15 @@ export function AboutSection() {
       <p>I’m</p>
       <p className={styles.name}>Sodiol Sayem</p>
       <p>I care how a website looks, and how it works.</p>
-      <p>A full-stack developer. I enjoy turning ideas into functional, thoughtfully designed digital experiences. My work focuses on building modern web applications and scalable solutions. I’m passionate about learning, experimenting with new technologies, and creating products that solve real-world problems.</p>
+      <p>I’m a full-stack developer based in Sylhet, Bangladesh. I work across interfaces, application logic and databases, with a particular interest in the parts that need to work together: a product page and its checkout, a chat room and its access rules.</p>
+      <p>I built Husnalogy and TARA as the sole developer at Meka Agency. Both projects involved the customer-facing website and the systems behind it, from product data to order management.</p>
       <a className={styles.contactLink} href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
     </div>
+    <section id="experience" className={styles.experience} aria-labelledby="experience-title">
+      <h3 id="experience-title">Experience</h3>
+      <div><p className={styles.role}>Senior Developer</p><p className={styles.employer}>Meka Agency</p></div>
+      <p className={styles.dates}><time dateTime="2026-07-01">July 2026</time> – present</p>
+      <p className={styles.experienceCopy}>Sole developer of Husnalogy and TARA, building their storefronts and application functionality as part of my work at Meka Agency.</p>
+    </section>
   </section>;
 }

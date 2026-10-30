@@ -3,8 +3,12 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { NavigationOverlay } from "./NavigationOverlay";
+import dynamic from "next/dynamic";
 import styles from "./Navbar.module.css";
+
+// Keep the GSAP menu out of the initial page's execution path. Once requested,
+// retain its component so its reversible animation and focus lifecycle survive.
+const NavigationOverlay = dynamic(() => import("./NavigationOverlay").then(module => module.NavigationOverlay), { ssr: false });
 
 export function Navbar() {
   const router = useRouter();
@@ -15,6 +19,7 @@ export function Navbar() {
   const pendingFocus = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [menuLoaded, setMenuLoaded] = useState(false);
   useEffect(() => () => cancelAnimationFrame(focusFrame.current), []);
   useLayoutEffect(() => {
     if (visible || !pendingFocus.current) return;
@@ -73,11 +78,12 @@ export function Navbar() {
           pendingFocus.current = null;
           cancelAnimationFrame(focusFrame.current);
           setVisible(true);
+          setMenuLoaded(true);
           setOpen(true);
         }}>
         <span /><span />
       </button>
     </header>
-    <NavigationOverlay open={open} onRequestClose={requestClose} onNavigate={requestNavigation} onClosed={afterClose} />
+    {menuLoaded && <NavigationOverlay open={open} onRequestClose={requestClose} onNavigate={requestNavigation} onClosed={afterClose} />}
   </div>;
 }

@@ -27,7 +27,9 @@ elements use `data-reveal`; future homepage animation controllers can listen for
 `sodiol:intro-complete`. Keep intro-independent scroll effects outside this component.
 The hidden page is inert and scrolling is locked until the final curtain clears.
 All animations, timers, and listeners are cleaned up on unmount. Reduced motion
-uses a 180ms transition; without JavaScript, the portfolio is available immediately.
+skips the intro; without JavaScript, the portfolio is available immediately. The
+letter-and-curtain sequence now runs on a 1.08-second timeline with a bounded
+100ms font wait.
 
 The destination homepage was created from scratch because the selected folder was
 empty. It contains real project links carried over from the user's portfolio context.
@@ -59,17 +61,14 @@ preview aspect ratios come from the imported image metadata automatically.
 All four gallery previews use centered `object-fit: contain`, so newly supplied
 project compositions stay fully visible instead of being enlarged and cropped.
 
-Hover reveals a clipped bottom information panel with a serif title and two
-staggered actions, coordinated with a 32% black scrim fading over the artwork.
-The scrim fades out on mouse leave and sits beneath the usable information panel.
-Focus reveals the same controls immediately; touch layouts
-keep them visible. Read the case opens one inline `ProjectCaseStudy` beneath
-the carousel. Its focused heading, restrained entry, shareable case hash,
-original full artwork, documented scope, approach, implementation focus, and
-outcome stay associated with the active project. Notes intentionally omit
-unverified per-project technologies, backend features, and numerical results.
-Back to work returns focus and scroll to the carousel. Works in the global menu
-also resets to Husnalogy through the small `sodiol:work-start` event.
+The serif project title and live/case actions remain visible without hover.
+Hover and focus add restrained feedback without covering the actions. Read the
+case opens one inline ProjectCaseStudy beneath the carousel. Its focused heading,
+shareable case hash, original full artwork, technologies, contribution, features
+and engineering decisions stay associated with the active project. The same
+content also renders at static /work/[slug] URLs with dedicated metadata.
+Back to work closes the inline case and restores focus to the carousel. Works in
+the global menu also resets to Husnalogy through sodiol:work-start.
 Case entry and return use matching element-scroll APIs, so a quick return
 supersedes the pending case-entry scroll reliably in Firefox as well.
 
@@ -77,17 +76,16 @@ The carousel uses no GSAP plugin or ScrollTrigger. The menu continues using GSAP
 the compact About reveal uses native Web Animations. Reduced motion settles image changes immediately, and a
 no-JavaScript project index preserves the four external destinations. The unused
 General Sans 700 preload was removed; the existing fonts themselves are retained.
-The gallery opens directly below the fixed navbar without a separate personal
-introduction or View selected work action. It uses an inset 92svh desktop stage
-and a content-sized mobile composition. Arrow targets are 56px on desktop and
-48px on mobile. The compact caption includes the project category and description,
-without a visible project counter; the project title is not duplicated on mobile. The name
-Sodiol Sayem appears in the homepage About copy.
+A compact personal introduction now sits above the existing gallery: Sodiol Sayem,
+Full-Stack Developer, with a project enquiry link. The gallery keeps the original
+84/16 artwork/rail proportions in a shorter desktop stage and a content-sized
+mobile composition. Arrow targets remain 56px on desktop and 48px on mobile.
 
 ## Navigation and About
 
 `Navbar` and its native modal `NavigationOverlay` live in the root layout alongside
-the intro, so internal Next.js navigation preserves their lifecycle. The panel rises
+the intro, so internal Next.js navigation preserves their lifecycle. The menu
+module and GSAP load on first request and remain mounted afterwards. The panel rises
 as a single surface; masked lines and social icons follow in a scoped GSAP timeline.
 Escape, explicit Tab traversal, focus restoration, scroll preservation, reversible
 opening/closing, and reduced motion are supported. Native modal inertness keeps the
@@ -113,14 +111,12 @@ is rendered.
 
 ## Home toolkit canvas
 
-`Toolboard` sits once between About and Contact. Its 25 entries and seven ordered
-groups live in `src/data/toolkit.ts`: languages, frontend, backend, databases/data,
-AI tools, development/deployment and analytics. Each group has its own labeled
-row. Wide layouts align up to five tools horizontally; tablet/mobile wrap tools
-within their group rather than mixing categories. Existing site tokens and fonts
-are retained. Text-only identities display once instead of colliding with a
-second label. This uses server-rendered markup and CSS, without a motion loop,
-pointer listeners or additional JavaScript dependencies.
+Toolboard sits once between About and Contact. Its 25 original tools remain in
+src/data/toolkit.ts. Fifteen core tools are grouped by interfaces, application/data
+and development/delivery. The other ten appear in a native additional-tools
+disclosure. No proficiency ratings or unconfirmed years of experience are added.
+Existing tokens and fonts are retained; rows wrap within their groups. This uses
+server-rendered markup and CSS, without an animation loop or new dependencies.
 
 The SVG assets total approximately 28 KB and load locally/lazily. Simple Icons and
 Devicon sources/licenses are documented in `public/toolkit/SOURCES.md`; tool
@@ -167,3 +163,12 @@ added. QA and social-asset scripts use optional external Playwright; see the gui
 
 See `docs/intro-reference.md` for the source timing, movement interpretation, and
 the limits of font matching from video alone.
+
+## October 2026 refinement
+
+See [the audit and validation notes](docs/portfolio-refinement.md) for content
+evidence, confirmed Meka Agency attribution, preserved behavior, implementation
+priorities, browser checks and remaining live verification gates. The cookie
+choice notice now sits in normal page flow after the footer so it cannot obscure
+project controls or the contact form. Consent remains opt-in and settings remain
+available in the footer.

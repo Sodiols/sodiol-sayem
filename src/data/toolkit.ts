@@ -34,11 +34,9 @@ export const toolkit: readonly Tool[] = [
 ];
 
 export const toolkitGroups = [
-  { name: "Languages", tools: ["javascript", "typescript", "html", "css", "python"] },
-  { name: "Frontend", tools: ["react", "nextjs", "tailwind", "vite"] },
-  { name: "Backend", tools: ["nodejs", "rest"] },
-  { name: "Databases & data", tools: ["supabase", "firebase", "postgresql"] },
-  { name: "AI tools", tools: ["claude", "codex", "ai-studio", "cursor", "antigravity"] },
-  { name: "Development & deployment", tools: ["vscode", "git", "github", "vercel"] },
-  { name: "Analytics", tools: ["analytics", "search-console"] },
+  { name: "Interfaces", description: "The core stack behind my web application interfaces.", tools: ["typescript", "javascript", "react", "nextjs", "tailwind", "html", "css"] },
+  { name: "Application & data", description: "Authentication, APIs, persistent data and real-time updates.", tools: ["nodejs", "rest", "supabase", "postgresql"] },
+  { name: "Development & delivery", description: "Version control, development and deployment.", tools: ["git", "github", "vscode", "vercel"] },
 ] as const;
+
+export const additionalToolIds = ["python", "vite", "firebase", "analytics", "search-console", "claude", "codex", "ai-studio", "cursor", "antigravity"] as const;

@@ -91,6 +91,7 @@
 .control:focus-within :is(input, select, textarea) { border-color: var(--accent); background: #242821; }
 .control:has([aria-invalid="true"]) :is(input, select, textarea) { border-color: #d4b5a9; }
 .fieldError { min-height: 20px; padding-top: 5px; color: #f0c8b7; font-size: 13px; line-height: 1.4; }
+.messageHelp { color:var(--muted); font-size:14px; line-height:1.6; margin-top:4px; }
 .sendRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
