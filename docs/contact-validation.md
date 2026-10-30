@@ -1,5 +1,10 @@
 # Homepage contact validation
 
+This records the earlier inline-confirmation implementation. The current contact
+flow adds mandatory client hCaptcha verification and a success-only `/thank-you`
+transition; see [production readiness](production-readiness.md) for current setup
+and verification boundaries.
+
 ## Design review
 
 Applied the local Taste and Web Design Guidelines skills. Design variance 5:

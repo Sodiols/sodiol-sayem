@@ -5,6 +5,7 @@ import { projects } from "@/data/projects";
 import { ProjectImage } from "./ProjectImage";
 import { ProjectCaseStudy } from "./ProjectCaseStudy";
 import styles from "./ProjectShowcase.module.css";
+import { trackEvent } from "@/lib/analytics";
 
 type CarouselState = { active: number; requested: number; incoming: number | null; imageReady: boolean };
 type CarouselAction = { type: "select" | "step" | "ready" | "finished"; index: number };
@@ -47,6 +48,12 @@ export function ProjectShowcase() {
   const [caseOpen, setCaseOpen] = useState(false);
   const [caseVisit, setCaseVisit] = useState(0);
   const project = projects[active];
+  useEffect(() => {
+    const view = () => trackEvent("project_view",project.slug);
+    if (root.current?.closest<HTMLElement>("[data-intro]")?.dataset.intro === "complete") view();
+    else window.addEventListener("sodiol:intro-complete",view,{once:true});
+    return () => window.removeEventListener("sodiol:intro-complete",view);
+  },[project.slug]);
   const select = useCallback((index: number) => dispatch({ type: "select", index }), []);
   const step = (direction: number) => dispatch({ type: "step", index: direction });
 
@@ -142,6 +149,7 @@ export function ProjectShowcase() {
     if (Math.abs(x) >= 50 && Math.abs(x) > Math.abs(y) * 1.5) step(x < 0 ? 1 : -1);
   }
   function openCase() {
+    trackEvent("case_study_open",project.slug);
     if (window.location.hash !== `#case-${project.slug}`) window.history.pushState(null, "", `#case-${project.slug}`);
     setCaseOpen(true);
     setCaseVisit(visit => visit + 1);
@@ -174,7 +182,7 @@ export function ProjectShowcase() {
         <div className={styles.infoPanel} data-project-info>
           <div className={styles.infoMask}><h2 translate="no">{project.name}</h2></div>
           <div className={styles.actions}>
-            <span className={styles.infoMask}><a href={project.href} target="_blank" rel="noopener noreferrer">Live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a></span>
+            <span className={styles.infoMask}><a href={project.href} target="_blank" rel="noopener noreferrer" onClick={()=>trackEvent("live_site_click",project.slug)}>Live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a></span>
             <span className={styles.infoMask}><button type="button" onClick={openCase} disabled={incoming !== null}
               aria-expanded={caseOpen} aria-controls="project-case-study">Read the case <span aria-hidden="true">↗</span></button></span>
           </div>

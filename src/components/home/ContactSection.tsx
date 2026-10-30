@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Captcha, type CaptchaHandle } from "@/components/contact/Captcha";
+import { markSubmissionReceived } from "@/lib/submission-receipt";
+import { trackEvent } from "@/lib/analytics";
 import styles from "./ContactSection.module.css";
 
 const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY?.trim();
@@ -10,6 +15,11 @@ type Errors = Partial<Record<Field, string>>;
 type Status = { kind: "idle" | "sending" | "success" | "error"; message?: string };
 
 export function ContactSection() {
+  const router = useRouter();
+  const captcha = useRef<CaptchaHandle>(null);
+  const [captchaActive,setCaptchaActive] = useState(false);
+  const [captchaToken,setCaptchaToken] = useState("");
+  const [captchaError,setCaptchaError] = useState(false);
   const root = useRef<HTMLElement>(null);
   const form = useRef<HTMLFormElement>(null);
   const statusElement = useRef<HTMLDivElement>(null);
@@ -103,6 +113,13 @@ export function ContactSection() {
       setStatus({ kind: "error", message: "Couldn’t send your message. Please refresh the page and try again." });
       return;
     }
+    if (!captchaToken) {
+      setCaptchaActive(true);
+      setCaptchaError(true);
+      captcha.current?.focus();
+      return;
+    }
+    setCaptchaError(false);
     const projectType = String(data.get("project_type") || "").trim();
     const payload = {
       access_key: accessKey,
@@ -113,6 +130,7 @@ export function ContactSection() {
       subject: "New Portfolio Inquiry | Sodiol Sayem",
       from_name: "Sodiol Portfolio",
       botcheck: false,
+      "h-captcha-response": captchaToken,
     };
     busy.current = true;
     setStatus({ kind: "sending" });
@@ -136,6 +154,9 @@ export function ContactSection() {
         currentForm.reset();
         setErrors({});
         setStatus({ kind: "success" });
+        markSubmissionReceived();
+        trackEvent("contact_form_success");
+        router.push("/thank-you");
       } else setStatus({ kind: "error", message: "Couldn’t send your message. Please try again." });
     } catch {
       if (mounted.current) setStatus({ kind: "error", message: timedOut ? "The request took too long. Please try again." : "Couldn’t send your message. Please check your connection and try again." });
@@ -143,18 +164,19 @@ export function ContactSection() {
       clearTimeout(timeout);
       busy.current = false;
       if (activeRequest.current === controller) activeRequest.current = null;
+      if (mounted.current) captcha.current?.reset();
     }
   }
 
   return <section ref={root} id="contact" className={styles.section} aria-labelledby="contact-title" data-contact>
     <div className={styles.layout}>
       <div className={styles.introduction}>
-        <p className={styles.eyebrow}><span>05 /</span> CONTACT</p>
         <h2 id="contact-title"><span className={styles.mask}><span data-contact-line>Have something</span></span>{" "}<span className={styles.mask}><span data-contact-line>in mind?</span></span></h2>
         <p className={styles.description}>An idea, a project, or just a question. I’d love to hear about it.</p>
         <p className={styles.location}>Based in Sylhet, Bangladesh.</p>
       </div>
       <form ref={form} onSubmit={submit} noValidate action="https://api.web3forms.com/submit" method="POST"
+        onFocusCapture={() => setCaptchaActive(true)}
         className={styles.form} aria-labelledby="contact-form-title" aria-busy={sending} data-contact-form>
         <h3 id="contact-form-title" className="sr-only">Send a message</h3>
         <input type="hidden" name="access_key" value={accessKey || ""} />
@@ -179,7 +201,7 @@ export function ContactSection() {
           </div>
           <div className={styles.field} data-contact-field>
             <label htmlFor="contact-project-type">What’s this about? <span>(optional)</span></label>
-            <div className={styles.control}><select id="contact-project-type" name="project_type" defaultValue=""
+            <div className={`${styles.control} ${styles.selectControl}`}><select id="contact-project-type" name="project_type" defaultValue=""
               aria-invalid={Boolean(errors.project_type)} aria-describedby={errors.project_type ? "contact-project-type-error" : undefined}
               onChange={() => clearError("project_type")}><option value="">Select an option</option>{projectTypes.map(type => <option key={type} value={type}>{type}</option>)}</select></div>
             <p id="contact-project-type-error" className={styles.fieldError}>{errors.project_type}</p>
@@ -191,7 +213,14 @@ export function ContactSection() {
               onInput={() => clearError("message")} onBlur={() => checkField("message")} /></div>
             <p id="contact-message-error" className={styles.fieldError}>{errors.message}</p>
           </div>
+          <div className={styles.sendRow}>
+          <div className={styles.verification}>
+            <Captcha ref={captcha} active={captchaActive} onToken={setCaptchaToken} />
+            <p className={styles.fieldError} aria-live="polite">{captchaError && !captchaToken ? "Please complete the anti-spam verification." : ""}</p>
+            <p>Messages are processed by Web3Forms. <Link href="/privacy-policy">Privacy Policy</Link></p>
+          </div>
           <button className={styles.submit} type="submit" disabled={sending}>{sending ? "Sending…" : "Send message"}<span aria-hidden="true">{sending ? "" : "↗"}</span></button>
+          </div>
         </fieldset>
         <div ref={statusElement} className={styles.status} role="status" aria-live="polite" aria-atomic="true" tabIndex={-1} data-state={status.kind}>
           {status.kind === "sending" && <p>Sending your message…</p>}

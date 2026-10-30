@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type { Project } from "@/data/projects";
 import { ProjectImage } from "./ProjectImage";
 import styles from "./ProjectShowcase.module.css";
+import { trackEvent } from "@/lib/analytics";
 
 type Props = { project: Project; visit: number; transitioning: boolean; onBack: () => void };
 
@@ -38,7 +39,7 @@ export function ProjectCaseStudy({ project, visit, transitioning, onBack }: Prop
       <section className={styles.caseRow} aria-labelledby="role-title"><p className={styles.caseLabel}>02 / MY ROLE</p><div><h3 id="role-title">The scope of the work.</h3><ul className={styles.disciplines}>{project.disciplines.map(item => <li key={item}>{item}</li>)}</ul></div></section>
       <section className={styles.caseRow} aria-labelledby="approach-title"><p className={styles.caseLabel}>03 / THE APPROACH</p><div><h3 id="approach-title">A direction of its own.</h3><p>{project.approach}</p></div></section>
       <section className={styles.caseRow} aria-labelledby="implementation-title"><p className={styles.caseLabel}>04 / IMPLEMENTATION</p><div><h3 id="implementation-title">What the project brings together.</h3><ul className={styles.implementation}>{project.implementation.map(item => <li key={item}>{item}</li>)}</ul></div></section>
-      <section className={styles.caseRow} aria-labelledby="outcome-title"><p className={styles.caseLabel}>05 / THE OUTCOME</p><div><h3 id="outcome-title">The finished experience.</h3><p>{project.outcome}</p><div className={styles.caseActions}><a href={project.href} target="_blank" rel="noopener noreferrer">Live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a><button type="button" onClick={onBack}>Back to work <span aria-hidden="true">↑</span></button></div></div></section>
+      <section className={styles.caseRow} aria-labelledby="outcome-title"><p className={styles.caseLabel}>05 / THE OUTCOME</p><div><h3 id="outcome-title">The finished experience.</h3><p>{project.outcome}</p><div className={styles.caseActions}><a href={project.href} target="_blank" rel="noopener noreferrer" onClick={()=>trackEvent("live_site_click",project.slug)}>Live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a><button type="button" onClick={onBack}>Back to work <span aria-hidden="true">↑</span></button></div></div></section>
     </div>
   </article>;
 }

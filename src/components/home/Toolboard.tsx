@@ -142,7 +142,7 @@ export function Toolboard() {
                 aria-label={tool.name} aria-pressed={selected === tool.id}
                 onClick={() => setSelected(value => value === tool.id ? null : tool.id)}>
                 {tool.icon ? <Image className={styles.logo} src={`/toolkit/${tool.icon}.svg`} width={64} height={64} alt="" unoptimized loading="lazy" draggable={false} />
-                  : <span className={styles.wordmark} aria-hidden="true">{tool.mark!.map(line => <span key={line}>{line}</span>)}</span>}
+                  : <span className={styles.wordmark} aria-hidden="true">{tool.mark!.map((line,index) => <span key={line}>{line}{index < tool.mark!.length - 1 ? " " : ""}</span>)}</span>}
                 <span className={styles.name}>{tool.label}</span>
               </button>
             </div>

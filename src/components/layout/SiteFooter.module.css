@@ -10,5 +10,9 @@
 .back { display: inline-flex; align-items: center; justify-self: end; gap: 20px; min-height: 44px; font-size: 11px; color: #a8a8a8; }
 .back:hover { color: #f5f5f5; }
 .footer a:focus-visible { outline: 1px solid #f5f5f5; outline-offset: 4px; }
+.links { grid-column:1/-1; display:flex; flex-wrap:wrap; gap:6px 25px; border-top:1px solid #363636; padding-top:15px; }
+.links :is(a,button) { display:inline-flex; align-items:center; min-height:44px; color:#a8a8a8; font:inherit; font-size:11px; background:transparent; border:0; padding:0; cursor:pointer; }
+.links :is(a,button):hover { color:#f5f5f5; }
+.links button:focus-visible { outline:1px solid #f5f5f5; outline-offset:4px; }
 @media (max-width: 767px) { .footer { padding-block: 25px; } .inner { gap: 20px 10px; } .socials { gap: 3px; } .socials a { width: 37px; } .copyright { font-size: 10px; } }
 @media (prefers-reduced-motion: reduce) { .socials svg { transition: none; } .socials a:hover svg { transform: none; } }

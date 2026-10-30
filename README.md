@@ -31,7 +31,7 @@ uses a 180ms transition; without JavaScript, the portfolio is available immediat
 
 The destination homepage was created from scratch because the selected folder was
 empty. It contains real project links carried over from the user's portfolio context.
-No email address was supplied; contact currently links to the GitHub profile.
+Contact uses the homepage Web3Forms form; no public email address is invented.
 
 ## Project carousel and inline cases
 
@@ -88,7 +88,7 @@ the intro, so internal Next.js navigation preserves their lifecycle. The panel r
 as a single surface; masked lines and social icons follow in a scoped GSAP timeline.
 Escape, explicit Tab traversal, focus restoration, scroll preservation, reversible
 opening/closing, and reduced motion are supported. Native modal inertness keeps the
-pinned gallery behind the menu. Colors were sampled from the supplied screenshot.
+carousel behind the menu. Colors were sampled from the supplied screenshot.
 Cormorant Garamond 600 is the closest compared open-license font, not a confirmed
 identification of the reference typeface. Its Latin WOFF2 and OFL are hosted locally.
 Social destinations are owner-configured in `src/data/navigation.ts`. Brand paths
@@ -104,9 +104,9 @@ reduced motion and disabled JavaScript leave the text immediately readable.
 About in the menu points to `/#about`; the inline “Let’s talk” action points to
 `#contact`. The old dedicated About page, styles, animation controller and
 page-specific metadata were removed. `next.config.ts` permanently redirects
-`/about` to `/#about` (HTTP 308), preserving existing external links. There is
-no sitemap or configured production hostname in this project to update. Homepage
-metadata remains in the root layout; no replacement About route is rendered.
+`/about` to `/#about` (HTTP 308), preserving existing external links. About remains
+a homepage anchor and is not a separate sitemap entry. No replacement About route
+is rendered.
 
 ## Home toolkit canvas
 
@@ -139,8 +139,11 @@ by Git. This key is a public form identifier; no forwarding API route is needed.
 Only an HTTP-success response with `success: true` clears the form. Failed,
 rate-limited, malformed, offline and timed-out requests preserve entered values.
 Requests have a 20-second timeout, duplicate protection and unmount cancellation.
-The hidden honeypot supplements the provider's spam filtering; it is not strong
-protection by itself. No paid CAPTCHA or domain-restriction feature is enabled.
+The form lazy-loads the official hCaptcha SDK on interaction and submits its token
+with the request. Enable mandatory hCaptcha in the Web3Forms dashboard; the widget
+alone does not establish server enforcement. A hidden honeypot is supplemental.
+No paid CAPTCHA or domain-restriction feature is enabled. Strict API success now
+uses client navigation to `/thank-you`; direct visits show neutral copy.
 
 Contact is `/#contact`, also reached by the homepage About CTA. Footer links use
 the same configured social profiles as navigation. The footer renders the current
@@ -148,6 +151,19 @@ year on the server. Reduced motion skips all contact entrance effects.
 
 The Google Search Console verification token is configured through root metadata.
 Deploy this build before completing verification in Search Console.
+
+## SEO, privacy and production setup
+
+See [production readiness](docs/production-readiness.md) for route metadata,
+canonical-origin configuration, sitemap/robots, sharing assets, header policy,
+Basic Consent Mode v2, GA4 setup, provider dashboard actions and verification limits.
+The canonical URL, public form key and GA4 measurement ID must be present in the
+hosting environment at build time. `.env.example` lists their names.
+
+The footer links to `/faq`, `/privacy-policy`, Contact and persistent Cookie
+settings. Analytics loads only after explicit opt-in; advertising permissions stay
+denied. New pages reuse the site fonts and colors. No runtime dependencies were
+added. QA and social-asset scripts use optional external Playwright; see the guide.
 
 ## Reference measurements
 

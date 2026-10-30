@@ -1,12 +1,14 @@
 import { socialProfiles } from "@/data/navigation";
 import { socialIcons } from "./socialIcons";
 import styles from "./SiteFooter.module.css";
+import Link from "next/link";
+import { CookieSettingsButton } from "@/components/privacy/CookieSettingsButton";
 
 export function SiteFooter() {
   const year = new Intl.DateTimeFormat("en", { year: "numeric", timeZone: "Asia/Dhaka" }).format(new Date());
   return <footer className={styles.footer}>
     <div className={styles.inner}>
-      <a href="#home" className={styles.brand} aria-label="Sodiol home" translate="no">sodiol.</a>
+      <Link href="/#home" className={styles.brand} aria-label="sodiol. home" translate="no">sodiol.</Link>
       <nav className={styles.socials} aria-label="Social profiles">
         {Object.entries(socialProfiles).map(([key, profile]) => {
           if (!profile.url) return null;
@@ -15,7 +17,8 @@ export function SiteFooter() {
         })}
       </nav>
       <p className={styles.copyright}>© {year} Sodiol Sayem</p>
-      <a className={styles.back} href="#home">Back to top <span aria-hidden="true">↑</span></a>
+      <Link className={styles.back} href="/#home">Back to top <span aria-hidden="true">↑</span></Link>
+      <nav className={styles.links} aria-label="More information"><Link href="/faq">FAQ</Link><Link href="/privacy-policy">Privacy Policy</Link><CookieSettingsButton /><Link href="/#contact">Contact</Link></nav>
     </div>
   </footer>;
 }
