@@ -1,0 +1,55 @@
+@font-face { font-family: "General Sans"; src: url("/fonts/general-sans-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+.section { padding: clamp(90px, 9vw, 155px) max(22px, 4.5vw) 65px; background: #111111; color: #f5f5f5; font-family: "General Sans", Arial, sans-serif; scroll-margin-top: clamp(80px, 10svh, 110px); }
+.layout { max-width: 1440px; margin-inline: auto; display: grid; grid-template-columns: .95fr 1fr; gap: clamp(55px, 8vw, 150px); }
+.eyebrow { font-size: 11px; line-height: 1.5; letter-spacing: .06em; margin-bottom: 38px; }
+.eyebrow span { margin-right: 9px; color: #a8a8a8; font-variant-numeric: tabular-nums; }
+.introduction h2 { display: flex; flex-direction: column; font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: clamp(64px, 6.5vw, 112px); line-height: 1.05; letter-spacing: -.055em; }
+.mask { display: block; overflow: clip; padding-block: .12em; margin-block: -.12em; }
+.mask > span { display: block; }
+.description { max-width: 32ch; color: #a8a8a8; font-size: 17px; line-height: 1.65; margin-top: 30px; text-wrap: pretty; }
+.location { font-size: 12px; line-height: 1.7; color: #a8a8a8; margin-top: 62px; }
+.form { min-width: 0; padding-top: 55px; }
+.form fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.field { margin-bottom: 24px; }
+.field:focus-within { opacity: 1 !important; transform: none !important; }
+.field label { display: block; font-size: 12px; line-height: 1.6; color: #f5f5f5; }
+.field label > span { margin-left: 7px; color: #a8a8a8; font-size: 11px; }
+.control { position: relative; border-bottom: 1px solid #363636; }
+.control::after { content: ""; position: absolute; inset: auto 0 -1px; height: 1px; background: #f5f5f5; transform: scaleX(0); transform-origin: left center; transition: transform .35s ease; pointer-events: none; }
+.control:focus-within::after { transform: scaleX(1); }
+.control input, .control select, .control textarea { display: block; width: 100%; margin: 0; padding: 14px 0 17px; border: 0; border-radius: 0; background: transparent; color: #f5f5f5; caret-color: #f5f5f5; font: inherit; font-size: 16px; line-height: 1.5; color-scheme: dark; scroll-margin-top: 120px; }
+.control textarea { min-height: 140px; resize: vertical; }
+.control select { cursor: pointer; }
+.control option { background: #111111; color: #f5f5f5; }
+.control :is(input,textarea)::placeholder { color: #888888; opacity: 1; }
+.control :is(input,select,textarea):focus-visible { outline: none; }
+.control:has([aria-invalid="true"]) { border-bottom-style: dashed; border-bottom-color: #a8a8a8; }
+.fieldError { min-height: 22px; padding-top: 6px; font-size: 11px; line-height: 1.4; color: #d9d9d9; }
+.submit { display: inline-flex; align-items: center; justify-content: space-between; min-height: 48px; min-width: 185px; gap: 35px; margin-top: 3px; padding: 8px 0; background: transparent; border: 0; border-bottom: 1px solid #a8a8a8; color: #f5f5f5; font: inherit; font-size: 16px; cursor: pointer; touch-action: manipulation; }
+.submit > span { display: block; min-width: 20px; font-size: 24px; line-height: 1; transition: transform .3s ease; }
+.submit:hover > span, .submit:focus-visible > span { transform: translate(2px,-2px); }
+.submit:focus-visible { outline: 1px solid #f5f5f5; outline-offset: 6px; }
+.submit:active { opacity: .7; }
+.submit:disabled { cursor: progress; color: #a8a8a8; }
+.status { min-height: 110px; margin-top: 28px; scroll-margin-top: 120px; }
+.status p { font-size: 13px; line-height: 1.65; color: #a8a8a8; max-width: 48ch; }
+.status:focus { outline: none; }
+.status[data-state="error"] { border-left: 1px solid #a8a8a8; padding-left: 16px; }
+.successMask { overflow: clip; padding-bottom: 5px; }
+.successMask h3 { font-family: "Cormorant Garamond", serif; font-size: 38px; line-height: 1.1; letter-spacing: -.03em; font-weight: 600; margin-bottom: 9px; animation: sent .5s cubic-bezier(.22,1,.36,1); }
+.honeypot { display: none; }
+@keyframes sent { from { transform: translateY(110%); } to { transform: translateY(0); } }
+@media (max-width: 1023px) { .layout { gap: 45px; } .introduction h2 { font-size: clamp(57px, 6.5vw, 80px); } }
+@media (max-width: 767px) {
+  .section { padding-block: 80px 30px; }
+  .layout { grid-template-columns: minmax(0,1fr); gap: 38px; }
+  .eyebrow { margin-bottom: 28px; }
+  .introduction h2 { font-size: clamp(44px, 13.5vw, 78px); }
+  .description { margin-top: 25px; font-size: 16px; }
+  .location { margin-top: 29px; font-size: 11px; }
+  .form { padding-top: 0; }
+  .field { margin-bottom: 23px; }
+  .submit { min-width: 190px; }
+  .status { min-height: 112px; }
+}
+@media (prefers-reduced-motion: reduce) { .control::after, .submit > span { transition: none; } .submit:is(:hover,:focus-visible) > span { transform: none; } .successMask h3 { animation: none; } }

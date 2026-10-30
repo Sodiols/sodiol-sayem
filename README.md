@@ -73,8 +73,8 @@ also resets to Husnalogy through the small `sodiol:work-start` event.
 Case entry and return use matching element-scroll APIs, so a quick return
 supersedes the pending case-entry scroll reliably in Firefox as well.
 
-The carousel uses no GSAP plugin or ScrollTrigger. Existing menu and About motion
-continue using GSAP. Reduced motion settles image changes immediately, and a
+The carousel uses no GSAP plugin or ScrollTrigger. The menu continues using GSAP;
+the compact About reveal uses native Web Animations. Reduced motion settles image changes immediately, and a
 no-JavaScript project index preserves the four external destinations. The unused
 General Sans 700 preload was removed; the existing fonts themselves are retained.
 The gallery sits below the fixed navbar and uses 94svh rather than filling the
@@ -94,22 +94,24 @@ identification of the reference typeface. Its Latin WOFF2 and OFL are hosted loc
 Social destinations are owner-configured in `src/data/navigation.ts`. Brand paths
 are from Font Awesome Free; attribution/license lives in `public/licenses/`.
 
-`/about` is a server-rendered route with route-specific metadata and scoped
-monochrome styling. `AboutMotion` is the small client boundary that owns headline
-masks, content entry, and structural rule reveals. It waits for the first document's
-intro completion, uses existing GSAP/ScrollTrigger, and reverts its match-media
-context on preference changes or unmount. Content and links work without JS.
-The five sections use the supplied personal copy and capabilities, with no invented
-experience. The homepage's short About teaser links here; the work and contact CTAs
-return to the real homepage destinations without replaying the intro. All About
-display headings share Cormorant Garamond; body copy uses existing General Sans.
-The four homepage project titles also use this same serif, per the typography
-refinement; descriptions and actions retain General Sans.
+The homepage contains one compact `AboutSection` between the project carousel
+and toolkit. It preserves the original global two-column layout, Instrument Serif
+headline, short paragraph and underlined Contact CTA. Its two masked headline
+lines and small copy entry run once on viewport entry after the intro. Native
+Web Animations and IntersectionObserver keep the effect scoped and lightweight;
+reduced motion and disabled JavaScript leave the text immediately readable.
+
+About in the menu points to `/#about`; the inline “Let’s talk” action points to
+`#contact`. The old dedicated About page, styles, animation controller and
+page-specific metadata were removed. `next.config.ts` permanently redirects
+`/about` to `/#about` (HTTP 308), preserving existing external links. There is
+no sitemap or configured production hostname in this project to update. Homepage
+metadata remains in the root layout; no replacement About route is rendered.
 
 ## Home toolkit canvas
 
-`Toolboard` sits once between the homepage About teaser and Contact. The separate
-About page is unchanged. Its 25 entries and deterministic desktop coordinates /
+`Toolboard` sits once between the homepage About teaser and Contact. The compact
+About section remains directly above it. Its 25 entries and deterministic desktop coordinates /
 compact layout spans live in `src/data/toolkit.ts`. The canvas uses existing
 Cormorant Garamond / General Sans with scoped monochrome tile styling.
 
@@ -125,6 +127,27 @@ button behavior. Touch layouts show labels and use a separate staggered layout.
 The SVG assets total approximately 28 KB and load locally/lazily. Simple Icons and
 Devicon sources/licenses are documented in `public/toolkit/SOURCES.md`; tool
 identities without a verified symbol use text marks. No new dependencies.
+
+## Contact and footer
+
+The homepage `ContactSection` uses the existing Cormorant Garamond and General
+Sans fonts, scoped monochrome styles, native controls, inline validation and a
+single client-side POST to Web3Forms. Set `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` in
+the hosting environment before building. The existing `.env.local` is ignored
+by Git. This key is a public form identifier; no forwarding API route is needed.
+
+Only an HTTP-success response with `success: true` clears the form. Failed,
+rate-limited, malformed, offline and timed-out requests preserve entered values.
+Requests have a 20-second timeout, duplicate protection and unmount cancellation.
+The hidden honeypot supplements the provider's spam filtering; it is not strong
+protection by itself. No paid CAPTCHA or domain-restriction feature is enabled.
+
+Contact is `/#contact`, also reached by the homepage About CTA. Footer links use
+the same configured social profiles as navigation. The footer renders the current
+year on the server. Reduced motion skips all contact entrance effects.
+
+The Google Search Console verification token is configured through root metadata.
+Deploy this build before completing verification in Search Console.
 
 ## Reference measurements
 

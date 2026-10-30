@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description: "Sodiol Sayem is a creative full stack developer from Sylhet, Bangladesh. Thoughtful interfaces, dependable systems, and care in the details.",
   openGraph: { title: "Sodiol Sayem", description: "Creative full stack developer. Sylhet, Bangladesh.", type: "website" },
   robots: { index: true, follow: true },
+  verification: { google: "iEQ4_JCjqMIA2XScyuNewP0E9x8IZbxG1sdlqgcoWXY" },
 };
 export const viewport: Viewport = { themeColor: "#262823", width: "device-width", initialScale: 1 };
 
