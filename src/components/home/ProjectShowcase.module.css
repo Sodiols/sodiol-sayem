@@ -29,7 +29,7 @@
 .selector button img { object-fit: cover; filter: grayscale(100%); }
 .selector button[aria-current="true"] { opacity: 1; outline: 2px solid var(--accent); outline-offset: 3px; }
 .selector button:active { opacity: .78; }
-.infoPanel { position:relative; flex-shrink:0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px clamp(24px, 4vw, 65px); background: var(--work-ground); }
+.infoPanel { position:relative; flex-shrink:0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0 24px; background: var(--work-ground); }
 .infoMask { display: block; overflow: clip; padding: 6px; margin: -6px; }
 .infoPanel h2 { font-family: var(--font-display); font-size: clamp(36px, 3.6vw, 64px); line-height: 1.05; letter-spacing: -.045em; font-weight: 400; }
 .actions { display: flex; align-items: center; gap: clamp(20px, 3vw, 50px); }
@@ -40,10 +40,8 @@
 .artwork:focus-within .infoPanel { transform: translateY(0); transition-duration: 0s; }
 .artwork:focus-within .imageViewport::after { opacity: .32; }
 .artwork:focus-within .infoPanel h2, .artwork:focus-within .actions a, .artwork:focus-within .actions button { transform: translateY(0); transition-duration: 0s; transition-delay: 0s; }
-.descriptionStrip { grid-column:1/-1; display:grid; grid-template-columns:minmax(180px,.8fr) minmax(0,1.4fr); align-items:center; gap:32px; min-height:96px; padding:22px 0 15px; border-top:1px solid var(--work-rule); } /* taste-skill-ignore: preserve the original project-caption divider requested by the owner. */
-.projectDetails { display:flex; align-items:center; flex-wrap:wrap; gap:12px 20px; min-width:0; }
-.projectName { font-family:var(--font-display); font-size:clamp(27px,2.5vw,37px); line-height:1.05; letter-spacing:-.025em; }
-.category { display:inline-flex; align-items:center; min-height:30px; padding:4px 8px; border:1px solid var(--work-rule); color:var(--accent); font-size:13px; line-height:1.3; white-space:nowrap; }
+.descriptionStrip { grid-column:1/-1; display:grid; grid-template-columns:minmax(140px,.35fr) minmax(0,1fr); align-items:start; gap:32px; min-height:88px; padding:22px 0 15px; border-top:1px solid var(--work-rule); } /* taste-skill-ignore: preserve the original project-caption divider requested by the owner. */
+.category { color:var(--accent); font-size:14px; line-height:1.85; }
 .projectSummary { max-width:65ch; color:var(--work-muted); font-size:16px; line-height:1.65; text-wrap:pretty; }
 .showcase :is(a,button,[tabindex]):focus-visible { outline: 2px solid var(--work-ink); outline-offset: 4px; }
 .stage:focus-visible { outline-offset: -5px; }
@@ -86,7 +84,7 @@
   .caseActions a:hover { color: var(--work-muted); }
 }
 @media (max-width: 1000px) {
-  .infoPanel { padding-inline: 25px; gap: 16px; }
+  .infoPanel { gap: 16px; }
   .actions { gap: 24px; }
   .actions a, .actions button { gap: 10px; font-size: 15px; }
 }
@@ -99,7 +97,7 @@
   .stage { height:auto; min-height:0; grid-template-rows:auto auto; margin-inline:var(--page-gutter); }
   .artwork { display: flex; flex-direction: column; overflow: clip; }
   .imageViewport { position:relative; flex:none; aspect-ratio:1.3; min-height:0; }
-  .infoPanel { position: relative; flex-shrink: 0; flex-direction: column; align-items: flex-start; gap: 10px; padding: 22px 20px 16px; transform: none; }
+  .infoPanel { position: relative; flex-shrink: 0; flex-direction: column; align-items: flex-start; gap: 10px; padding: 22px 0 16px; transform: none; }
   .infoPanel h2 { font-size: 37px; transform: none; }
   .actions { width: 100%; justify-content: space-between; gap: 12px; }
   .actions a, .actions button { transform: none; font-size: 14px; gap: 9px; }
@@ -108,8 +106,6 @@
   .rail { padding-top: 0; }
   .selector button { width: 48px; height: 48px; }
   .descriptionStrip { grid-template-columns:minmax(0,1fr); gap:14px; padding-block:20px 24px; }
-  .projectDetails { gap:9px 14px; }
-  .projectName { display:none; }
   .projectSummary { grid-column:1/-1; grid-row:2; font-size:16px; }
   .caseStudy { padding: 35px 22px; }
   .caseIntro { grid-template-columns: minmax(0, 1fr); gap: 25px; padding-block: 30px 35px; }

@@ -201,7 +201,7 @@ export function ProjectShowcase() {
       <CarouselArrows onPrevious={() => step(-1)} onNext={() => step(1)} />
       <ProjectSelector active={active} onSelect={select} />
       <div className={styles.descriptionStrip}>
-        <div className={styles.projectDetails}><p className={styles.projectName}>{project.name}</p><span className={styles.category} data-project-category>{project.category}</span></div>
+        <span className={styles.category} data-project-category>{project.category}</span>
         <p className={styles.projectSummary}>{project.summary}</p>
       </div>
       <p className="sr-only" aria-live="polite" aria-atomic="true">{project.name}. Project {active + 1} of {projects.length}.</p>
