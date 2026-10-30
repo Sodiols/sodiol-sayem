@@ -28,7 +28,7 @@ elements use `data-reveal`; future homepage animation controllers can listen for
 The hidden page is inert and scrolling is locked until the final curtain clears.
 All animations, timers, and listeners are cleaned up on unmount. Reduced motion
 skips the intro; without JavaScript, the portfolio is available immediately. The
-letter-and-curtain sequence now runs on a 1.08-second timeline with a bounded
+letter-and-curtain sequence now runs on a 4.88-second timeline with a bounded
 100ms font wait.
 
 The destination homepage was created from scratch because the selected folder was

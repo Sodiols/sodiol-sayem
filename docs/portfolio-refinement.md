@@ -60,7 +60,7 @@ large picture, caption divider and small identity/category labels. Four projects
 remain browsable; extra images are not mounted merely to satisfy an image count.
 
 The original intro's letter movements and curtain sequence remain, with an
-approximately 1.08-second animation timeline and at most 100ms font wait. Reduced
+approximately 4.88-second animation timeline and at most 100ms font wait. Reduced
 motion skips that sequence. Content remains readable without JavaScript. This is
 an animation duration, not a network or field-LCP guarantee.
 
@@ -96,6 +96,11 @@ are lab measurements; field Core Web Vitals require real visitor data. Deploymen
 is separate from local implementation and validation.
 
 ## Recorded results
+
+These measurements were recorded before the owner's follow-up request to slow
+the intro. The intro was subsequently restored to a 4.88-second timeline, around
+15% shorter than the original 5.74 seconds. The Lighthouse performance figures
+below describe the earlier short-intro build, not the restored pacing.
 
 - ESLint, TypeScript and the optimized production build passed. Four case pages
   are generated statically. Production dependency audit: zero vulnerabilities.
