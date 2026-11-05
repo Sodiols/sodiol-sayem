@@ -44,23 +44,30 @@
 
 @property --lift { syntax: "<length>"; inherits: true; initial-value: 0px; }
 
-/* Phones: the stack pins as a band at the top and the layers scroll up beneath it. */
+/* Phones: no room to read beside the stack, so it opens once as a picture and the layers follow as lists. */
 @media (max-width: 900px) {
   .header { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .header p { justify-self: start; font-size: 16px; }
-  .stack { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .scene { order: 0; z-index: 1; height: 44svh; margin-inline: calc(var(--page-gutter) * -1); padding-top: 56px; background: var(--ground); perspective: 1200px; }
-  .plates { width: min(64vw, 300px); }
-  .plate { padding: 14px; gap: 10px; transform: translateZ(calc((1 - var(--i)) * var(--spread) * 70px + var(--lift))); }
-  .plate[data-active="true"] { --lift: 26px; }
-  .plate[data-above="true"] { --lift: 110px; }
-  .plate p { font-size: 18px; }
-  .tiles { gap: 6px; }
-  .layer { min-height: 62svh; padding-block: 28px; }
-  .layer h3 { font-size: clamp(40px, 11vw, 60px); }
-  .description { font-size: 16px; }
-  .tools li { font-size: 20px; }
+  .stack { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 8px; }
+  .scene { order: 0; position: relative; height: auto; padding-block: 90px 70px; perspective: 1100px; }
+  .plates { width: min(62vw, 280px); }
+  .plate { padding: 12px; gap: 8px; transform: translateZ(calc((1 - var(--i)) * var(--spread) * 64px)); opacity: 1; }
+  .plate:first-child { background: var(--accent); color: var(--ground); }
+  .plate:first-child .tiles span { background: color-mix(in srgb, var(--ground) 12%, transparent); }
+  .plate:first-child .logo { filter: brightness(0); opacity: .85; }
+  .plate:not(:first-child) { background: #2a2d26; color: var(--muted); }
+  .plate:not(:first-child) .tiles span { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  .plate:not(:first-child) .logo { filter: brightness(0) invert(.86); opacity: .6; }
+  .plate p { font-size: 16px; }
+  .tiles { gap: 5px; }
+  .layer { min-height: 0; padding-block: 0; }
+  .layer + .layer { margin-top: 64px; }
+  .layer h3, .layer[data-active="true"] h3 { color: var(--accent); font-size: clamp(38px, 10.5vw, 56px); }
+  .description { margin-top: 12px; font-size: 16px; }
+  .tools { gap: 0; margin-top: 22px; }
+  .tools li { padding-block: 10px; font-size: 20px; }
+  .tool .logo { opacity: 1; }
   .usage { font-size: 14px; }
-  .additional { font-size: 20px; }
+  .additional { margin-top: 64px; font-size: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .plate, .logo, .layer h3 { transition: none; } }
