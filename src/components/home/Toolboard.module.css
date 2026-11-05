@@ -1,0 +1,66 @@
+.section { position: relative; padding: clamp(120px, 14vw, 220px) var(--page-gutter) clamp(80px, 10vw, 160px); color: var(--ink); }
+.header { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 40px; }
+.header h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(56px, 8.4vw, 150px); line-height: .9; letter-spacing: -.045em; }
+.header p { max-width: 36ch; justify-self: end; font-size: 18px; line-height: 1.55; text-wrap: pretty; }
+
+/* The layers read on the left; the stack they describe stays in view on the right. */
+.stack { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 90px); margin-top: clamp(40px, 6vw, 100px); }
+.scene { order: 2; position: sticky; top: 0; height: 100svh; display: grid; place-items: center; perspective: 1800px; }
+.plates { --spread: 1; position: relative; width: min(100%, 470px); aspect-ratio: 4 / 3; transform: rotateX(56deg) rotateZ(-38deg); transform-style: preserve-3d; }
+.plate { --lift: 0px; position: absolute; inset: 0; display: flex; flex-direction: column; gap: 18px; padding: 24px; background: #2a2d26; color: var(--muted);
+  transform: translateZ(calc((1 - var(--i)) * var(--spread) * 120px + var(--lift))); box-shadow: -26px 34px 60px rgba(0, 0, 0, .45);
+  transition: background-color .5s ease, color .5s ease, opacity .5s ease, --lift .7s cubic-bezier(.22, 1, .36, 1); }
+.plate[data-active="true"] { --lift: 46px; background: var(--accent); color: var(--ground); }
+/* Layers above the one being read rise out of the way so it can be seen. */
+.plate[data-above="true"] { --lift: 190px; opacity: .22; }
+.plate p { font-family: var(--font-display); font-size: 30px; line-height: 1; letter-spacing: -.02em; }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tiles span { display: grid; place-items: center; aspect-ratio: 1; background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.plate[data-active="true"] .tiles span { background: color-mix(in srgb, var(--ground) 12%, transparent); }
+/* One colour for every mark, so dark logos read on the ground and on the lit plate alike. */
+.logo { width: 34%; height: auto; filter: brightness(0) invert(.86); opacity: .6; transition: filter .5s ease, opacity .5s ease; }
+.plate[data-active="true"] .logo { filter: brightness(0); opacity: .85; }
+.mark { font-size: 11px; line-height: 1.1; text-align: center; }
+
+.layers { order: 1; }
+.layer { display: flex; flex-direction: column; justify-content: center; min-height: 82svh; padding-block: 40px; }
+.layer h3 { font-family: var(--font-display); font-weight: 400; font-size: clamp(44px, 5.2vw, 88px); line-height: .95; letter-spacing: -.04em; color: var(--muted); transition: color .4s ease; }
+.layer[data-active="true"] h3 { color: var(--accent); }
+.description { max-width: 34ch; margin-top: 18px; font-size: 18px; line-height: 1.55; }
+.tools { display: grid; gap: 6px; margin: 34px 0 0; padding: 0; list-style: none; }
+.tools li { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 24px; padding-block: 8px; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.3; }
+.tool { display: inline-flex; align-items: center; gap: .5em; }
+.tool .logo { width: .9em; height: .9em; }
+.layer[data-active="true"] .tool .logo { opacity: 1; }
+.usage { color: var(--muted); font-size: 15px; }
+
+.additional { margin-top: 72px; font-size: clamp(20px, 2.1vw, 30px); }
+.additional summary { display: inline-flex; align-items: center; gap: 24px; min-height: 48px; color: var(--accent); cursor: pointer; list-style: none; }
+.additional summary::-webkit-details-marker { display: none; }
+.additional summary span { transition: transform .3s ease; }
+.additional[open] summary span { transform: rotate(45deg); }
+.additional ul { display: flex; flex-wrap: wrap; gap: 4px 28px; margin: 16px 0 0; padding: 0; list-style: none; color: var(--muted); }
+.additional summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+@property --lift { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+/* Phones: the stack pins as a band at the top and the layers scroll up beneath it. */
+@media (max-width: 900px) {
+  .header { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .header p { justify-self: start; font-size: 16px; }
+  .stack { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .scene { order: 0; z-index: 1; height: 44svh; margin-inline: calc(var(--page-gutter) * -1); padding-top: 56px; background: var(--ground); perspective: 1200px; }
+  .plates { width: min(64vw, 300px); }
+  .plate { padding: 14px; gap: 10px; transform: translateZ(calc((1 - var(--i)) * var(--spread) * 70px + var(--lift))); }
+  .plate[data-active="true"] { --lift: 26px; }
+  .plate[data-above="true"] { --lift: 110px; }
+  .plate p { font-size: 18px; }
+  .tiles { gap: 6px; }
+  .layer { min-height: 62svh; padding-block: 28px; }
+  .layer h3 { font-size: clamp(40px, 11vw, 60px); }
+  .description { font-size: 16px; }
+  .tools li { font-size: 20px; }
+  .usage { font-size: 14px; }
+  .additional { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .plate, .logo, .layer h3 { transition: none; } }

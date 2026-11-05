@@ -1,0 +1,99 @@
+"use client";
+
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import styles from "./Navbar.module.css";
+import { navigationLinks } from "@/data/navigation";
+import { scrollToY } from "@/lib/scroll";
+
+// Same-page links glide with the page's smooth scroller; links to other pages navigate normally.
+function jump(event: MouseEvent<HTMLAnchorElement>, href: string) {
+  const url = new URL(href, window.location.href);
+  const target = url.pathname === window.location.pathname && document.getElementById(url.hash.slice(1));
+  if (!target) return;
+  event.preventDefault();
+  if (window.location.hash !== url.hash) window.history.pushState(null, "", url.hash);
+  scrollToY(target.getBoundingClientRect().top + window.scrollY);
+}
+
+// Keep the GSAP menu out of the initial page's execution path. Once requested,
+// retain its component so its reversible animation and focus lifecycle survive.
+const NavigationOverlay = dynamic(() => import("./NavigationOverlay").then(module => module.NavigationOverlay), { ssr: false });
+
+export function Navbar() {
+  const router = useRouter();
+  const root = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const destination = useRef<string | null>(null);
+  const focusFrame = useRef(0);
+  const pendingFocus = useRef<HTMLElement | null>(null);
+  const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [menuLoaded, setMenuLoaded] = useState(false);
+  useEffect(() => () => cancelAnimationFrame(focusFrame.current), []);
+  useLayoutEffect(() => {
+    if (visible || !pendingFocus.current) return;
+    const target = pendingFocus.current;
+    pendingFocus.current = null;
+    // The header must have committed its non-inert state before Safari can focus it.
+    focusFrame.current = requestAnimationFrame(() => target.focus({ preventScroll: true }));
+  }, [visible]);
+
+  const requestClose = useCallback(() => setOpen(false), []);
+  const requestNavigation = useCallback((href: string) => {
+    destination.current = href;
+    setOpen(false);
+  }, []);
+  const afterClose = useCallback(() => {
+    setVisible(false);
+    setOpen(false);
+    const href = destination.current;
+    destination.current = null;
+    cancelAnimationFrame(focusFrame.current);
+    if (!href) {
+      pendingFocus.current = trigger.current;
+      return;
+    }
+    const url = new URL(href, window.location.href);
+    if (url.pathname !== window.location.pathname) {
+      router.push(href);
+      return;
+    }
+    const target = document.getElementById(url.hash.slice(1));
+    if (!target) {
+      pendingFocus.current = trigger.current;
+      return;
+    }
+    if (window.location.hash !== url.hash) window.history.pushState(null, "", url.hash);
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+    if (url.hash === "#home") window.scrollTo({ top: 0, behavior });
+    else target.scrollIntoView({ behavior, block: "start" });
+    const focusTarget = target.querySelector<HTMLElement>("h1,h2") ?? target;
+    focusTarget.setAttribute("tabindex", "-1");
+    pendingFocus.current = focusTarget;
+    focusTarget.addEventListener("blur", () => focusTarget.removeAttribute("tabindex"), { once: true });
+  }, [router]);
+
+  return <div ref={root} className={styles.root} data-overlay-visible={visible}>
+    <header className={styles.bar} aria-label="Site navigation" aria-hidden={visible} inert={visible}>
+      <Link href="/#home" className={styles.wordmark} aria-label="Sodiol home" translate="no">sodiol.</Link>
+      <nav className={styles.links} aria-label="Primary">{navigationLinks.map(link => <Link key={link.href} href={link.href} onClick={event => jump(event, link.href)}>{link.label}</Link>)}</nav>
+      <button ref={trigger} className={styles.menuButton} type="button" aria-label="Open navigation menu"
+        aria-expanded={open} aria-controls="navigation-overlay" aria-haspopup="dialog"
+        onClick={() => {
+          if (root.current?.closest<HTMLElement>("[data-intro]")?.dataset.intro !== "complete") return;
+          destination.current = null;
+          pendingFocus.current = null;
+          cancelAnimationFrame(focusFrame.current);
+          setVisible(true);
+          setMenuLoaded(true);
+          setOpen(true);
+        }}>
+        <span /><span />
+      </button>
+    </header>
+    {menuLoaded && <NavigationOverlay open={open} onRequestClose={requestClose} onNavigate={requestNavigation} onClosed={afterClose} />}
+  </div>;
+}

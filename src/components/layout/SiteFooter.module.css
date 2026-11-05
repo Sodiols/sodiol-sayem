@@ -1,0 +1,20 @@
+/* The room's lights come on: ground and ink swap, and the name returns at full width. */
+.footer { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; min-height: 88svh; padding: 40px var(--page-gutter) 22px; background: var(--paper); color: var(--paper-ink); }
+.columns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; font-size: 16px; line-height: 1.5; }
+.columns > * { display: flex; flex-direction: column; align-items: flex-start; }
+.columns p, .columns a, .columns button { color: var(--paper-muted); }
+.columns .lead { margin-bottom: 6px; color: var(--paper-ink); }
+.columns a, .columns button { display: inline-flex; align-items: center; gap: 10px; min-height: 32px; padding: 0; border: 0; background: transparent; font: inherit; cursor: pointer; transition: color .18s ease, transform .2s ease; }
+.columns a:hover, .columns button:hover { color: var(--paper-ink); transform: translateX(4px); }
+.columns svg { width: 15px; height: 15px; fill: currentColor; }
+.brand { grid-row: 3; display: block; width: 100%; justify-self: stretch; margin-top: 40px; color: var(--paper-ink); }
+.brand svg { display: block; width: 100%; height: auto; overflow: visible; }
+.brand text { font-family: var(--font-display); font-size: 150px; letter-spacing: -.05em; fill: currentColor; }
+.footer p { order: 0; flex-basis: auto; }
+.copyright { grid-row: 4; margin-top: 16px; color: var(--paper-muted); font-size: 14px; }
+.footer :is(a,button):focus-visible { outline: 2px solid var(--paper-ink); outline-offset: 4px; }
+@media (max-width: 767px) {
+  .footer { min-height: 80svh; padding-top: 32px; }
+  .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { .columns a, .columns button { transition: none; } .columns a:hover, .columns button:hover { transform: none; } }

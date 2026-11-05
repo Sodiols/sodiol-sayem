@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.reference/
+.taste-skill/
+*.tsbuildinfo
+.env*
+!.env.example
+.claude/
