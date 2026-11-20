@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   icons: { icon: [{url:"/favicon.ico",sizes:"any"},{url:"/icon.png",type:"image/png",sizes:"192x192"}],apple:[{url:"/apple-touch-icon.png",sizes:"180x180"}] },
   verification: { google: "iEQ4_JCjqMIA2XScyuNewP0E9x8IZbxG1sdlqgcoWXY" },
 };
-export const viewport: Viewport = { themeColor: "#1d1f1a", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#191b18", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en" data-scroll-behavior="smooth"><head>

@@ -7,8 +7,8 @@
 }
 
 .root {
-  --menu-ground: #1e1c18;
-  --menu-ivory: #d0cabf;
+  --menu-ground: var(--interlude);
+  --menu-ivory: var(--ink);
   --menu-gutter: clamp(18px, 4.5vw, 80px);
   --menu-top: clamp(8px, calc(7svh - 22px), 42px);
   --menu-serif: "Cormorant Garamond", "Instrument Serif", serif;
@@ -55,7 +55,7 @@
 .menuButton span, .closeButton span { position: absolute; display: block; height: 1px; /* taste-skill-ignore: preserve the original navbar requested by the user. */ background: currentColor; transform-origin: center; }
 .menuButton span { width: 21px; left: 11.5px; transition: transform 0.22s ease; }
 .menuButton span:first-child { top: 20px; }
-.menuButton span:last-child { top: 24px; }
+.menuButton span:nth-child(2) { top: 24px; }
 .menuButton:active span:first-child { transform: translateY(1px); }
 .menuButton:active span:last-child { transform: translateY(-1px); }
 .closeButton { position: fixed; top: max(var(--menu-top), env(safe-area-inset-top)); right: max(var(--menu-gutter), env(safe-area-inset-right)); z-index: 2; }
@@ -148,9 +148,7 @@
   .labelEcho { display: none; }
 }
 
-.links { display: flex; gap: clamp(22px, 2.6vw, 40px); margin: 0 clamp(20px, 3vw, 44px) 0 auto; font-family: var(--font-body); font-size: 15px; }
-.links a { position: relative; display: inline-flex; align-items: center; min-height: 44px; pointer-events: auto; }
-.links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 10px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.22,1,.36,1); }
-.links a:hover::after { transform: scaleX(1); transform-origin: left; }
-@media (max-width: 900px) { .links { display: none; } }
-@media (prefers-reduced-motion: reduce) { .links a::after { transition: none; } }
+
+.menuButton { width: 88px; flex-basis: 88px; }
+.menuButton span { left: auto; right: 11.5px; }
+.menuLabel { position: absolute; left: 0; top: 50%; translate: 0 -50%; font-family: var(--font-body); font-size: 14px; font-weight: 400; }

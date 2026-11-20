@@ -1,5 +1,5 @@
 import { Hero } from "@/components/home/Hero";
-import { HillScene } from "@/components/three/HillScene";
+import { TrustSections } from "@/components/home/TrustSections";
 import { ProjectShowcase } from "@/components/home/ProjectShowcase";
 import { Toolboard } from "@/components/home/Toolboard";
 import { AboutSection } from "@/components/home/AboutSection";
@@ -13,7 +13,7 @@ import { socialProfiles } from "@/data/navigation";
 
 export const metadata = pageMetadata("/");
 
-export const viewport: Viewport = { themeColor: "#1d1f1a" };
+export const viewport: Viewport = { themeColor: "#191b18" };
 
 export default function Home() {
   return <>
@@ -21,9 +21,9 @@ export default function Home() {
       {"@type":"Person","@id":`${site.origin}/#person`,name:site.name,url:site.origin,jobTitle:"Full-Stack Developer",worksFor:{"@type":"Organization",name:"Meka Agency"},homeLocation:{"@type":"Place",name:"Sylhet, Bangladesh"},sameAs:Object.values(socialProfiles).map(profile=>profile.url).filter(Boolean)},
       {"@type":"WebSite","@id":`${site.origin}/#website`,name:site.name,url:site.origin,inLanguage:"en",author:{"@id":`${site.origin}/#person`}},
     ]}).replace(/</g,"\\u003c")}} />
-    <HillScene />
     <main id="main">
       <Hero />
+      <TrustSections />
       <ProjectShowcase />
       <AboutSection />
       <Toolboard />

@@ -1,5 +1,5 @@
 // The work gallery: project screens on a curved ribbon that flexes with scroll speed.
-// At rest each screen is printed in the room's two inks; the pointer reveals its true colour.
+// Active mockups retain their artwork colours; neighbouring screens sit in the room’s inks.
 
 const vertex = /* glsl */ `
 uniform float uCurve, uVelocity, uHover, uTime;
@@ -25,7 +25,6 @@ uniform float uActive, uHover, uVelocity, uAspect, uLoaded, uTime;
 uniform vec2 uMouse;
 varying vec2 vUv;
 varying float vDepth;
-float grain(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233)))*43758.5453); }
 void main(){
   float shift = uVelocity*0.025;
   vec3 tex = vec3(texture2D(uTex, vUv + vec2(shift, 0.0)).r, texture2D(uTex, vUv).g, texture2D(uTex, vUv - vec2(shift, 0.0)).b);
@@ -35,11 +34,10 @@ void main(){
   float d = distance(vUv*a, uMouse*a);
   float radius = uHover*0.9*uAspect;
   float reveal = smoothstep(radius, radius - 0.18, d);
-  vec3 color = mix(duo, tex, reveal);
+  vec3 color = mix(duo, tex, max(reveal, uActive));
   float edge = smoothstep(0.0, 0.06, vUv.x)*smoothstep(1.0, 0.94, vUv.x)*smoothstep(0.0, 0.06, vUv.y)*smoothstep(1.0, 0.94, vUv.y);
   color *= mix(0.62, 1.0, edge);                          // edges settle into the dark
   color *= mix(0.32, 1.0, uActive) * mix(1.0, 0.7, clamp(-vDepth*0.25, 0.0, 1.0));
-  color += (grain(vUv*900.0 + uTime) - 0.5)*0.05;
   gl_FragColor = vec4(mix(uDark*0.6, color, uLoaded), 1.0);
 }`;
 
@@ -67,6 +65,7 @@ export async function mountWorkStage({ host, track, sources, onActive, onHover, 
 
   const geometry = new THREE.PlaneGeometry(1, 1, 48, 24);
   const loader = new THREE.TextureLoader();
+  let disposed = false, loaded = 0;
   const planes = sources.map(source => {
     const uniforms = {
       uTex: { value: new THREE.Texture() }, uDark: { value: dark }, uLight: { value: light },
@@ -75,10 +74,13 @@ export async function mountWorkStage({ host, track, sources, onActive, onHover, 
     };
     const mesh = new THREE.Mesh(geometry, new THREE.ShaderMaterial({ vertexShader: vertex, fragmentShader: fragment, uniforms }));
     loader.load(source.src, texture => {
+      if (disposed) { texture.dispose(); return; }
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      uniforms.uTex.value.dispose();
       uniforms.uTex.value = texture;
       uniforms.uLoaded.value = 1;
+      if (++loaded === sources.length) onReady();
     });
     scene.add(mesh);
     return { mesh, uniforms, aspect: source.width/source.height, hover: 0 };
@@ -87,12 +89,13 @@ export async function mountWorkStage({ host, track, sources, onActive, onHover, 
   let spacing = 1, centreY = 0, portrait = false;
   const resize = () => {
     const { clientWidth: w, clientHeight: h } = host;
+    if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w/h;
     camera.updateProjectionMatrix();
     portrait = w/h < 1;
     const visH = 2*camera.position.z*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)), visW = visH*camera.aspect;
-    const boxW = visW*(portrait ? .86 : .46), boxH = visH*(portrait ? .3 : .44);
+    const boxW = visW*(portrait ? .86 : .46), boxH = visH*(portrait ? .3 : .48);
     spacing = visW*(portrait ? .94 : .62);
     centreY = visH*(.5 - (portrait ? .4 : .39));
     for (const plane of planes) {
@@ -154,9 +157,9 @@ export async function mountWorkStage({ host, track, sources, onActive, onHover, 
     renderer.render(scene, camera);
   };
   tick();
-  onReady();
 
   return () => {
+    disposed = true;
     cancelAnimationFrame(frame);
     resizer.disconnect();
     viewport.disconnect();

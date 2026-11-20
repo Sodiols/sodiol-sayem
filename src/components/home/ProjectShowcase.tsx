@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { projects } from "@/data/projects";
+import { projects, type Project } from "@/data/projects";
 import { ProjectImage } from "./ProjectImage";
 import { mountWorkStage } from "./workStage";
 import styles from "./ProjectShowcase.module.css";
@@ -12,6 +12,17 @@ import { scrollToY } from "@/lib/scroll";
 
 const vars = (values: Record<string, string | number>) => values as CSSProperties;
 
+function ProjectActions({ project }: { project: Project }) {
+  return <div className={styles.actions}>
+    <Link className={styles.caseButton} href={`/work/${project.slug}`} onClick={() => trackEvent("case_study_open", project.slug)}>
+      Read the case <span aria-hidden="true">→</span>
+    </Link>
+    <a className={styles.liveLink} href={project.href} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("live_site_click", project.slug)}>
+      Live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  </div>;
+}
+
 export function ProjectShowcase() {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -19,6 +30,7 @@ export function ProjectShowcase() {
   const [current, setCurrent] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
   const [glReady, setGlReady] = useState(false);
+  const stageReady = useRef(false);
   const router = useRouter();
 
   // Where the page must be for project `index` to stand in the middle of the ribbon.
@@ -51,28 +63,38 @@ export function ProjectShowcase() {
 
   useEffect(() => {
     let disposed = false, cleanup = () => {};
-    void mountWorkStage({
-      host: canvas.current!, track: track.current!,
-      sources: projects.map(project => project.image),
-      onActive: setCurrent, onHover: setHovered, onReady: () => setGlReady(true),
-    }).then(dispose => { if (disposed) dispose(); else cleanup = dispose; });
-
-    // When the wheel rests between two projects, settle on the nearer one.
-    let idle = 0;
-    const settle = () => {
-      clearTimeout(idle);
-      idle = window.setTimeout(() => {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        const box = track.current!.getBoundingClientRect();
-        if (box.top > 0 || box.bottom < window.innerHeight) return;
-        const position = -box.top/(box.height - window.innerHeight)*(projects.length - 1);
-        const nearest = Math.round(position);
-        if (Math.abs(position - nearest) > .015) scrollToY(yFor(nearest));
-      }, 220);
+    stageReady.current = false;
+    const updateFallback = () => {
+      if (stageReady.current || !track.current) return;
+      const box = track.current.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, -box.top / Math.max(1, box.height - window.innerHeight)));
+      setCurrent(Math.round(progress * (projects.length - 1)));
     };
-    window.addEventListener("scroll", settle, { passive: true });
-    return () => { disposed = true; cleanup(); clearTimeout(idle); window.removeEventListener("scroll", settle); };
-  }, [yFor]);
+    window.addEventListener("scroll", updateFallback, { passive: true });
+    updateFallback();
+    let started = false;
+    const startStage = () => {
+      if (started || disposed) return;
+      started = true;
+      void mountWorkStage({
+        host: canvas.current!, track: track.current!,
+        sources: projects.map(project => project.mockup ?? project.image),
+        onActive: setCurrent, onHover: setHovered,
+        onReady: () => { stageReady.current = true; setGlReady(true); },
+      }).then(dispose => { if (disposed) dispose(); else cleanup = dispose; }).catch(() => {
+        // The image and native project controls remain usable without WebGL.
+        stageReady.current = false;
+        updateFallback();
+      });
+    };
+    const preload = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      preload.disconnect();
+      startStage();
+    }, { rootMargin: `${Math.round(window.innerHeight * .6)}px 0px` });
+    preload.observe(track.current!);
+    return () => { disposed = true; preload.disconnect(); cleanup(); window.removeEventListener("scroll", updateFallback); };
+  }, []);
 
   const seen = useRef(new Set<string>());
   useEffect(() => {
@@ -92,21 +114,29 @@ export function ProjectShowcase() {
   return <section ref={root} id="work" className={styles.work} aria-labelledby="work-title" data-scene="0.22">
     <header className={styles.head}>
       <h2 id="work-title" data-split>Selected work</h2>
-      <p data-rise>Four applications built end to end: two storefronts, a team’s publishing system and a real-time chat.</p>
+      <div className={styles.introCopy}>
+        <p data-rise>Four applications built end to end: two storefronts, a team’s publishing system and a real-time chat.</p>
+        <a className={styles.skipWork} href="#about">Continue to about <span aria-hidden="true">↓</span></a>
+      </div>
     </header>
     <div ref={track} className={styles.track} style={vars({ "--count": projects.length })}>
       <div className={styles.stage} data-gl={glReady ? "ready" : undefined} data-hovering={hovered !== null}
-        data-cursor={hovered === null ? undefined : hovered === current ? "Open case" : "View"} onClick={stageClick}>
+        onClick={stageClick}>
         <div ref={canvas} className={styles.canvas} aria-hidden="true" />
         <div className={styles.fallback}>
           {projects.map((item, index) => <figure key={item.slug} className={styles.shot} data-state={index === current ? "active" : undefined}
-            style={vars({ "--ratio": item.image.width/item.image.height })}>
-            <ProjectImage project={item} critical={index === 0} />
+            style={vars({ "--ratio": (item.mockup ?? item.image).width/(item.mockup ?? item.image).height })}>
+            <ProjectImage project={item} />
           </figure>)}
         </div>
         <nav className={styles.index} aria-label="Projects">
           {projects.map((item, index) => <button key={item.slug} type="button" data-project-index aria-current={index === current ? "true" : undefined}
             onClick={() => scrollToY(yFor(index))} translate="no">{item.name}</button>)}
+          <div className={styles.browse}>
+            <p aria-live="polite" aria-atomic="true">Project {current + 1} of {projects.length}</p>
+            <button type="button" aria-label="Previous project" disabled={current === 0} onClick={() => scrollToY(yFor(current - 1))}><span aria-hidden="true">←</span></button>
+            <button type="button" aria-label="Next project" disabled={current === projects.length - 1} onClick={() => scrollToY(yFor(current + 1))}><span aria-hidden="true">→</span></button>
+          </div>
         </nav>
         <div className={styles.info}>
           {projects.map((item, index) => <article key={item.slug} className={styles.project} aria-labelledby={`${item.slug}-name`}
@@ -123,16 +153,24 @@ export function ProjectShowcase() {
             <div className={styles.detail}>
               <p className={styles.summary}>{item.summary}</p>
               <ul className={styles.tech} aria-label="Technologies">{item.technologies.slice(0, 4).map(tool => <li key={tool}>{tool}</li>)}</ul>
-              <div className={styles.actions}>
-                <Link className={styles.caseButton} href={`/work/${item.slug}`} onClick={() => trackEvent("case_study_open", item.slug)}>
-                  Read the case <span aria-hidden="true">→</span></Link>
-                <a className={styles.liveLink} href={item.href} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("live_site_click", item.slug)}>
-                  Live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
-              </div>
+              <ProjectActions project={item} />
             </div>
           </article>)}
         </div>
       </div>
+    </div>
+    <div className={styles.compactList}>
+      {projects.map(item => <article key={item.slug} className={styles.compactCard} aria-labelledby={`compact-${item.slug}-name`}>
+        <Link href={`/work/${item.slug}`} className={styles.compactImage} aria-label={`Read ${item.name} case study`} onClick={() => trackEvent("case_study_open", item.slug)}>
+          <ProjectImage project={item} presentation="compact" />
+        </Link>
+        <div>
+          <p className={styles.category}>{item.category} · {item.context}</p>
+          <h3 id={`compact-${item.slug}-name`} translate="no">{item.name}</h3>
+          <p className={styles.summary}>{item.summary}</p>
+          <ProjectActions project={item} />
+        </div>
+      </article>)}
     </div>
   </section>;
 }

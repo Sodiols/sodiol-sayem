@@ -1,0 +1,54 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 54px;
+  padding: 7px 8px 7px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color .22s ease, border-color .22s ease, color .22s ease, transform .22s ease;
+}
+.button > span:not(:global(.sr-only)) {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 19px;
+  line-height: 1;
+  pointer-events: none;
+  transition: background-color .22s ease, color .22s ease, transform .22s ease;
+}
+.filled {
+  composes: button;
+  background: var(--button-fill, var(--accent));
+  color: var(--button-ink, var(--ground));
+}
+.filled > span:not(:global(.sr-only)) { background: var(--button-ink, var(--ground)); color: var(--button-fill, var(--accent)); }
+.outline { composes: button; border-color: var(--border); background: transparent; color: var(--ink); }
+.outline > span:not(:global(.sr-only)) { background: var(--surface); color: var(--ink); }
+.button:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+.button:active { transform: scale(.98); }
+.button:disabled { cursor: progress; opacity: .65; }
+@media (hover: hover) {
+  .button:not(:disabled):hover { transform: translateY(-2px); }
+  .filled:not(:disabled):hover { background: var(--button-hover, var(--accent-hover)); }
+  .filled:not(:disabled):hover > span:not(:global(.sr-only)) { background: var(--button-ink, var(--ground)); color: var(--button-hover, var(--accent-hover)); }
+  .outline:hover { border-color: var(--accent); background: var(--surface-soft); }
+  .outline:hover > span:not(:global(.sr-only)) { background: var(--accent); color: var(--ground); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button, .button > span { transition: none; }
+  .button:not(:disabled):hover, .button:active { transform: none; }
+}

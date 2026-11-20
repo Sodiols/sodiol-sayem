@@ -51,8 +51,6 @@ export function AboutSection() {
       <span className={styles.lineMask}><span data-about-line>An eye on the whole.</span></span>
     </h2>
     <div className={styles.copy} data-about-copy>
-      <p>I’m</p>
-      <p className={styles.name}>Sodiol Sayem</p>
       <p>I care how a website looks, and how it works.</p>
       <p>I’m a full-stack developer based in Sylhet, Bangladesh. I work across interfaces, application logic and databases, with a particular interest in the parts that need to work together: a product page and its checkout, a chat room and its access rules.</p>
       <p>I built Husnalogy and TARA as the sole developer at Meka Agency. Both projects involved the customer-facing website and the systems behind it, from product data to order management.</p>

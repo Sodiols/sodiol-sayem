@@ -6,8 +6,13 @@ import tara from "../../public/projects/tara.webp";
 import epicElites from "../../public/projects/epicelites.png";
 import priChat from "../../public/projects/prichat.png";
 
+import husnalogyMockup from "../../public/projects/mockups/husnalogy.webp";
+import taraMockup from "../../public/projects/mockups/tara.webp";
+import epicElitesMockup from "../../public/projects/mockups/epic-elites.webp";
+import priChatMockup from "../../public/projects/mockups/prichat.webp";
+
 export type Project = {
-  name: string; slug: string; href: string; image: StaticImageData;
+  name: string; slug: string; href: string; image: StaticImageData; mockup?: StaticImageData;
   category: "E-commerce" | "Esports" | "Web app";
   position: string; fit: "cover" | "contain";
   description: string; summary: string; disciplines: string[]; alt: string;
@@ -20,7 +25,7 @@ export type Project = {
 // was confirmed by the owner. Repository URLs are deliberately not published.
 export const projects: readonly Project[] = [
   {
-    name: "Husnalogy", slug: "husnalogy", href: "https://husnalogy.com", image: husnalogy,
+    name: "Husnalogy", slug: "husnalogy", href: "https://husnalogy.com", image: husnalogy, mockup: husnalogyMockup,
     category: "E-commerce",
     position: "50% 50%", fit: "contain",
     description: "A storefront and personalization workflow for invitations, wedding stationery and gifts, connecting product discovery to custom designs and order handling.",
@@ -41,7 +46,7 @@ export const projects: readonly Project[] = [
     outcome: "The project brings the customer-facing shop and the systems needed to manage personalized orders into one application.",
   },
   {
-    name: "TARA", slug: "tara", href: "https://tarabd.co", image: tara,
+    name: "TARA", slug: "tara", href: "https://tarabd.co", image: tara, mockup: taraMockup,
     category: "E-commerce",
     position: "50% 50%", fit: "contain",
     description: "A fashion storefront and back office for a Sylhet clothing brand, with product discovery, variant selection and cash-on-delivery ordering.",
@@ -62,7 +67,7 @@ export const projects: readonly Project[] = [
     outcome: "A fashion commerce application that connects product discovery, ordering and day-to-day store management.",
   },
   {
-    name: "Epic Elites", slug: "epic-elites", href: "https://epicelites.vercel.app", image: epicElites,
+    name: "Epic Elites", slug: "epic-elites", href: "https://epicelites.vercel.app", image: epicElites, mockup: epicElitesMockup,
     category: "Esports",
     position: "50% 50%", fit: "contain",
     description: "A website and content dashboard for a Free Fire esports team, bringing the roster, match schedule, results, news and media into one publishing system.",
@@ -83,7 +88,7 @@ export const projects: readonly Project[] = [
     outcome: "A distinct team website backed by tools for keeping its roster, fixtures, news and media up to date.",
   },
   {
-    name: "PriChat", slug: "prichat", href: "https://prichat-ebf5.vercel.app", image: priChat,
+    name: "PriChat", slug: "prichat", href: "https://prichat-ebf5.vercel.app", image: priChat, mockup: priChatMockup,
     category: "Web app",
     position: "50% 50%", fit: "contain",
     description: "A room-based communication application with live messages, membership controls, voice recordings and browser-based calls.",

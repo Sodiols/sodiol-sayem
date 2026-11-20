@@ -2,49 +2,79 @@
 
 import { useEffect, useRef } from "react";
 
-// A lantern-coloured dot that trails the pointer, grows over controls and names what a click does
-// wherever an element carries data-cursor. Mouse only; touch and reduced motion keep the system cursor.
+const trailLength = 12;
+
+// A decorative mouse trail; the browser keeps its normal pointer and hit targets.
 export function Cursor() {
-  const dot = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!fine.matches || reduced.matches) return;
-    const element = dot.current!, label = element.firstElementChild as HTMLElement;
-    const root = document.documentElement;
-    let x = -100, y = -100, cx = -100, cy = -100, frame = 0;
-    const move = (event: PointerEvent) => {
-      if (event.pointerType !== "mouse") return;
-      x = event.clientX; y = event.clientY;
-      const target = event.target as Element;
-      const text = target.closest("[data-cursor]")?.getAttribute("data-cursor") ?? "";
-      element.dataset.mode = text ? "label" : target.closest("a,button,summary,select,label") ? "control" : target.closest("input,textarea,iframe") ? "hidden" : "";
-      if (label.textContent !== text) label.textContent = text;
-      root.dataset.cursor = "on";
+    const dots = Array.from(root.current!.children) as HTMLElement[];
+    const points = dots.map(() => ({ x: 0, y: 0 }));
+    let x = 0, y = 0, lastMove = 0, previous = 0, frame = 0, active = false;
+    // Remove the old label flag if this component was replaced by a hot update.
+    delete document.documentElement.dataset.cursor;
+
+    const clear = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      active = false;
+      dots.forEach(dot => { dot.style.opacity = "0"; });
     };
-    const leave = () => { element.dataset.mode = "hidden"; };
-    const down = () => element.dataset.pressed = "true";
-    const up = () => delete element.dataset.pressed;
-    const tick = () => {
-      cx += (x - cx)*.2; cy += (y - cy)*.2;
-      element.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+    const tick = (now: number) => {
+      frame = 0;
+      if (!fine.matches || reduced.matches || document.hidden) return clear();
+      const fade = Math.max(0, 1 - (now - lastMove) / 380);
+      if (fade === 0) return clear();
+      const delta = Math.min(64, Math.max(1, now - previous)) / (1000 / 60);
+      const follow = 1 - Math.pow(.55, delta);
+      previous = now;
+      let targetX = x, targetY = y;
+      points.forEach((point, index) => {
+        point.x += (targetX - point.x) * follow;
+        point.y += (targetY - point.y) * follow;
+        const taper = 1 - index / trailLength;
+        dots[index].style.transform = `translate3d(${point.x}px,${point.y}px,0) scale(${.3 + taper * .7})`;
+        dots[index].style.opacity = String(fade * taper * .5);
+        targetX = point.x;
+        targetY = point.y;
+      });
       frame = requestAnimationFrame(tick);
     };
+    const move = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || !fine.matches || reduced.matches) return;
+      if ((event.target as Element).closest("input,textarea,select,iframe")) return clear();
+      x = event.clientX;
+      y = event.clientY;
+      lastMove = performance.now();
+      if (!active) {
+        active = true;
+        previous = lastMove;
+        points.forEach(point => { point.x = x; point.y = y; });
+      }
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+    const onVisibility = () => { if (document.hidden) clear(); };
     window.addEventListener("pointermove", move, { passive: true });
-    document.addEventListener("pointerleave", leave);
-    window.addEventListener("pointerdown", down);
-    window.addEventListener("pointerup", up);
-    tick();
+    window.addEventListener("blur", clear);
+    document.addEventListener("pointerleave", clear);
+    document.addEventListener("visibilitychange", onVisibility);
+    fine.addEventListener("change", clear);
+    reduced.addEventListener("change", clear);
     return () => {
-      cancelAnimationFrame(frame);
-      delete root.dataset.cursor;
+      clear();
       window.removeEventListener("pointermove", move);
-      document.removeEventListener("pointerleave", leave);
-      window.removeEventListener("pointerdown", down);
-      window.removeEventListener("pointerup", up);
+      window.removeEventListener("blur", clear);
+      document.removeEventListener("pointerleave", clear);
+      document.removeEventListener("visibilitychange", onVisibility);
+      fine.removeEventListener("change", clear);
+      reduced.removeEventListener("change", clear);
     };
   }, []);
 
-  return <div ref={dot} className="cursor" aria-hidden="true"><span /></div>;
+  return <div ref={root} className="cursor-trail" data-cursor-trail aria-hidden="true">
+    {Array.from({ length: trailLength }, (_, index) => <span key={index} />)}
+  </div>;
 }
