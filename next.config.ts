@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: { agentUpgrade: "security" },
   poweredByHeader: false,
   async headers() {
     const development = process.env.NODE_ENV !== "production";
