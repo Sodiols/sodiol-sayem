@@ -34,31 +34,46 @@
 .imageFallback span { font-family: var(--font-display); font-size: clamp(48px, 6vw, 90px); @apply text-ink; }
 .imageFallback p { font-size: 14px; }
 
-/* Case study, opened in place under the plates and on its own page. */
-.caseStudy { @apply relative; padding: 65px var(--page-gutter); background: var(--ground); scroll-margin-top: clamp(80px, 11svh, 120px); }
+/* Case study page: the name and the way to the live site first, then a read with its contents kept in view. */
+.caseStudy { @apply relative; padding: 65px var(--page-gutter); background: var(--ground); }
 .caseTop { @apply flex items-center justify-between; gap: 24px; padding-block: 24px; }
-.caseTop > p, .caseLabel { font-size: 15px; line-height: 1.6; color: var(--accent-text); }
-.caseTop :is(a,button), .caseActions :is(a,button) { @apply inline-flex items-center; gap: 30px; min-height: 44px; padding: 0; background: transparent; border: 0; @apply text-ink; font: inherit; font-size: 16px; cursor: pointer; touch-action: manipulation; }
-.caseTop :is(a,button):hover, .caseActions :is(a,button):hover { color: var(--accent-text); }
-.caseIntro { @apply grid; grid-template-columns: 1.4fr 1fr; @apply items-end; gap: 6vw; padding-block: 55px 65px; }
-.caseIntro :is(h1,h2) { font-family: var(--font-display); font-weight: 400; font-size: clamp(70px, 10vw, 160px); letter-spacing: -.05em; line-height: .95; overflow-wrap: anywhere; scroll-margin-top: 110px; }
+.caseTop :is(a,button), .caseActions > a:not(.caseButton) { @apply inline-flex items-center; gap: 30px; min-height: 44px; padding: 0; background: transparent; border: 0; @apply text-ink; font: inherit; font-size: 16px; cursor: pointer; touch-action: manipulation; }
+.caseTop :is(a,button):hover, .caseActions > a:not(.caseButton):hover { color: var(--accent-text); }
+.caseIntro { @apply grid; grid-template-columns: 1.3fr 1fr; @apply items-end; gap: 6vw; padding-block: 55px 65px; }
+.caseIntro h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(70px, 10vw, 160px); letter-spacing: -.05em; line-height: .95; overflow-wrap: anywhere; }
 .caseIntro p { max-width: 45ch; font-size: 18px; line-height: 1.6; }
-.caseIntro .caseContext { color: var(--accent-text); font-size: 15px; margin-bottom: 18px; }
+.caseFacts { @apply grid; gap: 10px; margin: 26px 0 30px; font-size: 15px; line-height: 1.5; }
+.caseFacts div { @apply grid; grid-template-columns: 70px 1fr; gap: 16px; }
+.caseFacts dt { @apply text-muted; }
+.caseFacts dd { margin: 0; }
 .standalone { padding-top: 110px; }
-.stack { @apply flex flex-wrap; gap: 10px 24px; padding: 0; margin: 28px 0 0; list-style: none; color: var(--accent-text); font-size: 16px; line-height: 1.65; }
-.decisions { @apply grid; gap: 30px; margin-top: 36px; }
-.caseRow .decisions :is(h3,h4) { @apply text-ink; font-family: var(--font-body); font-size: 19px; line-height: 1.5; letter-spacing: 0; font-weight: 500; margin: 0 0 10px; }
-.caseRow .disciplines { margin-top: 24px; }
-.caseStudy .implementation { list-style: disc; padding-left: 20px; }
 .casePreview { @apply relative w-full; max-height: 100svh; background: var(--surface-soft); }
-.caseBody { max-width: 1500px; margin-inline: auto; padding-top: 70px; }
-.caseRow { @apply grid; grid-template-columns: 1fr 2fr; column-gap: 7vw; padding-block: 48px 60px; }
-.caseRow :is(h2,h3) { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 3.6vw, 60px); line-height: 1.1; letter-spacing: -.035em; margin-bottom: 25px; }
-.caseRow div > p { max-width: 58ch; font-size: 17px; line-height: 1.7; text-wrap: pretty; }
-.disciplines, .implementation { padding: 0; margin: 0; list-style: none; @apply text-muted; font-size: 16px; line-height: 1.7; }
-.disciplines li + li, .implementation li + li { margin-top: 10px; }
-.caseActions { @apply flex flex-wrap; gap: 25px 60px; margin-top: 35px; }
-.caseActions a:hover { color: var(--accent-text); }
+
+.caseBody { @apply grid; grid-template-columns: minmax(160px, 1fr) minmax(0, 2fr); column-gap: 7vw; max-width: 1500px; margin-inline: auto; padding-top: 70px; }
+.caseContents { grid-column: 1; grid-row: 1 / span 5; align-self: start; position: sticky; top: 120px; padding-top: 48px; }
+.caseContents ul { @apply grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.caseContents a { @apply inline-flex items-center; gap: 12px; min-height: 40px; @apply text-muted; font-size: 16px; transition: color .2s ease; }
+/* A filled mark beside the part being read. */
+.caseContents a::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; scale: 0; transition: scale .3s cubic-bezier(.22,1,.36,1); }
+.caseContents a:hover { @apply text-ink; }
+.caseContents a[aria-current] { @apply text-ink; }
+.caseContents a[aria-current]::before { scale: 1; background: var(--accent-text); }
+.caseContents a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.caseRow { grid-column: 2; padding-block: 48px 60px; }
+.caseRow h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 3.6vw, 60px); line-height: 1.1; letter-spacing: -.035em; margin-bottom: 25px; scroll-margin-top: 110px; }
+.caseRow > p, .decisions p { max-width: 58ch; font-size: 17px; line-height: 1.7; text-wrap: pretty; }
+.stack { @apply flex flex-wrap; gap: 10px 24px; padding: 0; margin: 28px 0 0; list-style: none; color: var(--accent-text); font-size: 16px; line-height: 1.65; }
+.decisions { @apply grid; gap: 14px; margin-top: 36px; }
+/* Each decision is its own block, set a tone up from the page. */
+.decisions > div { padding: 26px 28px; background: var(--surface-soft); }
+.decisions h3 { @apply text-ink; font-family: var(--font-body); font-size: 19px; line-height: 1.45; font-weight: 500; margin: 0 0 10px; }
+.disciplines { margin-top: 24px; }
+.disciplines, .implementation { padding: 0; list-style: none; @apply text-muted; font-size: 16px; line-height: 1.7; }
+.disciplines li + li { margin-top: 10px; }
+.implementation { @apply grid; gap: 14px; margin: 0; @apply text-ink; font-size: 18px; }
+.implementation li { @apply flex items-baseline; gap: 14px; }
+.implementation li::before { content: ""; flex: 0 0 7px; height: 7px; border-radius: 50%; background: var(--accent-text); translate: 0 -2px; }
+.caseActions { @apply flex flex-wrap items-center; gap: 20px 40px; margin-top: 35px; }
 .nextProject { @apply grid; gap: 14px; max-width: 1500px; margin: 60px auto 0; padding-block: 60px 30px; }
 .nextProject > span { color: var(--accent-text); font-size: 16px; }
 .nextProject strong { font-family: var(--font-display); font-weight: 400; font-size: clamp(64px, 12vw, 200px); line-height: .9; letter-spacing: -.05em; transition: color .25s ease, transform .5s cubic-bezier(.22,1,.36,1); }
@@ -79,14 +94,20 @@
   .summary { font-size: 16px; }
   .tech { @apply hidden; }
   .actions { margin-top: 16px; @apply justify-between; }
-  .caseStudy { padding: 35px 22px; }
+  .caseStudy { padding: 35px var(--page-gutter); }
   .caseIntro { grid-template-columns: minmax(0, 1fr); gap: 25px; padding-block: 30px 35px; }
-  .caseIntro :is(h1,h2) { font-size: clamp(56px, 15vw, 110px); }
+  .caseIntro h1 { font-size: clamp(56px, 15vw, 110px); }
   .standalone { padding-top: 100px; }
-  .caseIntro > p, .caseRow div > p { font-size: 16px; }
-  .caseBody { padding-top: 40px; }
-  .caseRow { grid-template-columns: minmax(0, 1fr); gap: 25px; padding-block: 30px 40px; }
-  .caseRow :is(h2,h3) { font-size: 37px; margin-bottom: 20px; }
+  .caseIntro p, .caseRow > p, .decisions p { font-size: 16px; }
+  /* Phones: the contents become one row of links above the read. */
+  .caseBody { grid-template-columns: minmax(0, 1fr); padding-top: 32px; }
+  .caseContents { grid-column: 1; grid-row: auto; position: static; padding-top: 0; }
+  .caseContents ul { @apply flex flex-wrap; gap: 0 20px; }
+  .caseContents a::before { display: none; }
+  .caseRow { grid-column: 1; padding-block: 30px 40px; }
+  .caseRow h2 { font-size: 37px; margin-bottom: 20px; }
+  .decisions > div { padding: 20px; }
+  .implementation { font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .work *, .caseStudy * { transition: none !important; } }
 
@@ -115,9 +136,6 @@
   @apply grid grid-cols-2 gap-1 rounded-2xl p-1 sm:grid-cols-4;
   background: var(--surface-soft);
 }
-.caseContents { @apply flex flex-wrap items-center gap-x-6; margin-bottom: 1.5rem; }
-.caseContents a { @apply inline-flex min-h-11 items-center; }
-.caseRow :is(h2,h3)[id] { scroll-margin-top: 6rem; }
 
 .preview .projectImage { object-fit: contain !important; }
 

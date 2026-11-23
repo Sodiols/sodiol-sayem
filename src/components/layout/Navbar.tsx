@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -66,7 +66,9 @@ export function Navbar() {
 
   return <div ref={root} className={styles.root} data-overlay-visible={visible}>
     <header className={styles.bar} aria-label="Site navigation" aria-hidden={visible} inert={visible}>
-      <Link href="/#home" className={styles.wordmark} aria-label="Sodiol home" translate="no">sodiol.</Link>
+      <Link href="/#home" className={styles.wordmark} aria-label="Sodiol home" translate="no">
+        {[..."sodiol."].map((letter, index) => <span key={index} style={{ "--i": index } as CSSProperties}>{letter}</span>)}
+      </Link>
       <button ref={trigger} className={styles.menuButton} type="button" aria-label="Open navigation menu"
         aria-expanded={open} aria-controls="navigation-overlay" aria-haspopup="dialog"
         onClick={() => {
@@ -78,7 +80,7 @@ export function Navbar() {
           setMenuLoaded(true);
           setOpen(true);
         }}>
-        <span /><span /><b className={styles.menuLabel}>Menu</b>
+        <span /><span />
       </button>
     </header>
     {menuLoaded && <NavigationOverlay open={open} onRequestClose={requestClose} onNavigate={requestNavigation} onClosed={afterClose} />}

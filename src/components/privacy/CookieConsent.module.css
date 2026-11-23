@@ -1,26 +1,50 @@
 @reference "../../app/globals.css";
 
-.root { display:flow-root; @apply relative; z-index:1; background:var(--paper); @apply text-ink; font-family:var(--font-body); }
-.banner { @apply relative; width:min(720px,calc(100% - 2 * var(--page-gutter))); margin:0 var(--page-gutter) 32px; padding:24px; background:var(--surface-raised); }
-.root h2 { margin-bottom:8px; font-family:var(--font-display); font-size:22px; font-weight:400; line-height:1.15; letter-spacing:-.025em; }
-.root p,.root a { font-size:14px; line-height:1.55; }
-.root p { @apply text-muted; }
-.banner p { font-size:16px; line-height:1.45; }
-.root a { @apply inline-flex items-center; min-height:36px; @apply text-ink; text-decoration:underline; text-underline-offset:4px; }
-.actions { @apply flex flex-wrap; gap:9px; margin-block:10px 6px; }
-.root button { min-height:44px; padding:10px 12px; border:0; border-radius:0; background:var(--surface); @apply text-ink; font:inherit; font-size:14px; cursor:pointer; }
-.actions button:first-child { background:var(--accent); @apply text-ink; }
-.links { @apply flex flex-wrap; gap:20px; }
-.links button { min-height:36px; padding:0; background:transparent; @apply text-ink; }
-.root button:hover { background:var(--accent-hover); @apply text-ink; }
-.links button:hover { background:transparent; color:var(--accent-text); }
-.root :is(button,a,input):focus-visible { outline:2px solid var(--ink); outline-offset:4px; }
-.dialog { @apply fixed inset-0; width:min(560px,calc(100vw - 36px)); max-height:calc(100dvh - 40px); margin:auto; padding:28px; border:0; background:var(--surface-raised); @apply text-ink; overflow:auto; }
-.dialog::backdrop { background:rgb(0 0 0 / .75); }
-.dialogTop { @apply flex; align-items:start; @apply justify-between; gap:18px; }
-.dialogTop button { min-width:44px; margin-top:-10px; padding:0; border:0; font-size:24px; }
-.category { @apply flex items-center justify-between; gap:25px; padding-block:22px; cursor:pointer; }
-.category strong { @apply block; font-size:15px; font-weight:400; }
-.category small { @apply block; max-width:35ch; margin-top:8px; @apply text-muted; font-size:13px; line-height:1.6; }
-.category input { width:22px; height:22px; flex-shrink:0; accent-color:var(--accent); }
-@media(max-width:479px) { .banner { padding:14px; } .actions { @apply grid; grid-template-columns:1fr 1fr; } .links { gap:16px; } .dialog { padding:22px; } }
+@keyframes arrive { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* The one thing on the page that floats: a dark card in the lower left, met on arrival, out of the reading line. */
+.root { font-family: var(--font-body); }
+.banner { position: fixed; left: max(var(--page-gutter), env(safe-area-inset-left)); bottom: max(24px, env(safe-area-inset-bottom)); z-index: 70;
+  width: min(400px, calc(100vw - 2 * var(--page-gutter))); padding: 24px; background: var(--ink); color: var(--paper);
+  box-shadow: 0 18px 48px rgb(24 39 28 / .28); animation: arrive .6s cubic-bezier(.22, 1, .36, 1) both; }
+/* Wait for the intro to hand over the screen, then arrive. */
+:global([data-intro]:not([data-intro="complete"])) .banner { visibility: hidden; animation: none; }
+.root h2 { margin-bottom: 8px; font-family: var(--font-display); font-size: 26px; font-weight: 400; line-height: 1.1; letter-spacing: -.025em; }
+.banner p { color: color-mix(in srgb, var(--paper) 82%, var(--ink)); font-size: 15px; line-height: 1.5; }
+/* Accept and reject sit side by side at the same size: saying no is as easy as saying yes. */
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; }
+.root button { min-height: 46px; padding: 10px 14px; border: 0; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; touch-action: manipulation; transition: background-color .18s ease, transform .15s ease; }
+.root button:active { transform: scale(.97); }
+.banner .actions button:first-child { background: var(--accent-hover); color: var(--ink); }
+.banner .actions button:first-child:hover { background: var(--ground); }
+.banner .actions button:last-child { background: color-mix(in srgb, var(--paper) 14%, var(--ink)); color: var(--paper); }
+.banner .actions button:last-child:hover { background: color-mix(in srgb, var(--paper) 24%, var(--ink)); }
+.links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 10px; }
+.root a, .links button { display: inline-flex; align-items: center; min-height: 40px; padding: 0; background: transparent; color: inherit; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+.links button:hover, .banner a:hover { background: transparent; color: var(--accent-hover); }
+.banner :is(button, a):focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+
+.dialog { position: fixed; inset: 0; width: min(560px, calc(100vw - 36px)); max-height: calc(100dvh - 40px); margin: auto; padding: 30px; border: 0; background: var(--paper); color: var(--ink); overflow: auto; box-shadow: 0 24px 60px rgb(24 39 28 / .3); }
+.dialog::backdrop { background: rgb(24 39 28 / .55); }
+.dialog p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+.dialogTop { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
+.dialogTop button { min-width: 44px; margin-top: -10px; padding: 0; background: transparent; color: var(--ink); font-size: 26px; }
+.dialogTop button:hover { background: var(--surface); }
+.category { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-top: 10px; padding: 18px 20px; background: var(--surface-soft); cursor: pointer; }
+.category + .category { margin-top: 6px; }
+.category strong { display: block; font-size: 16px; font-weight: 500; }
+.category small { display: block; max-width: 35ch; margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.category input { width: 22px; height: 22px; flex-shrink: 0; accent-color: var(--accent-text); }
+.dialog .actions button:first-child { background: var(--ink); color: var(--paper); }
+.dialog .actions button:first-child:hover { background: var(--accent-text); }
+.dialog .actions button:last-child { background: var(--surface); color: var(--ink); }
+.dialog .actions button:last-child:hover { background: var(--surface-raised); }
+.dialog > a { margin-top: 10px; }
+.dialog :is(button, a, input):focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+@media (max-width: 479px) {
+  .banner { left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); width: auto; padding: 20px; }
+  .root h2 { font-size: 23px; }
+  .dialog { padding: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .banner { animation: none; } .root button { transition: none; } }

@@ -46,7 +46,7 @@ export function CookieConsent() {
   return <div className={styles.root}>
     {choice === "unknown" && !settings && <aside className={styles.banner} aria-labelledby="cookie-heading" data-consent-banner>
       <h2 id="cookie-heading">A little about cookies.</h2>
-      <p>Optional analytics measure site visits.</p>
+      <p>Optional analytics show which pages get read. Nothing is measured until you choose.</p>
       <div className={styles.actions}><button type="button" onClick={()=>choose(true)}>Accept analytics</button><button type="button" onClick={()=>choose(false)}>Reject optional</button></div>
       <div className={styles.links}>
         <button type="button" data-cookie-preferences onClick={event=>{opener.current=event.currentTarget;setSettings(true);}}>Preferences</button>
@@ -58,7 +58,7 @@ export function CookieConsent() {
       <p>Choose what works for you. Optional analytics starts only after you accept.</p>
       <label className={styles.category}><span><strong>Necessary</strong><small>Site functionality and remembering your preference.</small></span><input type="checkbox" checked disabled aria-label="Necessary storage, always active" readOnly /></label>
       <label className={styles.category}><span><strong>Analytics</strong><small>Optional Google Analytics measurement. Advertising remains disabled.</small></span><input ref={checkbox} type="checkbox" aria-label="Allow analytics" /></label>
-      <div className={styles.actions}><button type="button" onClick={()=>choose(Boolean(checkbox.current?.checked))}>Save preferences</button><button type="button" onClick={()=>choose(false)}>Reject optional</button></div>
+      <div className={styles.actions}><button type="button" onClick={()=>choose(Boolean(checkbox.current?.checked))}>Save preferences</button><button type="button" onClick={()=>choose(true)}>Accept all</button></div>
       <Link href="/privacy-policy" onClick={()=>setSettings(false)}>Privacy Policy</Link>
     </dialog>
   </div>;

@@ -26,7 +26,8 @@ const nextConfig: NextConfig = {
     ] }];
   },
   async redirects() {
-    return [{ source: "/about", destination: "/#about", permanent: true }];
+    return [{ source: "/about", destination: "/#about", permanent: true },
+      { source: "/work/epicelites", destination: "/work/epic-elites", permanent: true }];
   },
 };
 

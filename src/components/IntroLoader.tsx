@@ -44,7 +44,6 @@ export function IntroLoader({ children }: { children: ReactNode }) {
       document.body.style.overflow = previousBodyOverflow;
       overlay.hidden = true;
       clearTimeout(failSafe);
-      try { sessionStorage.setItem("sodiol:intro-seen", "true"); } catch { /* Storage may be unavailable. */ }
       window.dispatchEvent(new Event("sodiol:intro-complete"));
     };
     skipIntro.current = () => { animations.forEach(animation => animation.cancel()); finish(); page.querySelector<HTMLElement>("#home a")?.focus({ preventScroll: true }); };
@@ -52,14 +51,12 @@ export function IntroLoader({ children }: { children: ReactNode }) {
     window.addEventListener("keydown", onKeyDown);
     const animate = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => {
       const animation = element.animate(frames, { fill: "both", ...options });
-      animation.playbackRate = 2.5;
       animations.push(animation);
       return animation;
     };
     const run = async () => {
-      let seen = false;
-      try { seen = sessionStorage.getItem("sodiol:intro-seen") === "true"; } catch { /* Use the first-visit intro. */ }
-      if (seen || window.location.pathname !== "/" || window.location.hash || motion.matches) { finish(); return; }
+      // Every arrival on the home page opens with the name; deep links and reduced motion go straight in.
+      if (window.location.pathname !== "/" || window.location.hash || motion.matches) { finish(); return; }
       // Never wait indefinitely on a failed font request. The serif fallback is usable.
       await Promise.race([
         document.fonts.load('100px "Instrument Serif"', "sodiol."),
@@ -116,7 +113,7 @@ export function IntroLoader({ children }: { children: ReactNode }) {
       await reveal.finished;
       finish();
     };
-    const failSafe = setTimeout(finish, 3500);
+    const failSafe = setTimeout(finish, 10000);
     const onMotionChange = () => { if (motion.matches) { finish(); animations.forEach(a => a.cancel()); } };
     motion.addEventListener("change", onMotionChange);
     void run().catch(finish);

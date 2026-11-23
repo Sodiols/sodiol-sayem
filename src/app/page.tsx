@@ -28,6 +28,6 @@ export default function Home() {
       <Toolboard />
       <ContactSection />
     </main>
-    <SiteFooter />
+    <SiteFooter invite={false} />
   </>;
 }

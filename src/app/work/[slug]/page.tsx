@@ -28,7 +28,7 @@ export default async function Work({ params }: Props) {
   const project = projects[index], next = projects[(index + 1) % projects.length];
   return <><main id="main" className={`${styles.caseStudy} ${styles.standalone}`}>
     <nav className={styles.caseTop} aria-label="Case study navigation"><Link href="/#work">← Selected work</Link><Link href="/#contact">Discuss a project ↗</Link></nav>
-    <CaseStudyContent project={project} standalone />
+    <CaseStudyContent project={project} />
     <nav aria-label="Next case study"><Link className={styles.nextProject} href={`/work/${next.slug}`}>
       <span>Next project</span><strong translate="no">{next.name} <span aria-hidden="true">→</span></strong></Link></nav>
   </main><SiteFooter /></>;

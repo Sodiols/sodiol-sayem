@@ -1,7 +1,7 @@
 @reference "../../app/globals.css";
 
 /* The room's lights come on: ground and ink swap, and the name returns at full width. */
-.footer { @apply relative; z-index: 1; @apply grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; min-height: 88svh; padding: 40px var(--page-gutter) 22px; background: var(--paper); color: var(--paper-ink); }
+.footer { @apply relative; z-index: 1; @apply grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; min-height: 88svh; padding: 40px var(--page-gutter) 22px; background: var(--paper); color: var(--paper-ink); }
 .columns { @apply grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; font-size: 16px; line-height: 1.5; }
 .columns > * { @apply flex flex-col; align-items: flex-start; }
 .columns p, .columns a, .columns button { color: var(--paper-muted); }
@@ -9,14 +9,27 @@
 .columns a, .columns button { @apply inline-flex items-center; gap: 10px; min-height: 32px; padding: 0; border: 0; background: transparent; font: inherit; cursor: pointer; transition: color .18s ease, transform .2s ease; }
 .columns a:hover, .columns button:hover { color: var(--paper-ink); transform: translateX(4px); }
 .columns svg { width: 15px; height: 15px; fill: currentColor; }
-.brand { grid-row: 3; @apply block w-full; justify-self: stretch; margin-top: 40px; color: var(--paper-ink); }
+.brand { grid-row: 4; @apply block w-full; justify-self: stretch; margin-top: 40px; color: var(--paper-ink); }
 .brand svg { @apply block w-full; height: auto; overflow: visible; }
 .brand text { font-family: var(--font-display); font-size: 150px; letter-spacing: -.05em; fill: currentColor; }
 .footer p { order: 0; flex-basis: auto; }
-.copyright { grid-row: 4; margin-top: 16px; color: var(--paper-muted); font-size: 14px; }
+/* Pages without a contact section close on the invitation; the name and the way out follow. */
+.invite { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px 40px; padding: clamp(40px, 6vw, 90px) 0 clamp(56px, 7vw, 110px); }
+.invite h2 { font-family: var(--font-display); font-size: clamp(48px, 7vw, 120px); font-weight: 400; line-height: .92; letter-spacing: -.045em; }
+.inviteLink { display: inline-flex; align-items: center; gap: 28px; min-height: 58px; padding: 0 26px; border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 16px; transition: background-color .2s ease, transform .15s ease; }
+.inviteLink span { transition: transform .25s ease; }
+.inviteLink:hover { background: var(--accent-text); }
+.inviteLink:hover span { transform: translateX(4px); }
+.inviteLink:active { transform: scale(.97); }
+.baseline { grid-row: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin-top: 16px; color: var(--paper-muted); font-size: 14px; }
+.top { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--paper-ink); font: inherit; font-size: 15px; cursor: pointer; }
+.top span { transition: transform .25s ease; }
+.top:hover span { transform: translateY(-3px); }
 .footer :is(a,button):focus-visible { outline: 2px solid var(--paper-ink); outline-offset: 4px; }
 @media (max-width: 767px) {
   .footer { min-height: 80svh; padding-top: 32px; }
   .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; font-size: 15px; }
+  .invite { padding-top: 24px; }
+  .inviteLink { width: 100%; justify-content: space-between; }
 }
-@media (prefers-reduced-motion: reduce) { .columns a, .columns button { transition: none; } .columns a:hover, .columns button:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .columns a, .columns button, .inviteLink, .inviteLink span, .top span { transition: none; } .columns a:hover, .columns button:hover { transform: none; } }
