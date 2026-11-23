@@ -8,6 +8,7 @@ export function CaseStudyContent({ project, standalone = false }: { project: Pro
   const Heading = standalone ? "h1" : "h2";
   const SectionHeading = standalone ? "h2" : "h3";
   const DecisionHeading = standalone ? "h3" : "h4";
+  const preview = project.mockup ?? project.image;
   return <>
     <header className={styles.caseIntro}>
       <Heading id={`case-${project.slug}-title`} tabIndex={-1} translate="no">{project.name}</Heading>
@@ -19,8 +20,8 @@ export function CaseStudyContent({ project, standalone = false }: { project: Pro
       <a href={`#${project.slug}-approach`}>Engineering decisions</a>
       <a href={`#${project.slug}-outcome`}>Outcome</a>
     </nav>
-    <div className={styles.casePreview} style={{ aspectRatio: `${project.image.width} / ${project.image.height}` }}>
-      <ProjectImage key={project.image.src} project={project} presentation="case" />
+    <div className={styles.casePreview} style={{ aspectRatio: `${preview.width} / ${preview.height}` }}>
+      <ProjectImage key={preview.src} project={project} presentation="case" />
     </div>
     <div className={styles.caseBody}>
       <section className={styles.caseRow} aria-labelledby={`${project.slug}-overview`}><p className={styles.caseLabel}>The project</p><div><SectionHeading id={`${project.slug}-overview`}>At a glance.</SectionHeading><p>{project.overview}</p><ul className={styles.stack} aria-label="Technologies used">{project.technologies.map(tool => <li key={tool}>{tool}</li>)}</ul></div></section>

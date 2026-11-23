@@ -3,12 +3,14 @@ import Image from "next/image";
 import husnalogyLogo from "../../../public/brands/husnalogy.webp";
 import taraLogo from "../../../public/brands/tara.webp";
 import lusaLogo from "../../../public/brands/lusa.webp";
+import epicElitesLogo from "../../../public/brands/epic-elites.webp";
 
-const brands = ["Husnalogy", "TARABD", "Lusa Tintoria"];
+const brands = ["Husnalogy", "TARABD", "Lusa Tintoria", "Epic Elites"];
 const brandLogos = [
   { name: "Husnalogy", image: husnalogyLogo, id: "husnalogy" },
   { name: "TARA", image: taraLogo, id: "tara" },
   { name: "Lusa Tintoria", image: lusaLogo, id: "lusa" },
+  { name: "Epic Elites", image: epicElitesLogo, id: "epic-elites" },
 ];
 const countries = [
   { name: "America", code: "us" },
