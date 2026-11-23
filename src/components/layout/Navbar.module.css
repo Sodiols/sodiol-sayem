@@ -147,3 +147,19 @@
   .bar .wordmark:hover span { animation: none; }
   .bar .menuButton, .bar .menuButton span { transition: none; }
 }
+
+/* The close control takes the menu button's place and shape; its two lines turn into the cross as the menu opens. */
+@keyframes crossTop { from { transform: translateY(-4px) rotate(0); } to { transform: rotate(45deg); } }
+@keyframes crossBottom { from { transform: translateY(4px) rotate(0); } to { transform: rotate(-45deg); } }
+.overlay .closeButton { top: max(calc(var(--menu-top) - 4px), env(safe-area-inset-top)); width: 52px; height: 52px; flex-basis: 52px; border-radius: 50%;
+  background: var(--ink); color: var(--ground); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.overlay .closeButton span { left: 16px; top: 25px; width: 20px; height: 2px; border-radius: 2px; }
+.overlay .closeButton span:first-child { transform: rotate(45deg); animation: crossTop 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both; }
+.overlay .closeButton span:last-child { transform: rotate(-45deg); animation: crossBottom 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both; }
+.overlay .closeButton:hover { opacity: 1; transform: rotate(90deg); }
+.overlay .closeButton:active { opacity: 1; transform: rotate(90deg) scale(0.92); }
+.overlay .closeButton:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .overlay .closeButton span { animation: none; }
+  .overlay .closeButton, .overlay .closeButton:hover { transition: none; transform: none; }
+}
