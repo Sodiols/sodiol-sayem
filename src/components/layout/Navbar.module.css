@@ -32,7 +32,7 @@
 :global([data-intro="complete"]) .bar { visibility: visible; opacity: 1; @apply pointer-events-none; }
 :global([data-intro="complete"]) .bar > :is(a, button) { @apply pointer-events-auto; }
 .root[data-overlay-visible="true"] .bar { visibility: hidden; opacity: 0; @apply pointer-events-none; }
-.wordmark { font-family: var(--menu-serif); font-size: clamp(18px, min(3.8svh, 3.5vw), 32px); font-weight: 600; line-height: 1; letter-spacing: -0.065em; }
+.wordmark { font-family: var(--menu-serif); font-size: clamp(28px, min(3.8svh, 3.5vw), 32px); font-weight: 600; line-height: 1; letter-spacing: -0.065em; }
 .bar .wordmark { @apply inline-flex; min-width: 44px; min-height: 44px; @apply items-center; }
 .menuButton, .closeButton { @apply relative block;
   width: 44px;
