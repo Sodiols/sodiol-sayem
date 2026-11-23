@@ -6,6 +6,6 @@ export const setLenis = (instance: Lenis | null) => { lenis = instance; };
 
 export function scrollToY(top: number) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (lenis && !reduced) lenis.scrollTo(top, { duration: 1.2 });
+  if (lenis && !reduced) lenis.scrollTo(top, { duration: .7 });
   else window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
 }

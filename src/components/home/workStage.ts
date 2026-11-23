@@ -1,5 +1,5 @@
 // The work gallery: project screens on a curved ribbon that flexes with scroll speed.
-// At rest each screen is printed in the room's two inks; the pointer reveals its true colour.
+// Active mockups retain their artwork colours; neighbouring screens sit in the room’s inks.
 
 const vertex = /* glsl */ `
 uniform float uCurve, uVelocity, uHover, uTime;
@@ -25,7 +25,6 @@ uniform float uActive, uHover, uVelocity, uAspect, uLoaded, uTime;
 uniform vec2 uMouse;
 varying vec2 vUv;
 varying float vDepth;
-float grain(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233)))*43758.5453); }
 void main(){
   float shift = uVelocity*0.025;
   vec3 tex = vec3(texture2D(uTex, vUv + vec2(shift, 0.0)).r, texture2D(uTex, vUv).g, texture2D(uTex, vUv - vec2(shift, 0.0)).b);
@@ -35,11 +34,10 @@ void main(){
   float d = distance(vUv*a, uMouse*a);
   float radius = uHover*0.9*uAspect;
   float reveal = smoothstep(radius, radius - 0.18, d);
-  vec3 color = mix(duo, tex, reveal);
+  vec3 color = mix(duo, tex, max(reveal, uActive));
   float edge = smoothstep(0.0, 0.06, vUv.x)*smoothstep(1.0, 0.94, vUv.x)*smoothstep(0.0, 0.06, vUv.y)*smoothstep(1.0, 0.94, vUv.y);
   color *= mix(0.62, 1.0, edge);                          // edges settle into the dark
   color *= mix(0.32, 1.0, uActive) * mix(1.0, 0.7, clamp(-vDepth*0.25, 0.0, 1.0));
-  color += (grain(vUv*900.0 + uTime) - 0.5)*0.05;
   gl_FragColor = vec4(mix(uDark*0.6, color, uLoaded), 1.0);
 }`;
 
@@ -63,7 +61,7 @@ export async function mountWorkStage({ host, track, sources, onActive, onHover, 
   camera.position.z = 10;
   const style = getComputedStyle(document.documentElement);
   const color = (name: string, fallback: string) => new THREE.Color(style.getPropertyValue(name).trim() || fallback);
-  const dark = color("--ground", "#1d1f1a").offsetHSL(0, 0, .03), light = color("--ink", "#e6e8df").lerp(color("--accent", "#cbd2b1"), .5).multiplyScalar(.82);
+  const dark = color("--ink", "#18271c").offsetHSL(0, 0, .03), light = color("--ground", "#e5e8ce").lerp(color("--accent", "#789575"), .5).multiplyScalar(.82);
 
   const geometry = new THREE.PlaneGeometry(1, 1, 48, 24);
   const loader = new THREE.TextureLoader();
@@ -92,9 +90,9 @@ export async function mountWorkStage({ host, track, sources, onActive, onHover, 
     camera.updateProjectionMatrix();
     portrait = w/h < 1;
     const visH = 2*camera.position.z*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)), visW = visH*camera.aspect;
-    const boxW = visW*(portrait ? .86 : .46), boxH = visH*(portrait ? .3 : .44);
+    const boxW = visW*(portrait ? .86 : .46), boxH = visH*(portrait ? .85 : .9);
     spacing = visW*(portrait ? .94 : .62);
-    centreY = visH*(.5 - (portrait ? .4 : .39));
+    centreY = 0;
     for (const plane of planes) {
       const width = Math.min(boxW, boxH*plane.aspect);
       plane.mesh.scale.set(width, width/plane.aspect, 1);

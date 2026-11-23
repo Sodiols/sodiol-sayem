@@ -1,22 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import styles from "./Navbar.module.css";
-import { navigationLinks } from "@/data/navigation";
-import { scrollToY } from "@/lib/scroll";
-
-// Same-page links glide with the page's smooth scroller; links to other pages navigate normally.
-function jump(event: MouseEvent<HTMLAnchorElement>, href: string) {
-  const url = new URL(href, window.location.href);
-  const target = url.pathname === window.location.pathname && document.getElementById(url.hash.slice(1));
-  if (!target) return;
-  event.preventDefault();
-  if (window.location.hash !== url.hash) window.history.pushState(null, "", url.hash);
-  scrollToY(target.getBoundingClientRect().top + window.scrollY);
-}
 
 // Keep the GSAP menu out of the initial page's execution path. Once requested,
 // retain its component so its reversible animation and focus lifecycle survive.
@@ -79,7 +67,6 @@ export function Navbar() {
   return <div ref={root} className={styles.root} data-overlay-visible={visible}>
     <header className={styles.bar} aria-label="Site navigation" aria-hidden={visible} inert={visible}>
       <Link href="/#home" className={styles.wordmark} aria-label="Sodiol home" translate="no">sodiol.</Link>
-      <nav className={styles.links} aria-label="Primary">{navigationLinks.map(link => <Link key={link.href} href={link.href} onClick={event => jump(event, link.href)}>{link.label}</Link>)}</nav>
       <button ref={trigger} className={styles.menuButton} type="button" aria-label="Open navigation menu"
         aria-expanded={open} aria-controls="navigation-overlay" aria-haspopup="dialog"
         onClick={() => {
@@ -91,7 +78,7 @@ export function Navbar() {
           setMenuLoaded(true);
           setOpen(true);
         }}>
-        <span /><span />
+        <span /><span /><b className={styles.menuLabel}>Menu</b>
       </button>
     </header>
     {menuLoaded && <NavigationOverlay open={open} onRequestClose={requestClose} onNavigate={requestNavigation} onClosed={afterClose} />}

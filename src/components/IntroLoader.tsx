@@ -15,6 +15,7 @@ const letters = [
 
 export function IntroLoader({ children }: { children: ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
+  const skipIntro = useRef<() => void>(() => {});
 
   useEffect(() => {
     const shell = root.current!;
@@ -28,34 +29,44 @@ export function IntroLoader({ children }: { children: ReactNode }) {
     const previousOverflow = document.documentElement.style.overflow;
     const previousBodyOverflow = document.body.style.overflow;
     let cancelled = false;
+    let finished = false;
     let fontTimeout: ReturnType<typeof setTimeout>;
     page.inert = true;
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
     const finish = () => {
-      if (cancelled) return;
+      if (cancelled || finished) return;
+      finished = true;
       shell.dataset.intro = "complete";
       page.inert = false;
       document.documentElement.style.overflow = previousOverflow;
       document.body.style.overflow = previousBodyOverflow;
       overlay.hidden = true;
       clearTimeout(failSafe);
+      try { sessionStorage.setItem("sodiol:intro-seen", "true"); } catch { /* Storage may be unavailable. */ }
       window.dispatchEvent(new Event("sodiol:intro-complete"));
     };
+    skipIntro.current = () => { animations.forEach(animation => animation.cancel()); finish(); page.querySelector<HTMLElement>("#home a")?.focus({ preventScroll: true }); };
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape" && !finished) skipIntro.current(); };
+    window.addEventListener("keydown", onKeyDown);
     const animate = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => {
       const animation = element.animate(frames, { fill: "both", ...options });
+      animation.playbackRate = 2.5;
       animations.push(animation);
       return animation;
     };
     const run = async () => {
+      let seen = false;
+      try { seen = sessionStorage.getItem("sodiol:intro-seen") === "true"; } catch { /* Use the first-visit intro. */ }
+      if (seen || window.location.pathname !== "/" || window.location.hash || motion.matches) { finish(); return; }
       // Never wait indefinitely on a failed font request. The serif fallback is usable.
       await Promise.race([
         document.fonts.load('100px "Instrument Serif"', "sodiol."),
         new Promise<void>(resolve => { fontTimeout = setTimeout(resolve, 100); }),
       ]).catch(() => undefined);
       clearTimeout(fontTimeout);
-      if (cancelled) return;
+      if (cancelled || finished) return;
       shell.dataset.intro = "playing";
       if (motion.matches) {
         finish();
@@ -105,7 +116,7 @@ export function IntroLoader({ children }: { children: ReactNode }) {
       await reveal.finished;
       finish();
     };
-    const failSafe = setTimeout(finish, 10000);
+    const failSafe = setTimeout(finish, 3500);
     const onMotionChange = () => { if (motion.matches) { finish(); animations.forEach(a => a.cancel()); } };
     motion.addEventListener("change", onMotionChange);
     void run().catch(finish);
@@ -114,6 +125,7 @@ export function IntroLoader({ children }: { children: ReactNode }) {
       clearTimeout(fontTimeout);
       clearTimeout(failSafe);
       motion.removeEventListener("change", onMotionChange);
+      window.removeEventListener("keydown", onKeyDown);
       animations.forEach(animation => animation.cancel());
       page.inert = false;
       document.documentElement.style.overflow = previousOverflow;
@@ -124,9 +136,10 @@ export function IntroLoader({ children }: { children: ReactNode }) {
   return (
     <div ref={root} data-intro="pending">
       <div className="portfolio">{children}</div>
-      <div className="intro" aria-hidden="true">
-        <div className="intro-curtain" />
-        <div className="intro-surface">
+      <div className="intro" role="region" aria-label="Introduction">
+        <button className="intro-skip" type="button" onClick={() => skipIntro.current()}>Skip intro <span aria-hidden="true">↗</span></button>
+        <div className="intro-curtain" aria-hidden="true" />
+        <div className="intro-surface" aria-hidden="true">
           <div className="intro-word">
             {letters.map(({ char }, index) => <span className="intro-letter" key={index}>{char}</span>)}
           </div>

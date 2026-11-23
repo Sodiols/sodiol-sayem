@@ -13,6 +13,12 @@ export function CaseStudyContent({ project, standalone = false }: { project: Pro
       <Heading id={`case-${project.slug}-title`} tabIndex={-1} translate="no">{project.name}</Heading>
       <div><p className={styles.caseContext}>{project.context}</p><p>{project.description}</p></div>
     </header>
+    <nav aria-label="Case study sections" className={styles.caseContents}>
+      <a href={`#${project.slug}-overview`}>Overview</a>
+      <a href={`#${project.slug}-role`}>My role</a>
+      <a href={`#${project.slug}-approach`}>Engineering decisions</a>
+      <a href={`#${project.slug}-outcome`}>Outcome</a>
+    </nav>
     <div className={styles.casePreview} style={{ aspectRatio: `${project.image.width} / ${project.image.height}` }}>
       <ProjectImage key={project.image.src} project={project} presentation="case" />
     </div>

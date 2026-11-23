@@ -33,38 +33,9 @@ export function ContactSection() {
 
   useEffect(() => {
     mounted.current = true;
-    const section = root.current!;
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const animations: Animation[] = [];
-    let ready = section.closest<HTMLElement>("[data-intro]")?.dataset.intro === "complete";
-    let visible = false;
-    let played = false;
-    const reveal = () => {
-      if (!ready || !visible || played) return;
-      played = true; observer.disconnect();
-      if (motion.matches) return;
-      section.querySelectorAll<HTMLElement>("[data-contact-line]").forEach((line, index) => {
-        animations.push(line.animate([{ transform: "translateY(110%)" }, { transform: "translateY(0)" }],
-          { duration: 750, delay: index * 80, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" }));
-      });
-      section.querySelectorAll<HTMLElement>("[data-contact-field]").forEach((field, index) => {
-        animations.push(field.animate([{ transform: "translateY(14px)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }],
-          { duration: 550, delay: 100 + index * 55, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" }));
-      });
-    };
-    const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; reveal(); }, { threshold: 0.1 });
-    const onIntro = () => { ready = true; reveal(); };
-    const onMotion = () => { if (motion.matches) animations.forEach(animation => animation.finish()); };
-    observer.observe(section);
-    window.addEventListener("sodiol:intro-complete", onIntro);
-    motion.addEventListener("change", onMotion);
     return () => {
       mounted.current = false;
       activeRequest.current?.abort();
-      observer.disconnect();
-      window.removeEventListener("sodiol:intro-complete", onIntro);
-      motion.removeEventListener("change", onMotion);
-      animations.forEach(animation => animation.cancel());
     };
   }, []);
 
@@ -106,7 +77,7 @@ export function ContactSection() {
       return;
     }
     if (!accessKey) {
-      setStatus({ kind: "error", message: "The form isn’t available right now. Please try again later or use a social link below." });
+      setStatus({ kind: "error", message: "The form isn’t available right now. Please try again later or use the LinkedIn link in this section." });
       return;
     }
     const data = new FormData(currentForm);
@@ -174,11 +145,9 @@ export function ContactSection() {
   return <section ref={root} id="contact" className={styles.section} aria-labelledby="contact-title" data-contact data-scene="1">
     <div className={styles.layout}>
       <div className={styles.introduction}>
-        <h2 id="contact-title"><span className={styles.mask}><span data-contact-line>Have something</span></span>{" "}<span className={styles.mask}><span data-contact-line>in mind?</span></span></h2>
-        <p className={styles.description}>Have a website to build or an application to improve? Tell me what it needs to do, where you are with it, and any timeline you have in mind.</p>
+        <h2 id="contact-title">Let’s talk.</h2>
+        <p className={styles.description}>Tell me what you’re building or what you’d like to improve. A few lines are enough to start.</p>
         <dl className={styles.facts}>
-          <div><dt>Based in</dt><dd>Sylhet, Bangladesh</dd></div>
-          <div><dt>Working on</dt><dd>Web applications, storefronts and the systems behind them</dd></div>
           <div><dt>Elsewhere</dt><dd className={styles.socials}>{Object.values(socialProfiles).filter(profile => profile.url).map(profile =>
             <a key={profile.label} href={profile.url!} target="_blank" rel="noopener noreferrer">{profile.label}<span className="sr-only"> (opens in a new tab)</span></a>)}</dd></div>
         </dl>
@@ -186,45 +155,48 @@ export function ContactSection() {
       <form ref={form} onSubmit={submit} noValidate action="https://api.web3forms.com/submit" method="POST"
         onFocusCapture={() => setCaptchaActive(true)}
         className={styles.form} aria-labelledby="contact-form-title" aria-busy={sending} data-contact-form>
-        <h3 id="contact-form-title" className={styles.formTitle} data-contact-field>Write to me</h3>
+        <h3 id="contact-form-title" className={styles.formTitle}>Send an inquiry</h3>
         <input type="hidden" name="access_key" value={accessKey || ""} />
         <input type="hidden" name="subject" value="New Portfolio Inquiry | Sodiol Sayem" />
         <input type="hidden" name="from_name" value="Sodiol Portfolio" />
         <div className={styles.honeypot} aria-hidden="true"><input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" aria-label="Leave this field empty" /></div>
         <fieldset disabled={sending}>
           <legend className="sr-only">Your contact details and message</legend>
-          {/* The form reads as a letter: each blank is a labelled field inside the sentence. */}
-          <p className={styles.sentence} data-contact-field>
-            Hello Sodiol, my name is{" "}
-            <label className="sr-only" htmlFor="contact-name">Your name</label>
-            <input id="contact-name" className={styles.blank} name="name" type="text" placeholder="your name" autoComplete="name" required maxLength={100} size={9}
-              aria-invalid={Boolean(errors.name)} aria-describedby={describe("name")}
-              onInput={() => clearError("name")} onBlur={() => checkField("name")} />
-            {" "}and you can reach me at{" "}
-            <label className="sr-only" htmlFor="contact-email">Email address</label>
-            <input id="contact-email" className={styles.blank} name="email" type="email" inputMode="email" placeholder="you@example.com" autoComplete="email" autoCapitalize="none" spellCheck={false} required maxLength={254} size={14}
-              aria-invalid={Boolean(errors.email)} aria-describedby={describe("email")}
-              onInput={() => clearError("email")} onBlur={() => checkField("email")} />.
-            {" "}I’d like to talk about{" "}
-            <label className="sr-only" htmlFor="contact-project-type">What’s this about? (optional)</label>
-            <span className={styles.selectBlank}><select id="contact-project-type" className={styles.blank} name="project_type" defaultValue=""
-              aria-invalid={Boolean(errors.project_type)} aria-describedby={describe("project_type")}
-              onChange={() => clearError("project_type")}><option value="">a project (optional)</option>{projectTypes.map(type => <option key={type} value={type}>{type.toLowerCase()}</option>)}</select></span>.
-          </p>
-          <div className={styles.errors} aria-live="polite">
-            <p id="contact-name-error" className={styles.fieldError}>{errors.name}</p>
-            <p id="contact-email-error" className={styles.fieldError}>{errors.email}</p>
-            <p id="contact-project-type-error" className={styles.fieldError}>{errors.project_type}</p>
+          <div className={styles.fields}>
+            <div className={styles.field}>
+              <label htmlFor="contact-name">Your name</label>
+              <input id="contact-name" name="name" autoComplete="name" required maxLength={100}
+                aria-invalid={Boolean(errors.name)} aria-describedby={describe("name")}
+                onInput={() => clearError("name")} onBlur={() => checkField("name")} />
+              <p id="contact-name-error" className={styles.fieldError} aria-live="polite">{errors.name}</p>
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="contact-email">Email address</label>
+              <input id="contact-email" name="email" type="email" inputMode="email" autoComplete="email" autoCapitalize="none" spellCheck={false} required maxLength={254}
+                aria-invalid={Boolean(errors.email)} aria-describedby={describe("email")}
+                onInput={() => clearError("email")} onBlur={() => checkField("email")} />
+              <p id="contact-email-error" className={styles.fieldError} aria-live="polite">{errors.email}</p>
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="contact-project-type">Project type <span>(optional)</span></label>
+              <select id="contact-project-type" name="project_type" defaultValue=""
+                aria-invalid={Boolean(errors.project_type)} aria-describedby={describe("project_type")}
+                onChange={() => clearError("project_type")}>
+                <option value="">Choose a project type</option>
+                {projectTypes.map(type => <option key={type}>{type}</option>)}
+              </select>
+              <p id="contact-project-type-error" className={styles.fieldError}>{errors.project_type}</p>
+            </div>
           </div>
-          <div className={styles.messageField} data-contact-field>
+          <div className={styles.messageField}>
             <label htmlFor="contact-message">Your message</label>
             <textarea id="contact-message" name="message" rows={5} placeholder="What does it need to do, and where are you with it?" required maxLength={5000}
               aria-invalid={Boolean(errors.message)} aria-describedby={describe("message", "contact-message-help")}
               onInput={() => clearError("message")} onBlur={() => checkField("message")} />
             <p id="contact-message-error" className={styles.fieldError}>{errors.message}</p>
-            <p id="contact-message-help" className={styles.messageHelp}>A short brief is enough to start. Please leave out passwords and other sensitive information.</p>
+            <p id="contact-message-help" className={styles.messageHelp}>Please leave out passwords and other sensitive information.</p>
           </div>
-          <div className={styles.sendRow} data-contact-field>
+          <div className={styles.sendRow}>
             <div className={styles.verification}>
               <Captcha ref={captcha} active={captchaActive} onToken={setCaptchaToken} />
               <p className={styles.fieldError} aria-live="polite">{captchaError && !captchaToken ? "Please complete the anti-spam verification." : ""}</p>

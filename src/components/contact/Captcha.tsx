@@ -47,7 +47,7 @@ export function Captcha({active,onToken,ref}:{active:boolean;onToken:(token:stri
       api=instance;
       widget.current=api.render(container.current!,{
         // Official Web3Forms free-plan sitekey, not a fabricated credential.
-        sitekey:"50b2fe65-b00b-4b9e-ad62-3ba471098be2",theme:"dark",size:"compact",
+        sitekey:"50b2fe65-b00b-4b9e-ad62-3ba471098be2",theme:"light",size:"compact",
         callback:(token:string)=>onToken(token),
         "expired-callback":()=>onToken(""),
         "chalexpired-callback":()=>onToken(""),
