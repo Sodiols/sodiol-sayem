@@ -10,7 +10,7 @@ if (origin.username || origin.password || origin.search || origin.hash || origin
 export const site = {
   origin: origin.origin,
   name: "Sodiol Sayem",
-  title: "Sodiol Sayem | Full-Stack Developer",
+  title: "Sodiol Sayem | Full-Stack Developer in Sylhet, Bangladesh",
   description: "Full-stack developer in Sylhet, Bangladesh. Senior Developer at Meka Agency. Explore my work in e-commerce, real-time applications and complete web platforms.",
   locale: "en_US",
 } as const;

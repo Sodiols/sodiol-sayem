@@ -2,7 +2,7 @@
 
 /* The room's lights come on: ground and ink swap, and the name returns at full width. */
 .footer { @apply relative; z-index: 1; @apply grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; min-height: 88svh; padding: 40px var(--page-gutter) 22px; background: var(--paper); color: var(--paper-ink); }
-.columns { @apply grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; font-size: 16px; line-height: 1.5; }
+.columns { @apply grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px; font-size: 16px; line-height: 1.5; }
 .columns > * { @apply flex flex-col; align-items: flex-start; }
 .columns p, .columns a, .columns button { color: var(--paper-muted); }
 .columns .lead { margin-bottom: 6px; color: var(--paper-ink); }

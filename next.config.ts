@@ -27,7 +27,11 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [{ source: "/about", destination: "/#about", permanent: true },
-      { source: "/work/epicelites", destination: "/work/epic-elites", permanent: true }];
+      { source: "/work/epicelites", destination: "/work/epic-elites", permanent: true },
+      // Older addresses Google still knows: the work index and the previous case-study path.
+      { source: "/work", destination: "/#work", permanent: true },
+      { source: "/projects", destination: "/#work", permanent: true },
+      { source: "/projects/:slug", destination: "/work/:slug", permanent: true }];
   },
 };
 

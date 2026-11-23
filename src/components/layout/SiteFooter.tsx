@@ -1,4 +1,5 @@
 import { socialProfiles, navigationLinks } from "@/data/navigation";
+import { projects } from "@/data/projects";
 import { socialIcons } from "./socialIcons";
 import styles from "./SiteFooter.module.css";
 import Link from "next/link";
@@ -16,6 +17,7 @@ export function SiteFooter({ invite = true }: { invite?: boolean }) {
     <div className={styles.columns}>
       <div><p className={styles.lead}>Sodiol Sayem</p><p>Full-stack developer</p><p>Sylhet, Bangladesh</p></div>
       <nav aria-label="Footer"><p className={styles.lead}>Pages</p>{navigationLinks.map(link => <Link key={link.href} href={link.href}>{link.label}</Link>)}</nav>
+      <nav aria-label="Case studies"><p className={styles.lead}>Case studies</p>{projects.map(project => <Link key={project.slug} href={`/work/${project.slug}`} translate="no">{project.name}</Link>)}</nav>
       <nav aria-label="Social profiles"><p className={styles.lead}>Elsewhere</p>
         {Object.entries(socialProfiles).map(([key, profile]) => {
           if (!profile.url) return null;

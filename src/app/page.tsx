@@ -9,6 +9,8 @@ import type { Viewport } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site-config";
 import { socialProfiles } from "@/data/navigation";
+import { projects } from "@/data/projects";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata = pageMetadata("/");
 
@@ -16,10 +18,15 @@ export const viewport: Viewport = { themeColor: "#e5e8ce" };
 
 export default function Home() {
   return <>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[
-      {"@type":"Person","@id":`${site.origin}/#person`,name:site.name,url:site.origin,jobTitle:"Full-Stack Developer",worksFor:{"@type":"Organization",name:"Meka Agency"},homeLocation:{"@type":"Place",name:"Sylhet, Bangladesh"},sameAs:Object.values(socialProfiles).map(profile=>profile.url).filter(Boolean)},
+    <JsonLd data={{"@context":"https://schema.org","@graph":[
+      {"@type":"Person","@id":`${site.origin}/#person`,name:site.name,url:site.origin,image:`${site.origin}/images/og/home.png`,description:site.description,
+        jobTitle:"Full-Stack Developer",worksFor:{"@type":"Organization",name:"Meka Agency"},
+        homeLocation:{"@type":"Place",name:"Sylhet, Bangladesh",address:{"@type":"PostalAddress",addressLocality:"Sylhet",addressCountry:"BD"}},
+        knowsAbout:["Full-stack web development","E-commerce development","Next.js","React","TypeScript","Supabase","PostgreSQL","Tailwind CSS"],
+        sameAs:Object.values(socialProfiles).map(profile=>profile.url).filter(Boolean)},
       {"@type":"WebSite","@id":`${site.origin}/#website`,name:site.name,url:site.origin,inLanguage:"en",author:{"@id":`${site.origin}/#person`}},
-    ]}).replace(/</g,"\\u003c")}} />
+      {"@type":"ItemList",name:"Selected work",itemListElement:projects.map((project,index)=>({"@type":"ListItem",position:index+1,url:`${site.origin}/work/${project.slug}`,name:project.name}))},
+    ]}} />
     <main id="main">
       <Hero />
       <TrustSections />
