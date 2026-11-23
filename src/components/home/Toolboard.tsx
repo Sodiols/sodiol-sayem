@@ -32,8 +32,8 @@ export function Toolboard() {
         <p>My <a href="#work">four featured projects</a> share a core stack: {new Intl.ListFormat("en", { style: "long", type: "conjunction" }).format(sharedStack.map(tool => tool.name))}.</p>
       </header>
       <div className={styles.groups}>
-        {toolkitGroups.map(group => (
-          <ToolkitGroup key={group.name} title={group.name}>
+        {toolkitGroups.map((group, index) => (
+          <ToolkitGroup key={group.name} title={group.name} defaultOpen={index === 0}>
             <p className={styles.description}>{group.description}</p>
             <ToolList ids={group.tools} />
           </ToolkitGroup>

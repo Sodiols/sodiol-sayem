@@ -3,8 +3,8 @@
 import { useId, useState, type ReactNode } from "react";
 import styles from "./Toolboard.module.css";
 
-export function ToolkitGroup({ title, children }: { title: string; children: ReactNode }) {
-  const [pinned, setPinned] = useState(false);
+export function ToolkitGroup({ title, defaultOpen = false, children }: { title: string; defaultOpen?: boolean; children: ReactNode }) {
+  const [pinned, setPinned] = useState(defaultOpen);
   const [preview, setPreview] = useState(false);
 
   const panelId = useId();
