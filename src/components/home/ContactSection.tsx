@@ -30,6 +30,7 @@ export function ContactSection() {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const sending = status.kind === "sending";
+  const sent = status.kind === "success";
 
   useEffect(() => {
     mounted.current = true;
@@ -128,7 +129,8 @@ export function ContactSection() {
         setStatus({ kind: "success" });
         markSubmissionReceived();
         trackEvent("contact_form_success");
-        router.push("/thank-you");
+        // Let the button confirm the send before moving on to the thank-you page.
+        setTimeout(() => { if (mounted.current) router.push("/thank-you"); }, 1400);
       } else setStatus({ kind: "error", message: "Couldn’t send your message. Please try again." });
     } catch {
       if (mounted.current) setStatus({ kind: "error", message: timedOut ? "The request took too long. Please try again." : "Couldn’t send your message. Please check your connection and try again." });
@@ -160,7 +162,7 @@ export function ContactSection() {
         <input type="hidden" name="subject" value="New Portfolio Inquiry | Sodiol Sayem" />
         <input type="hidden" name="from_name" value="Sodiol Portfolio" />
         <div className={styles.honeypot} aria-hidden="true"><input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" aria-label="Leave this field empty" /></div>
-        <fieldset disabled={sending}>
+        <fieldset disabled={sending || sent}>
           <legend className="sr-only">Your contact details and message</legend>
           <div className={styles.fields}>
             <div className={styles.field}>
@@ -202,7 +204,12 @@ export function ContactSection() {
               <p className={styles.fieldError} aria-live="polite">{captchaError && !captchaToken ? "Please complete the anti-spam verification." : ""}</p>
               <p>Messages are processed by Web3Forms. <Link href="/privacy-policy">Privacy Policy</Link></p>
             </div>
-            <button className={styles.submit} type="submit" disabled={sending}>{sending ? "Sending…" : "Send message"}<span aria-hidden="true">{sending ? "" : "↗"}</span></button>
+            <button className={styles.submit} type="submit" disabled={sending || sent} data-state={status.kind}>
+              {sent ? "Message sent" : sending ? "Sending…" : "Send message"}
+              <span aria-hidden="true">{sent
+                ? <svg className={styles.check} viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                : sending ? <i className={styles.spinner} /> : "↗"}</span>
+            </button>
           </div>
         </fieldset>
         <div ref={statusElement} className={styles.status} role="status" aria-live="polite" aria-atomic="true" tabIndex={-1} data-state={status.kind}>

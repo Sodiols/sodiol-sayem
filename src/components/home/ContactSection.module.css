@@ -61,7 +61,15 @@
 .verification button { min-height: 44px; padding: 8px 0; border: 0; border-bottom: 2px solid var(--paper-ink); background: transparent; color: var(--paper-ink); font: inherit; cursor: pointer; }
 .submit { composes: filled from "../ui/ActionButton.module.css"; --button-fill: var(--paper-ink); --button-ink: var(--paper); --button-hover: var(--accent-text); justify-self: start; min-width: min(210px, 100%); }
 .submit:focus-visible, .verification :is(button, a, [data-captcha-area]):focus-visible, .socials a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-.submit:disabled { cursor: progress; opacity: .7; }
+.submit:disabled { cursor: progress; }
+.submit:is([data-state="sending"], [data-state="success"]):disabled { opacity: 1; }
+/* Sending spins in the button's own circle; a confirmed send turns the button olive and draws a check. */
+@keyframes spin { to { transform: rotate(1turn); } }
+@keyframes pop { 0% { transform: scale(1); } 45% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.spinner { display: block; width: 16px; height: 16px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+.submit[data-state="success"] { --button-fill: var(--accent); --button-ink: var(--ink); cursor: default; animation: pop .5s cubic-bezier(.22, 1, .36, 1); }
+.check { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; animation: draw .45s .12s cubic-bezier(.22, 1, .36, 1) forwards; }
 .status { margin-top: 18px; scroll-margin-top: 120px; }
 .status:empty { margin-top: 0; }
 .status p { max-width: 48ch; color: var(--paper-muted); font-size: 15px; line-height: 1.6; }
@@ -88,5 +96,7 @@
 @media (prefers-reduced-motion: reduce) {
   .messageField textarea, .submit, .submit > span { transition: none; }
   .submit:hover > span { transform: none; }
-  .successMask h3 { animation: none; }
+  .successMask h3, .submit[data-state="success"] { animation: none; }
+  .spinner { animation-duration: 2s; }
+  .check { animation: none; stroke-dashoffset: 0; }
 }
